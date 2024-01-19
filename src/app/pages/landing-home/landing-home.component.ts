@@ -7,9 +7,18 @@ import { Router } from '@angular/router';
   styleUrls: ['./landing-home.component.scss']
 })
 export class LandingHomeComponent {
-
+  bol_login = true;
+    
   constructor(private router:Router){
 
+  }
+
+  modoLogin() {
+    this.bol_login = true;
+  }
+
+  modoRegistro() {
+    this.bol_login = false;
   }
 
   login(){
