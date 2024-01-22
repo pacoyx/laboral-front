@@ -2,12 +2,22 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutManagerComponent } from 'src/app/layouts/layout-manager/layout-manager.component';
 import { LandingManagerComponent } from './pages/landing-manager/landing-manager.component';
+import { PublicarEmpleoMgComponent } from './pages/publicar-empleo-mg/publicar-empleo-mg.component';
+import { ChatMgComponent } from './pages/chat-mg/chat-mg.component';
+import { EmpleosMgComponent } from './pages/empleos-mg/empleos-mg.component';
+import { ConfiguracionMgComponent } from './pages/configuracion-mg/configuracion-mg.component';
 
 const routes: Routes = [
   {
     path: '',
     component: LayoutManagerComponent,
-    children: [{ path: '', component: LandingManagerComponent }],
+    children: [
+      { path: '', component: LandingManagerComponent },
+      { path: 'publicar', component: PublicarEmpleoMgComponent },
+      { path: 'chat', component: ChatMgComponent },
+      { path: 'empleos', component: EmpleosMgComponent },
+      { path: 'configuracion', component: ConfiguracionMgComponent },
+    ],
   },
 ];
 

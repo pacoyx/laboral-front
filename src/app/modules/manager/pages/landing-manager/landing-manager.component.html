@@ -6,14 +6,12 @@
       <div class="block-empresa">
         <div class="row">
           <div class="col-3">
-            <!-- <img
-              src="assets/images/sinfoto_cuadrado.png"
-              style="width: 100px; height: 100px"
-            /> -->
-            <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="#D2DEEF" class="bi bi-camera" viewBox="0 0 16 16">
+            
+              <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="#D2DEEF" class="bi bi-camera" viewBox="0 0 16 16">
                 <path d="M15 12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1.172a3 3 0 0 0 2.12-.879l.83-.828A1 1 0 0 1 6.827 3h2.344a1 1 0 0 1 .707.293l.828.828A3 3 0 0 0 12.828 5H14a1 1 0 0 1 1 1zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4z"/>
                 <path d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5m0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7M3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0"/>
               </svg>
+            
           </div>
           <div class="col-7">
             <p style="color: #172C73;font-weight: 700; font-size: 24px;">Nombre empresa | 0.0 
@@ -30,7 +28,10 @@
               </svg> Link de pagina web</a>
           </div>
           <div class="col-2" style="text-align: right;">
-            <img src="assets/images/pencil_edit.png" style="width: 30px" />
+            <img 
+            src="assets/images/pencil_edit.png" 
+            style="width: 30px; cursor: pointer;" 
+            data-toggle="modal" data-target="#modalEditarDatosEmp" />
           </div>
         </div>
       </div>
@@ -59,26 +60,92 @@
       <div class="row pb-3" style="text-align: left">
         <div>
           <span class="titulo"> Empleador: </span>
-          <div class="subtitulo">Juan Pablo Sinarahua</div>
+          <div class="subtitulo">{{vEmpleador}}</div>
         </div>
       </div>
 
       <div class="row pb-3" style="text-align: left">
         <div>
           <span class="titulo"> Correo: </span>
-          <div class="subtitulo">juanpablo@empresarapi.com.pe</div>
+          <div class="subtitulo">{{vCorreo}}</div>
         </div>
       </div>
 
       <div class="row" style="text-align: left">
         <div>
           <span class="titulo"> Celular: </span>
-          <div class="subtitulo">+51 921 852 956</div>
+          <div class="subtitulo">{{vCelular}}</div>
         </div>
       </div>
       <br />
       <div class="w-100">
-        <button class="btn btn-primary " style="width: 50%;">Editar</button>
+        <button class="btn btn-primary" style="width: 50%;" (click)="irConfiguracion()" >
+          Editar
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalEditarDatosEmp" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Datos de la Empresa</h5>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Responda las siguientes preguntas</p>
+        <form [formGroup]="frmDatos">
+
+          <div class="form-group">
+            <label for="txtNombres" class="label_text">Nombres completos</label>
+            <input formControlName="nombreEmpresa" type="text" class="form-control" id="txtNombres" aria-describedby="emailHelp">
+            <small id="emailHelp" class="form-text text-muted" *ngIf="nombreEmpresa.invalid && (nombreEmpresa.dirty || nombreEmpresa.touched)">
+              <div *ngIf="nombreEmpresa.errors?.['required']">
+                nombreEmpresa es requerido.
+              </div>          
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label for="txtUbicacion" class="label_text">Ubicación</label>
+            <input formControlName="ubicacion" type="text" class="form-control" id="txtUbicacion" aria-describedby="emailHelp">
+            <small id="emailHelp" class="form-text text-muted" *ngIf="ubicacion.invalid && (ubicacion.dirty || ubicacion.touched)">
+              <div *ngIf="ubicacion.errors?.['required']">
+                Ubicacion es requerido.
+              </div>          
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label for="txtUrl" class="label_text">Url del perfil/sitio web </label>
+            <input formControlName="url" type="text" class="form-control" id="txtUrl" aria-describedby="emailHelp">
+            <small id="emailHelp" class="form-text text-muted" *ngIf="url.invalid && (url.dirty || url.touched)">
+              <div *ngIf="url.errors?.['required']">
+                url es requerido.
+              </div>          
+            </small>
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+        <button type="button" class="btn btn-primary">
+          <span class="spinner-border spinner-border-sm"></span>
+          <span class="visually-hidden">Loading...</span>
+          Guardar Cambios
+        </button>
       </div>
     </div>
   </div>
