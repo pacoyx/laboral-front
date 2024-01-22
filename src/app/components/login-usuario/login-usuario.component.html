@@ -5,21 +5,41 @@
 </div>
 <form [formGroup]="frmLogin">
     <div class="form-group">
-        <label for="exampleInputEmail1" class="label_text">Correo electronico</label>
-        <input formControlName="correo" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-        <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+        <label for="txtCorreoLogin" class="label_text" for="txtCorreo">Correo electronico</label>
+        <input formControlName="correo" type="email" class="form-control" aria-describedby="emailHelp" id="txtCorreo">
+        <small class="form-text text-muted" *ngIf="correo.invalid && (correo.dirty || correo.touched)">
+          <div *ngIf="correo.errors?.['required']">
+            correo es requerido.
+          </div>
+          <div *ngIf="correo.errors?.['email']">
+            Formato de correo invalido.
+          </div>          
+        </small>
       </div>          
     
     <div class="form-group">
-      <label for="exampleInputPassword1" class="label_text">Contraseña</label>
-      <input formControlName="clave" type="password" class="form-control" id="exampleInputPassword1">
-      <small id="emailHelp" class="form-text text-muted">
+      <label for="txtClaveLogin" class="label_text" data-toggle="tooltip" data-placement="bottom" title="Ingrese un correo ya sea corportativo o personal">
+        Contraseña <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
+          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4m.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2"/>
+        </svg>
+      </label>
+      <input formControlName="clave" type="password" class="form-control" id="txtClaveLogin">
+      <small class="form-text text-muted" *ngIf="clave.invalid && (clave.dirty || clave.touched)">
+        <div *ngIf="clave.errors?.['required']">
+          clave es requerido.
+        </div>          
+        <div *ngIf="clave.errors?.['minlength']">
+          clave debe tener al menos 6 caracteres.
+        </div>          
+      </small>
+
+      <small class="form-text text-muted">
         ¿Olvidaste tu contraseña?
     </small>
     </div>
     <div class="form-group form-check">
-      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-      <label class="form-check-label label_text" for="exampleCheck1">Recordar contraseña</label>
+      <input formControlName="recordar" type="checkbox" class="form-check-input" id="chkRecordar">
+      <label class="form-check-label label_text" for="chkRecordar">Recordar contraseña</label>
     </div>
     
   </form>
@@ -35,4 +55,10 @@
         <img src="assets/images/google.png" class="ml-3">
     </div>
 
+  </div>
+
+  <div class="alert alert-danger mt-3" role="alert" *ngIf="bol_err">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-octagon-fill" viewBox="0 0 16 16">
+      <path d="M11.46.146A.5.5 0 0 0 11.107 0H4.893a.5.5 0 0 0-.353.146L.146 4.54A.5.5 0 0 0 0 4.893v6.214a.5.5 0 0 0 .146.353l4.394 4.394a.5.5 0 0 0 .353.146h6.214a.5.5 0 0 0 .353-.146l4.394-4.394a.5.5 0 0 0 .146-.353V4.893a.5.5 0 0 0-.146-.353zM8 4c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995A.905.905 0 0 1 8 4m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+    </svg> {{msg_err}}
   </div>

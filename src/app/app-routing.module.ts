@@ -2,10 +2,20 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LandingHomeComponent } from './pages/landing-home/landing-home.component';
 import { LayoutPublicComponent } from './layouts/layout-public/layout-public.component';
+import { UsuarioCreadoMsgComponent } from './pages/usuario-creado-msg/usuario-creado-msg.component';
+import { UsuarioCreadoValidacionComponent } from './pages/usuario-creado-validacion/usuario-creado-validacion.component';
 
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
+  {
+    path: 'register',
+    component: UsuarioCreadoMsgComponent,
+  },
+  {
+    path: 'validate/:token',
+    component: UsuarioCreadoValidacionComponent,
+  },
   {
     path: 'manager',
     loadChildren: () =>

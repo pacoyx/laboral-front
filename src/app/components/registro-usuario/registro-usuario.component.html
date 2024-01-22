@@ -3,48 +3,73 @@
         Bienvenidos a Laboral.ai
     </h4> 
 </div>
-<form>
+<form [formGroup]="frmRegUsuario">
     <div class="form-group">
-        <label for="exampleInputEmail1" class="label_text">Nombres completos</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-        <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+        <label for="txtNombres" class="label_text">Nombres completos</label>
+        <input formControlName="nombreCompleto" type="text" class="form-control" id="txtNombres" aria-describedby="emailHelp">
+        <small id="emailHelp" class="form-text text-muted" *ngIf="nombreCompleto.invalid && (nombreCompleto.dirty || nombreCompleto.touched)">
+          <div *ngIf="nombreCompleto.errors?.['required']">
+            nombreCompleto es requerido.
+          </div>          
+        </small>
       </div>
       <div class="form-group">
-        <label for="exampleInputEmail1" class="label_text">Nombre de la empresa</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-        <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+        <label  for="txtNombreEmpresa" class="label_text">Nombre de la empresa</label>
+        <input formControlName="nombreEmpresa" type="text" class="form-control" id="txtNombreEmpresa" aria-describedby="emailHelp">
+        <small id="emailHelp" class="form-text text-muted" *ngIf="nombreEmpresa.invalid && (nombreEmpresa.dirty || nombreEmpresa.touched)">
+          <div *ngIf="nombreEmpresa.errors?.['required']">
+            nombreEmpresa es requerido.
+          </div>          
+        </small>
       </div>
       <div class="row">
         <div class="col-6">
             <div class="form-group">
-                <label for="exampleInputEmail1" class="label_text">Correo corporativo</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                <label for="txtCorreo" class="label_text">Correo corporativo</label>
+                <input formControlName="correo" type="email" class="form-control" id="txtCorreo" aria-describedby="emailHelp">
+                <small id="emailHelp" class="form-text text-muted" *ngIf="correo.invalid && (correo.dirty || correo.touched)">
+                  <div *ngIf="correo.errors?.['required']">
+                    correo corporativo es requirido.
+                  </div>
+                  <div *ngIf="correo.errors?.['email']">
+                    Formato de correo invalido.
+                  </div>
+                </small>
               </div>
         </div>
         <div class="col-6">
             <div class="form-group">
-                <label for="exampleInputEmail1" class="label_text" >Celular</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                <label for="txtCelular" class="label_text" >Celular</label>
+                <input formControlName="celular" type="text" class="form-control" id="txtCelular" aria-describedby="emailHelp">
+                <small id="emailHelp" class="form-text text-muted" *ngIf="celular.invalid && (celular.dirty || celular.touched)">
+                  <div *ngIf="celular.errors?.['required']">
+                    celular es requerido.
+                  </div>          
+                </small>
               </div>
         </div>
       </div>
     
     
     <div class="form-group">
-      <label for="exampleInputPassword1" class="label_text">Contraseña</label>
-      <input type="password" class="form-control" id="exampleInputPassword1">
-      <small id="emailHelp" class="form-text text-muted">
-        ¿Olvidaste tu contraseña?
-    </small>
+      <label for="txtClave" class="label_text">Contraseña</label>
+      <input formControlName="clave" type="password" class="form-control" id="txtClave">
+      <small id="emailHelp" class="form-text text-muted" *ngIf="clave.invalid && (clave.dirty || clave.touched)">
+        <div *ngIf="clave.errors?.['required']">
+          clave es requerido.
+        </div>          
+        <div *ngIf="clave.errors?.['minlength']">
+          clave debe tener al menos 6 caracteres.
+        </div>          
+      </small>
     </div>
-    <div class="form-group form-check">
-      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-      <label class="form-check-label label_text" for="exampleCheck1">Recordar contraseña</label>
-    </div>
+    
 </form>
-<button type="button" class="btn btn-block boton_reg" (click)="login()" >Registrarme</button>
+<button type="button" class="btn btn-block boton_reg" (click)="RegistrarUsuario()"
+[disabled]="frmRegUsuario.invalid">  
+  <i class="fas fa-spinner fa-spin" *ngIf="bol_loading"></i>
+  Registrarme
+</button>
   <div>
     
     <div class="text-center mt-3">
@@ -56,4 +81,10 @@
         <img src="assets/images/google.png" class="ml-3">
     </div>
 
+  </div>
+
+  <div class="alert alert-danger mt-3" role="alert" *ngIf="bol_err">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
+      <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+    </svg> {{msg_err}}
   </div>

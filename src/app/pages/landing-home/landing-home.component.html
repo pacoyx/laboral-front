@@ -5,9 +5,9 @@
 <!-- <button (click)="login()">ir manager</button> -->
 
 <div style="width: 400px; border: 1px solid black; padding: 20px;float: right; border-radius: 5px;border-color: gainsboro;margin-bottom: 50px;">
-  <div class="w-100 text-center mb-5">
+  <div class="text-center mb-5">
     
-        <div style="background-color: #E1ECFC;padding: 5px;">
+        <div style="background-color: #E1ECFC;padding: 5px;border-radius: 5px; width: 100%;">
             <button class="btn" [ngClass]="{'btn-primary': bol_login}" (click)="modoLogin()">Iniciar sesión</button>
             <button class="btn"[ngClass]="{'btn-primary': !bol_login}" (click)="modoRegistro()">Registrate</button>
         </div>

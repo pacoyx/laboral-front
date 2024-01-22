@@ -14,6 +14,8 @@ import { RegistroUsuarioComponent } from './components/registro-usuario/registro
 import { LoginUsuarioComponent } from './components/login-usuario/login-usuario.component';
 import { MenuManagerComponent } from './components/menu-manager/menu-manager.component';
 import { SidebarManagerComponent } from './components/sidebar-manager/sidebar-manager.component';
+import { UsuarioCreadoMsgComponent } from './pages/usuario-creado-msg/usuario-creado-msg.component';
+import { UsuarioCreadoValidacionComponent } from './pages/usuario-creado-validacion/usuario-creado-validacion.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { SidebarManagerComponent } from './components/sidebar-manager/sidebar-ma
     RegistroUsuarioComponent,
     LoginUsuarioComponent,
     MenuManagerComponent,
-    SidebarManagerComponent
+    SidebarManagerComponent,
+    UsuarioCreadoMsgComponent,
+    UsuarioCreadoValidacionComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,52 @@
+<div style="margin: 20px">
+  <div *ngIf="bol_loading">
+    <p>
+      <i class="fas fa-spinner fa-spin"></i>
+      validando cuenta...
+    </p>
+  </div>
+
+  <div *ngIf="!bol_loading">
+    <p *ngIf="bol_valOk">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        fill="currentColor"
+        class="bi bi-person-check"
+        viewBox="0 0 16 16"
+      >
+        <path
+          d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m1.679-4.493-1.335 2.226a.75.75 0 0 1-1.174.144l-.774-.773a.5.5 0 0 1 .708-.708l.547.548 1.17-1.951a.5.5 0 1 1 .858.514M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4"
+        />
+        <path
+          d="M8.256 14a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z"
+        />
+      </svg>
+      Cuenta validada correctamente.
+    </p>
+
+    <p *ngIf="!bol_valOk" style="color: red">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        fill="currentColor"
+        class="bi bi-exclamation-octagon-fill"
+        viewBox="0 0 16 16"
+      >
+        <path
+          d="M11.46.146A.5.5 0 0 0 11.107 0H4.893a.5.5 0 0 0-.353.146L.146 4.54A.5.5 0 0 0 0 4.893v6.214a.5.5 0 0 0 .146.353l4.394 4.394a.5.5 0 0 0 .353.146h6.214a.5.5 0 0 0 .353-.146l4.394-4.394a.5.5 0 0 0 .146-.353V4.893a.5.5 0 0 0-.146-.353zM8 4c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995A.905.905 0 0 1 8 4m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"
+        />
+      </svg>
+      Validacion incorrecta.
+    </p>
+
+    <p>
+      Ir al login
+      <a [routerLink]="['/home']" routerLinkActive="router-link-active"
+        >Laboral.ai Home</a
+      >
+    </p>
+  </div>
+</div>
