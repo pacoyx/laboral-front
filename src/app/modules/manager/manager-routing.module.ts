@@ -13,6 +13,7 @@ const routes: Routes = [
     component: LayoutManagerComponent,
     children: [
       { path: '', component: LandingManagerComponent },
+      { path: 'dashboard', component: LandingManagerComponent },
       { path: 'publicar', component: PublicarEmpleoMgComponent },
       { path: 'chat', component: ChatMgComponent },
       { path: 'empleos', component: EmpleosMgComponent },

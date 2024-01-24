@@ -4,4 +4,6 @@ export const environment = {
   epLogin: '/login',
   epRegistrarUsuario: '/registerUser',
   epValidarRegistroUsuario: '/validateRegisterUser',
+  epValidarExisteUsuario: '/validateExistsUser',
+  epRegistroEmpresa: '/registerCompany',
 };

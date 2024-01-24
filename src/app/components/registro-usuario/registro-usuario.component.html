@@ -34,6 +34,19 @@
                   <div *ngIf="correo.errors?.['email']">
                     Formato de correo invalido.
                   </div>
+
+
+
+                  <div *ngIf="correo.status === 'PENDING'">
+                    Checking...
+                  </div>
+                  <div *ngIf="correo.status === 'VALID'">
+                    Email valido
+                  </div>
+                  <div *ngIf="correo.errors ">
+                    Este correo ya existe
+                  </div>
+
                 </small>
               </div>
         </div>
