@@ -1,0 +1,34 @@
+<div class="block-crear">
+  <div class="titulo-chat d-flex">
+    <img src="assets/images/logo_chatbot.png" />
+    <div style="color: white">Chatbot</div>
+  </div>
+
+  <div class="container-msj">
+    <div class="container-scroll" #target>
+        <div class="mesajes" *ngFor="let item of arr_mensajes">
+            <div class="usuario">
+              <img src="assets/images/logo_chatbot.png" />
+              <span> {{ item.usuario }}</span>
+            </div>
+            <div class="texto">
+              <div [innerHtml]="item.msg"></div>
+            </div>
+          </div>
+    </div>
+    
+
+    <div class="input_msj d-flex justify-content-between align-items-center">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="escribe un mensaje"
+        #inputmsg
+        [(ngModel)]="inputText"
+      />
+      <button class="btn" (click)="enviarMsg(inputmsg.value)">
+        <img src="assets/images/button_send.png" alt="" />
+      </button>
+    </div>
+  </div>
+</div>

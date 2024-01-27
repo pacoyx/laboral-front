@@ -1,9 +1,11 @@
-.container-publicar {
+.container-publicar-editar {
     width: 100%;
     margin: 20px;
     //  background-color: red;
     flex-direction: column;
 }
+
+
 
 .block-crear {
     text-align: center;
@@ -23,23 +25,4 @@
     }
 
     img{width: 70px; height: 70px;}
-}
-
-
-.block-detalle {
-    text-align: center;
-    min-width: 800px;
-    min-height: 600px;
-    border: 1px solid gainsboro;
-    border-radius: 8px;
-    // padding: 24px;
-    background-color: #F6F8FF;
-    margin-left: 10px;
-    p{
-        font-size: 14px;
-        font-weight: 600;
-        color: #172C73;
-        margin-top: 20px;
-    }
-        
 }

@@ -1,0 +1,24 @@
+.block-perfil{
+    width: 100%;
+    border: 1px solid gainsboro;
+    border-radius: 8px;
+    padding: 24px;
+    background-color: #FFFFFF;
+
+    input{
+        background-color: #F6F6FF;
+        color: #172C73;
+        border-radius: 4px;
+        // height: 36px;
+    }
+    label{
+        color: #374456;
+        font-size: 12px;
+        font-weight: 600;
+    }
+    h5{
+        color: #172C73;
+        font-weight: 600;
+        font-size: 16px;
+    }
+}

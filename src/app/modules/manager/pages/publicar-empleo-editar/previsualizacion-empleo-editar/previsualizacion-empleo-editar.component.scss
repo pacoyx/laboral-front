@@ -1,0 +1,57 @@
+.block-visualizacion {
+    min-width: 500px;
+
+    border: 1px solid gainsboro;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    padding: 20px;
+    padding-top: 10px;
+
+
+
+    .titulo-preview {
+        width: 100%;
+        height: 56px;
+        color: #0256BF;
+        font-size: 16;
+        font-weight: 600;
+    }
+
+    .container-text-preview {
+
+
+        background-color: #F6F6FF;
+        padding: 10px;
+        border: 1px solid gainsboro;
+        border-radius: 8px;
+
+
+        .header-text {
+            margin-bottom: 10px;
+        }
+
+        .container-scroll {
+            overflow-y: scroll;
+            max-height: 312px;
+        }
+
+
+        span {
+            color: #3D4279;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        p {
+            color: #3D4279;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+
+
+
+    }
+
+
+}

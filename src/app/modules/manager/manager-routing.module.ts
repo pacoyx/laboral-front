@@ -6,6 +6,8 @@ import { PublicarEmpleoMgComponent } from './pages/publicar-empleo-mg/publicar-e
 import { ChatMgComponent } from './pages/chat-mg/chat-mg.component';
 import { EmpleosMgComponent } from './pages/empleos-mg/empleos-mg.component';
 import { ConfiguracionMgComponent } from './pages/configuracion-mg/configuracion-mg.component';
+import { PerfilMgComponent } from './pages/perfil-mg/perfil-mg.component';
+import { PublicarEmpleoEditarComponent } from './pages/publicar-empleo-editar/publicar-empleo-editar.component';
 
 const routes: Routes = [
   {
@@ -15,9 +17,11 @@ const routes: Routes = [
       { path: '', component: LandingManagerComponent },
       { path: 'dashboard', component: LandingManagerComponent },
       { path: 'publicar', component: PublicarEmpleoMgComponent },
+      { path: 'publicar-editar', component: PublicarEmpleoEditarComponent },
       { path: 'chat', component: ChatMgComponent },
       { path: 'empleos', component: EmpleosMgComponent },
       { path: 'configuracion', component: ConfiguracionMgComponent },
+      { path: 'perfil', component: PerfilMgComponent },
     ],
   },
 ];
