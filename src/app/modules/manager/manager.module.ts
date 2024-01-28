@@ -16,6 +16,7 @@ import { NavConfigComponent } from './pages/configuracion-mg/nav-config/nav-conf
 import { PublicarEmpleoEditarComponent } from './pages/publicar-empleo-editar/publicar-empleo-editar.component';
 import { ChatEmpleoEditarComponent } from './pages/publicar-empleo-editar/chat-empleo-editar/chat-empleo-editar.component';
 import { PrevisualizacionEmpleoEditarComponent } from './pages/publicar-empleo-editar/previsualizacion-empleo-editar/previsualizacion-empleo-editar.component';
+import { ListaEmpleosComponent } from './pages/publicar-empleo-editar/lista-empleos/lista-empleos.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { PrevisualizacionEmpleoEditarComponent } from './pages/publicar-empleo-e
     NavConfigComponent,
     PublicarEmpleoEditarComponent,
     ChatEmpleoEditarComponent,
-    PrevisualizacionEmpleoEditarComponent,    
+    PrevisualizacionEmpleoEditarComponent,
+    ListaEmpleosComponent,    
   ],
   imports: [
     CommonModule,

@@ -1,13 +1,23 @@
 <div class="container-publicar">
   <div>
-    <p style="font-size: 24px; font-weight: 600">Publicar empleo</p>
+    <nav aria-label="breadcrumb" style="background-color: white;">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">Publicar empleo</li>
+      </ol>
+    </nav>
   </div>
 
   <div class="d-flex flex-row" style="background-color: white; padding: 20px">
-    <div class="block-crear">
-      <img src="assets/images/maleta.png" />
-      <p>crear un nuevo empleo</p>
-      <button class="btn btn-primary" (click)="irEditar()">Crear empleo</button>
+    <div class="d-flex flex-column">
+      <div class="block-crear">
+        <img src="assets/images/maleta.png" />
+        <p>crear un nuevo empleo</p>
+        <button class="btn btn-primary" (click)="irEditar()">
+          Crear empleo
+        </button>
+      </div>
+
+      <app-lista-empleos [listEmpleos]="arrEmpleos"></app-lista-empleos>
     </div>
 
     <div class="block-detalle d-flex flex-column justify-content-center">
@@ -19,17 +29,15 @@
         </p>
       </div>
     </div>
-    
   </div>
 
   <button
-  class="btn btn-info"
-  data-toggle="modal"
-  data-target="#modalAvisoFaltaDatos"
->
-  test aviso
-</button>
-
+    class="btn btn-info"
+    data-toggle="modal"
+    data-target="#modalAvisoFaltaDatos"
+  >
+    test aviso
+  </button>
 </div>
 
 <div class="modal" tabindex="-1" id="modalAvisoFaltaDatos">

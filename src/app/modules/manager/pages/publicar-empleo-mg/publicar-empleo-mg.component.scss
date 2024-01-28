@@ -14,7 +14,7 @@
     padding-top: 20px;
     background-color: #F6F8FF;
 
-    p{
+    p {
         font-size: 14px;
         font-weight: 500;
         color: #172C73;
@@ -22,8 +22,14 @@
         margin-bottom: 20px;
     }
 
-    img{width: 70px; height: 70px;}
+    img {
+        width: 70px;
+        height: 70px;
+    }
 }
+
+
+
 
 
 .block-detalle {
@@ -35,11 +41,12 @@
     // padding: 24px;
     background-color: #F6F8FF;
     margin-left: 10px;
-    p{
+
+    p {
         font-size: 14px;
         font-weight: 600;
         color: #172C73;
         margin-top: 20px;
     }
-        
+
 }
