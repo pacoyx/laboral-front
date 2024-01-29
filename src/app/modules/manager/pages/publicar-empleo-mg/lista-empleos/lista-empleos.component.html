@@ -1,0 +1,23 @@
+
+
+
+<div class="block-lista-empleos" *ngFor="let empleo of listEmpleos" (click)="verEmpleo(empleo)">
+    <div class="d-flex">
+        <div class="ml-1 mt-1">
+            <img src="assets/images/logo_rappi.png">
+        </div>
+        <div class="w-100 pl-2 pr-1" style="color: #1D214E;font-size: 14; font-weight: 600;">
+            <p>{{empleo.titulo}}</p>
+        </div>
+    </div>
+    <div class="pt-2 pb-1 d-flex w-100 align-items-center justify-content-around"     >
+        <div>
+            <span class="badge badge-primary p-2" style="background-color: #E1E7FF;color: #3461FF;">
+                {{empleo.modalidad}}</span>
+        </div>
+        <div style="text-align: right;">            
+            <span class="badge badge-pill badge-light mt-3">Hace 3 dias</span>
+        </div>
+    </div>
+
+  </div>

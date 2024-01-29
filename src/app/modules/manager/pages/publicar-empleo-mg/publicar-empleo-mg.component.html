@@ -1,6 +1,6 @@
 <div class="container-publicar">
-  <div>
-    <nav aria-label="breadcrumb" style="background-color: white;">
+  <div style="width: 90%">
+    <nav aria-label="breadcrumb" style="background-color: white">
       <ol class="breadcrumb">
         <li class="breadcrumb-item">Publicar empleo</li>
       </ol>
@@ -9,18 +9,29 @@
 
   <div class="d-flex flex-row" style="background-color: white; padding: 20px">
     <div class="d-flex flex-column">
-      <div class="block-crear">
-        <img src="assets/images/maleta.png" />
-        <p>crear un nuevo empleo</p>
-        <button class="btn btn-primary" (click)="irEditar()">
-          Crear empleo
-        </button>
-      </div>
+      <div style="overflow-y: scroll; height: 500px;">
 
-      <app-lista-empleos [listEmpleos]="arrEmpleos"></app-lista-empleos>
+        <div class="block-crear">
+          <img src="assets/images/maleta.png" />
+          <p>crear un nuevo empleo</p>
+          <button class="btn btn-primary" (click)="irNuevoEmpleo()">
+            Crear empleo
+          </button>
+        </div>
+
+        <app-lista-empleos
+          [listEmpleos]="arrEmpleos"
+          (sendEmpleo)="verDetalle($event)"
+        ></app-lista-empleos>
+
+
+      </div>
     </div>
 
-    <div class="block-detalle d-flex flex-column justify-content-center">
+    <div
+      *ngIf="!bol_detalle"
+      class="block-detalle d-flex flex-column justify-content-center"
+    >
       <div>
         <img src="assets/images/laboral_cabeza.png" />
         <p>
@@ -28,6 +39,13 @@
           del empleo una vez que lo publiques
         </p>
       </div>
+    </div>
+
+    <div class="block-detalle-fill" *ngIf="bol_detalle">
+      <!-- {{ empleoDetalle | json }} -->
+
+    <app-detalle-empleo [empleo]="empleoDetalle"></app-detalle-empleo>
+
     </div>
   </div>
 
