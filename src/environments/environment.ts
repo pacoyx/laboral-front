@@ -1,9 +1,9 @@
 export const environment = {
   production: true,
-  epRaiz: 'http://localhost:4001',
+  epRaiz: 'https://github.com/pacoyx/laboral-back',
   epLogin: '/login',
   epRegistrarUsuario: '/registerUser',
   epValidarRegistroUsuario: '/validateRegisterUser',
   epValidarExisteUsuario: '/validateExistsUser',
-  epRegistroEmpresa: '/registerCompany',
+  epRegistroEmpresa: '/registerCompany'
 };
