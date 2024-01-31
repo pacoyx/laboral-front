@@ -10,8 +10,7 @@ import { Router } from '@angular/router';
 import { EmpresaService } from '../../services/empresa.service';
 import { IReqRegEmpresa } from '../../interfaces/IReqRegEmpresa';
 import { LoginService } from 'src/app/Services/login.service';
-import { IReqExisteLogin } from 'src/app/interfaces/IReqExisteLogin';
-import { map } from 'rxjs';
+
 
 declare var $: any;
 @Component({
@@ -31,7 +30,6 @@ export class PerfilMgComponent {
   vCelular = '';
 
   frmDatos: FormGroup;
-  frmReclutador: FormGroup;
   bol_loading = false;
   bol_msgOk = false;
   bol_msgErr = false;
@@ -39,62 +37,38 @@ export class PerfilMgComponent {
 
   constructor() {
     this.frmDatos = new FormGroup({
+      idcompany: new FormControl(0),
+      ruc: new FormControl('', Validators.required),
       nombreEmpresa: new FormControl('', Validators.required),
-      ubicacion: new FormControl('', Validators.required),
-      url: new FormControl('', Validators.required),
+      icon: new FormControl(''),
+      rating: new FormControl(''),
+      ubicacion: new FormControl(''),
+      linkedin: new FormControl(''),
+      url: new FormControl(''),      
+      about: new FormControl(''),
       uploadedImage1: new FormControl(['']),
     });
-
-    this.frmReclutador = this.fb.group({
-      nombreCompleto: ['', { validators: [Validators.required] }],
-      nombreEmpresa: ['', { validators: [Validators.required] }],
-      correo: [
-        '',
-        {
-          validators: [Validators.required, Validators.email],
-          asyncValidators: [this.validarEmail.bind(this)],
-          updateOn: 'blur',
-        },
-      ],
-      celular: ['', { validators: Validators.required }],
-      clave: [
-        '',
-        { validators: [Validators.required, Validators.minLength(6)] },
-      ],
-      uploadedImage1: new FormControl(['']),
-    });
+   
   }
 
-  get nombreCompleto() {
-    return this.frmReclutador.get('nombreCompleto');
-  }
-  get nombreEmpresaRe() {
-    return this.frmReclutador.get('nombreEmpresa');
-  }
-  get correo() {
-    return this.frmReclutador.get('correo');
-  }
-  get celular() {
-    return this.frmReclutador.get('celular');
-  }
-  get clave() {
-    return this.frmReclutador.get('clave');
+  get about() {
+    return this.frmDatos.get('about');
   }
 
-  validarEmail(control: AbstractControl) {
-    console.log('entro al checkmail');
-    const reqCheck: IReqExisteLogin = {
-      correo: control.value,
-    };
-    return this.loginService.checkLogin(reqCheck).pipe(
-      map((res) => {
-        console.log(res);
-
-        return res.existe == 'NO' ? null : { emailTaken: true };
-      })
-    );
+  get linkedin() {
+    return this.frmDatos.get('linkedin');
   }
 
+  get rating() {
+    return this.frmDatos.get('rating');
+  }
+
+  get icon() {
+    return this.frmDatos.get('icon');
+  }
+  get ruc() {
+    return this.frmDatos.get('ruc');
+  }
   get nombreEmpresa() {
     return this.frmDatos.get('nombreEmpresa');
   }
@@ -117,16 +91,9 @@ export class PerfilMgComponent {
     this.router.navigate(['/manager/configuracion']);
   }
 
-  
-
   onFileSelect(event: any) {
     const file = event.target.files[0];
     this.frmDatos.get('uploadedImage1')!.setValue(file);
-  }
-
-  onFileSelect2(event: any) {
-    const file = event.target.files[0];
-    this.frmReclutador.get('uploadedImage1')!.setValue(file);
   }
 
   guardarDatosEmpresa() {
@@ -140,11 +107,19 @@ export class PerfilMgComponent {
     }
 
     const reqRegEmp: IReqRegEmpresa = {
-      idusuario: this.vIdUsuario,
-      nombreEmpresa: this.frmDatos.value.nombreEmpresa,
-      ubicacion: this.frmDatos.value.ubicacion,
-      url: this.frmDatos.value.url,
+      
+      idCompany: 0,
+      ruc: this.frmDatos.value.ruc,
+      name: this.frmDatos.value.nombreEmpresa,
+      icon: this.frmDatos.value.icon,
+      rating: this.frmDatos.value.rating,
+      location: this.frmDatos.value.ubicacion,
+      linkedin: this.frmDatos.value.linkedin,
+      webpage: this.frmDatos.value.url,
+      endorse: '0',
+      about: this.frmDatos.value.about
     };
+    
 
     const imageForm = new FormData();
     imageForm.append('myFile', this.frmDatos.get('uploadedImage1')!.value);

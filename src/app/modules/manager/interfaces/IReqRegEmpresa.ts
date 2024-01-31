@@ -1,6 +1,12 @@
 export interface IReqRegEmpresa {
-  idusuario: number;
-  nombreEmpresa: string;
-  ubicacion: string;
-  url: string;
+  idCompany: number;
+  ruc: string;
+  name: string;
+  icon: string;
+  rating: string;
+  location: string;
+  linkedin: string;
+  webpage: string;
+  endorse: string;
+  about: string;
 }

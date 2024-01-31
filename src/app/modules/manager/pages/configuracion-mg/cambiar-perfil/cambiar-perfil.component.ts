@@ -104,7 +104,8 @@ export class CambiarPerfilComponent implements OnInit {
       return;
     }
 
-    const reqRegEmp: IReqRegEmpresa = {
+    // const reqRegEmp: IReqRegEmpresa = {
+      const reqRegEmp: any = {
       idusuario: this.vIdUsuario,
       nombreEmpresa: this.frmReclutador.value.nombreEmpresa,
       ubicacion: this.frmReclutador.value.ubicacion,
