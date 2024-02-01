@@ -1,29 +1,328 @@
 <div class="container-empleo">
-    <div style="width: 90%">
-      <nav aria-label="breadcrumb" style="background-color: white">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">Empleos</li>
-        </ol>
-      </nav>
-    </div>
+  <nav aria-label="breadcrumb" style="background-color: white">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">Empleos</li>
+    </ol>
+  </nav>
 </div>
-<div class="d-flex flex-row" style="background-color: white; padding: 20px">
 
+<div class="" style="background-color: white; margin: 20px; padding: 10px">
+  <div class="d-flex flex-row">
+    <button
+      class="btn"
+      (click)="bol_tabAbierto = true"
+      [ngClass]="{ 'emp-abiertos': bol_tabAbierto }"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        fill="currentColor"
+        class="bi bi-bookmark-check"
+        viewBox="0 0 16 16"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M10.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0"
+        />
+        <path
+          d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"
+        />
+      </svg>
+      Empleos abiertos
+    </button>
+    <button
+      class="btn"
+      (click)="bol_tabAbierto = false"
+      [ngClass]="{ 'emp-cerrados': !bol_tabAbierto }"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        fill="currentColor"
+        class="bi bi-briefcase"
+        viewBox="0 0 16 16"
+      >
+        <path
+          d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5"
+        />
+      </svg>
+      Empleos cerrados
+    </button>
+  </div>
+  <hr style="margin-top: 0" />
+
+  <div class="d-flex flex-row">
+    <div class="flex-grow-1">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Buscar"
+        style="width: 315px; background-color: #f5f6ff"
+      />
+    </div>
     <div>
-
-        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="pills-home-tab" data-toggle="pill" data-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Empleos abiertos</button>
-            </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="pills-profile-tab" data-toggle="pill" data-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Empleos cerrados</button>
-        </li>
-    </ul>
-
-    <div class="tab-content" id="pills-tabContent">
-        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">...</div>
-        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">...</div>        
+      <button
+        class="btn btn-light"
+        data-toggle="modal"
+        data-target="#modalEliminar"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-trash"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"
+          />
+          <path
+            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"
+          />
+        </svg>
+      </button>
     </div>
-    
+    <div class="ml-4">
+      <select class="form-control">
+        <option value="">Ordenar por</option>
+        <option value="item">Abierto</option>
+        <option value="item">Pausado</option>
+        <option value="item">Cerrado</option>
+      </select>
+    </div>
+  </div>
+
+  <div
+    class="d-flex"
+    style="height: 300px; overflow-y: scroll; margin-top: 20px"
+  >
+    <table style="width: 100%; margin-top: 10px">
+      <tr *ngFor="let item of [1, 2, 4, 5, 1, 2, 4, 5]">
+        <td style="padding-right: 5px">
+          <input type="checkbox" class="form-control" />
+        </td>
+        <td>
+          <div class="d-flex">
+            <img
+              src="assets/images/logo_rappi.png"
+              width="36px"
+              height="36px"
+            />
+            <div class="d-flex flex-column text-left pl-2">
+              <span
+                class="text-truncate"
+                style="
+                  color: #1d214e;
+                  font-size: 14px;
+                  font-weight: 600;
+                  max-width: 250px;
+                "
+              >
+                PHP/React/Angular Fullstack nodejs avanzado
+              </span>
+              <span style="font-size: 14px; font-weight: 500; color: #47576f">
+                Solera
+              </span>
+              <span style="font-size: 14px; font-weight: 400; color: #47576f">
+                Publicado: el 1 de diciembre de 2023
+              </span>
+            </div>
+          </div>
+        </td>
+        <td>
+          <div
+            class="d-flex justify-content-between"
+            style="
+              background-color: #f7f6f9;
+              border: 0px solid gray;
+              border-radius: 5px;
+              padding: 5px;
+            "
+          >
+            <div
+              style="
+                padding: 5px;
+                color: #1d214e;
+                font-weight: 600;
+                font-size: 12px;
+                text-align: left;
+              "
+            >
+              65 <br />postulantes
+            </div>
+            <div
+              style="
+                padding: 5px;
+                color: #1d214e;
+                font-weight: 600;
+                font-size: 12px;
+                text-align: left;
+              "
+            >
+              15 <br />evaluados
+            </div>
+            <div
+              style="
+                padding: 5px;
+                color: #1d214e;
+                font-weight: 600;
+                font-size: 12px;
+                text-align: left;
+              "
+            >
+              5 <br />filtrados por IA
+            </div>
+          </div>
+        </td>
+        <td>
+          <button (click)="verCandidatos(1)" class="btn" style="background-color: #e5f4ff; color: #0d99ff">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-list-ul"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2"
+              />
+            </svg>
+            Ver candidatos
+          </button>
+        </td>
+        <td>
+          <select
+            class="form-control"
+            style="
+              background-color: #14ae5c;
+              color: #ffffff;
+              font-size: 14px;
+              font-weight: 500;
+            "
+            (change)="handleEstado($event)"
+          >
+            <option value="A">Abierto</option>
+            <option value="P">Pausado</option>
+            <option value="C">Cerrado</option>
+          </select>
+        </td>
+      </tr>
+    </table>
+  </div>
 </div>
+
+<div class="modal" tabindex="-1" id="modalEliminar">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="border-radius: 16px">
+      <div class="mt-3 mr-3">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center w-100">
+          <img src="assets/images/laboral_cabeza.png" />
+        </div>
+        <div
+          class="text-center w-100 mt-4 mb-4"
+          style="color: #1d214e; font-size: 16px; font-weight: 600"
+        >
+          <p>¿Estás seguro de eliminar el empleo?</p>
+        </div>
+        <div
+          class="text-center w-100 mt-4 mb-4"
+          style="color: #5f7494; font-size: 14px; font-weight: 400"
+        >
+          <p>Recuerda que no podras recuperarlo una vez que lo elimines</p>
+        </div>
+        <div class="text-center w-100 mb-5">
+          <button
+            type="button"
+            class="btn"
+            data-dismiss="modal"
+            style="
+              background-color: #3461ff;
+              color: white;
+              width: 190px;
+              border-radius: 8px;
+            "
+          >
+            Si, Eliminar
+          </button>
+          <button
+            type="button"
+            class="btn"
+            style="
+              margin-left: 8px;
+              background-color: white;
+              color: #3461ff;
+              width: 190px;
+              border-color: #3461ff;
+              border-radius: 8px;
+            "
+          >
+            No, Volver
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" tabindex="-1" id="modalCerrar">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="border-radius: 16px">
+      <div class="mt-3 mr-3">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center w-100">
+          <img src="assets/images/carpeta_email.png" />
+        </div>
+        <div
+          class="text-center w-100 mt-4 mb-4"
+          style="color: #1d214e; font-size: 16px; font-weight: 600"
+        >
+          <p>
+            Este empleo se encuentra cerrado, si <br>
+             deseas abrirlo comunicate con
+            nosotros a <a href="Laboral.ai@gmail.com"> Laboral.ai@gmail.com </a>
+          </p>
+        </div>
+
+        <div class="text-center w-100 mb-5">
+          <button
+            type="button"
+            class="btn"
+            data-dismiss="modal"
+            style="
+              background-color: #3461ff;
+              color: white;
+              width: 190px;
+              border-radius: 8px;
+            "
+          >
+           Entendido
+          </button>          
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

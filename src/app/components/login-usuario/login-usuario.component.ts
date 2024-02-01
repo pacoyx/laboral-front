@@ -66,7 +66,7 @@ export class LoginUsuarioComponent implements OnInit {
           };
           localStorage.setItem('laboral.ai', JSON.stringify(dataToken));
           localStorage.setItem('laboral.ai.check', JSON.stringify(req));
-          this.router.navigateByUrl('/manager/perfil');
+          this.router.navigateByUrl('/manager');
         }
         this.bol_err = true;
         this.msg_err = 'Usuario o clave incorrectos';

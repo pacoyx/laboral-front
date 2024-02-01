@@ -39,8 +39,7 @@ export class PerfilMgComponent {
     this.frmDatos = new FormGroup({
       idcompany: new FormControl(0),
       ruc: new FormControl('', Validators.required),
-      nombreEmpresa: new FormControl('', Validators.required),
-      icon: new FormControl(''),
+      nombreEmpresa: new FormControl('', Validators.required),      
       rating: new FormControl(''),
       ubicacion: new FormControl(''),
       linkedin: new FormControl(''),
@@ -63,9 +62,6 @@ export class PerfilMgComponent {
     return this.frmDatos.get('rating');
   }
 
-  get icon() {
-    return this.frmDatos.get('icon');
-  }
   get ruc() {
     return this.frmDatos.get('ruc');
   }
@@ -107,17 +103,18 @@ export class PerfilMgComponent {
     }
 
     const reqRegEmp: IReqRegEmpresa = {
-      
+
       idCompany: 0,
       ruc: this.frmDatos.value.ruc,
       name: this.frmDatos.value.nombreEmpresa,
-      icon: this.frmDatos.value.icon,
+      icon: '',
       rating: this.frmDatos.value.rating,
       location: this.frmDatos.value.ubicacion,
       linkedin: this.frmDatos.value.linkedin,
       webpage: this.frmDatos.value.url,
       endorse: '0',
-      about: this.frmDatos.value.about
+      about: this.frmDatos.value.about,
+      idUser: this.vIdUsuario
     };
     
 

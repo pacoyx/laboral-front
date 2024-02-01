@@ -8,6 +8,7 @@ import { EmpleosMgComponent } from './pages/empleos-mg/empleos-mg.component';
 import { ConfiguracionMgComponent } from './pages/configuracion-mg/configuracion-mg.component';
 import { PerfilMgComponent } from './pages/perfil-mg/perfil-mg.component';
 import { PublicarEmpleoEditarComponent } from './pages/publicar-empleo-editar/publicar-empleo-editar.component';
+import { EmpleoCandidatosComponent } from './pages/empleo-candidatos/empleo-candidatos.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,7 @@ const routes: Routes = [
       { path: 'publicar-editar', component: PublicarEmpleoEditarComponent },
       { path: 'chat', component: ChatMgComponent },
       { path: 'empleos', component: EmpleosMgComponent },
+      { path: 'candidatos', component: EmpleoCandidatosComponent },
       { path: 'configuracion', component: ConfiguracionMgComponent },
       { path: 'perfil', component: PerfilMgComponent },
     ],

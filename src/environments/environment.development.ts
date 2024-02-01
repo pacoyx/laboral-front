@@ -5,5 +5,6 @@ export const environment = {
   epRegistrarUsuario: '/registerUser',
   epValidarRegistroUsuario: '/validateRegisterUser',
   epValidarExisteUsuario: '/validateExistsUser',
-  epRegistroEmpresa: '/registerCompany'  
+  epRegistroEmpresa: '/registerCompany',
+  epListarEmpPorUsu:'/getCompanyByIdUser'  
 };

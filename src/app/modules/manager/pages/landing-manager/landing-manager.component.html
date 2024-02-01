@@ -39,7 +39,18 @@
       <div class="block-empresa">
         <div class="row">
           <div class="col-3">
+
+            <ngx-skeleton-loader 
+            *ngIf="bol_loading" appearance="circle"
+            animation="pulse"
+            [theme]="{              
+               height: '100px',
+               width: '100px'              
+            }"
+            />
+
             <svg
+              *ngIf="!bol_loading"
               xmlns="http://www.w3.org/2000/svg"
               width="100"
               height="100"
@@ -57,7 +68,13 @@
           </div>
           <div class="col-7">
             <p style="color: #172c73; font-weight: 700; font-size: 24px">
-              Nombre empresa | 0.0
+              
+              <ngx-skeleton-loader *ngIf="bol_loading"
+              count="2" appearance="line" animation="progress"  />
+              
+              <span *ngIf="!bol_loading">
+                {{vEmpNombre}} | {{vEmpRating}}
+              </span>
               <svg
                 *ngFor="let item of [0, 2, 1]"
                 xmlns="http://www.w3.org/2000/svg"
@@ -72,11 +89,13 @@
                 />
               </svg>
             </p>
-            <p style="color: #172c73; font-weight: 600; font-size: 14px">
-              Lima, Perú
+            <p style="color: #172c73; font-weight: 600; font-size: 14px">              
+              <span *ngIf="!bol_loading">
+                {{vEmpUbicacion}}
+              </span> 
             </p>
             <a
-              href="#"
+              [href]="vEmpWeb"
               class="badge badge-light"
               style="color: #172c73; font-weight: 600"
             >

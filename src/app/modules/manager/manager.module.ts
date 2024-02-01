@@ -18,7 +18,8 @@ import { ChatEmpleoEditarComponent } from './pages/publicar-empleo-editar/chat-e
 import { PrevisualizacionEmpleoEditarComponent } from './pages/publicar-empleo-editar/previsualizacion-empleo-editar/previsualizacion-empleo-editar.component';
 import { ListaEmpleosComponent } from './pages/publicar-empleo-mg/lista-empleos/lista-empleos.component';
 import { DetalleEmpleoComponent } from './pages/publicar-empleo-mg/detalle-empleo/detalle-empleo.component';
-
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { EmpleoCandidatosComponent } from './pages/empleo-candidatos/empleo-candidatos.component';
 
 @NgModule({
   declarations: [
@@ -37,13 +38,15 @@ import { DetalleEmpleoComponent } from './pages/publicar-empleo-mg/detalle-emple
     ChatEmpleoEditarComponent,
     PrevisualizacionEmpleoEditarComponent,
     ListaEmpleosComponent,
-    DetalleEmpleoComponent,    
+    DetalleEmpleoComponent,
+    EmpleoCandidatosComponent,    
   ],
   imports: [
     CommonModule,
     ManagerRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    NgxSkeletonLoaderModule
   ]
 })
 export class ManagerModule { }

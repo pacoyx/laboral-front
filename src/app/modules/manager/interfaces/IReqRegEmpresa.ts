@@ -9,4 +9,5 @@ export interface IReqRegEmpresa {
   webpage: string;
   endorse: string;
   about: string;
+  idUser:number;
 }

@@ -1,9 +1,10 @@
 export const environment = {
   production: true,
-  epRaiz: 'https://github.com/pacoyx/laboral-back',
+  epRaiz: 'https://dev-laboral-back.azurewebsites.net',
   epLogin: '/login',
   epRegistrarUsuario: '/registerUser',
   epValidarRegistroUsuario: '/validateRegisterUser',
   epValidarExisteUsuario: '/validateExistsUser',
-  epRegistroEmpresa: '/registerCompany'
+  epRegistroEmpresa: '/registerCompany',
+  epListarEmpPorUsu:'/getCompanyByIdUser'
 };
