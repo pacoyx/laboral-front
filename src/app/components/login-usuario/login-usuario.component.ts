@@ -13,6 +13,7 @@ export class LoginUsuarioComponent implements OnInit {
   frmLogin: FormGroup;
   bol_err = false;
   msg_err = '';
+  bol_loading=false;
 
   constructor(private router: Router, private loginService: LoginService) {
     this.frmLogin = new FormGroup({
@@ -55,9 +56,11 @@ export class LoginUsuarioComponent implements OnInit {
 
     console.log('request::', req);
 
+    this.bol_loading = true;
     this.loginService.login(req).subscribe({
       next: (resp) => {
         console.log(resp);
+        this.bol_loading = false;
         if (resp.codigoRespuesta == '00') {
           const dataToken = {
             user: resp.data,
@@ -67,6 +70,7 @@ export class LoginUsuarioComponent implements OnInit {
           localStorage.setItem('laboral.ai', JSON.stringify(dataToken));
           localStorage.setItem('laboral.ai.check', JSON.stringify(req));
           this.router.navigateByUrl('/manager');
+          return;
         }
         this.bol_err = true;
         this.msg_err = 'Usuario o clave incorrectos';
@@ -77,8 +81,12 @@ export class LoginUsuarioComponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
+        this.bol_loading = false;
         this.bol_err = true;
         this.msg_err = 'Error en login';
+        setTimeout(() => {
+          this.bol_err = false;
+        }, 3000);
       },
       complete: () => {
         console.log('complete login()');

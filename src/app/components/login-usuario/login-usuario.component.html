@@ -43,7 +43,11 @@
     </div>
     
   </form>
-  <button type="button" class="btn btn-block boton_reg" (click)="login()" >Inicia sesión</button>
+  <button type="button" class="btn btn-block boton_reg" (click)="login()" >
+    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="bol_loading"></span>
+    <!-- <span class="sr-only">Loading...</span> -->
+    Inicia sesión
+  </button>
   <div>
     
     <div class="text-center mt-3">
