@@ -26,3 +26,23 @@
 
     img{width: 70px; height: 70px;}
 }
+
+.block-visualizacion-nodata {
+    min-width: 500px;
+    min-height: 300px;
+    border: 1px solid gainsboro;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    padding: 20px;
+    padding-top: 10px;
+
+
+
+    .titulo-preview-nodata {
+        width: 100%;
+        height: 56px;
+        color: #0256BF;
+        font-size: 16;
+        font-weight: 600;
+    }
+}

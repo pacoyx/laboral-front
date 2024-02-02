@@ -19,7 +19,13 @@
           </button>
         </div>
 
+
+        <div class="spinner-border" role="status" *ngIf="bol_LoadingEmpleos">
+          <span class="sr-only">Loading...</span>
+        </div>
+
         <app-lista-empleos
+        *ngIf="!bol_LoadingEmpleos"
           [listEmpleos]="arrEmpleos"
           (sendEmpleo)="verDetalle($event)"
         ></app-lista-empleos>

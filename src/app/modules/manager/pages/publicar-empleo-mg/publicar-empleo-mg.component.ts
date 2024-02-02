@@ -1,94 +1,65 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IListaEmpleos } from '../../interfaces/IListaEmpleos';
+import { EmpresaService } from '../../services/empresa.service';
 
 @Component({
   selector: 'app-publicar-empleo-mg',
   templateUrl: './publicar-empleo-mg.component.html',
   styleUrls: ['./publicar-empleo-mg.component.scss'],
 })
-export class PublicarEmpleoMgComponent {
+export class PublicarEmpleoMgComponent implements OnInit {
   private router = inject(Router);
+  private empresaService = inject(EmpresaService);
 
   bol_detalle = false;
+  bol_LoadingEmpleos = false;
   empleoDetalle!: IListaEmpleos;
+  vIdUsuario = 0;
+  arrEmpleos: IListaEmpleos[] = [];
 
-  arrEmpleos: IListaEmpleos[] = [
-    {
-      id:1,
-      img: '',
-      titulo:
-        'Programador Jr .Net Core full stack testing backend fronted relacionado con base de datos',
-      modalidad: 'remoto',
-      descripcion:
-        'Hola, somos Laboral.ai, startup que a través de inteligencia artificial apoya a estudiantes a encajar con trabajos altamente demandados, creando una conexión más rápida con oportunidades laborales que eleven su calidad de vida.      Hemos ganado varios concurso de capital semilla y estamos creciendo, por lo que nos gustaría incorporar a un practicante con muchas ganas de crecer con nosotros para el desarrollo de nuestra plataforma y en todo el proceso de lanzamiento de un producto digital.',
-      funciones: [
-        'Analizar base de datos',
-        'Desarrollar MVP fanto FrontEnd como Backend de acuerdo a requerimientos del backlog',
-        'Desarrollar Codigo en PHP, Javascript, WordpressDiseñar base de datos del aplicativo',
-        'Utilizar algoritmos de Inteligencia Artificial',
-      ],
-      conocimientos: [
-        'Ingles avanzado',
-        'Estudiante y/o egresado de Sistemas, Ciencia de la computación o afines.',
-        'Carácter autodidacta, resolutivo, analítico, disciplinado, curioso y con muchos deseos de desarrollo',
-        'Conocimientos de programación (Con ganas de desarrollarse como full stack)',
-        'Conocimientos básicos de herramientas de prototipado y esquematizado como Figma, Miro, entre otros. (deseable)',
-        'Conocimientos básicos de metodologías ágiles (deseable)',
-      ],
-    },
-    {
-      id:2,
-      img: '',
-      titulo: 'Devloper java full stack Azure aws google',
-      modalidad: 'presencial',
-      descripcion:
-        '2 Hola, somos Laboral.ai, startup que a través de inteligencia artificial apoya a estudiantes a encajar con trabajos altamente demandados, creando una conexión más rápida con oportunidades laborales que eleven su calidad de vida.      Hemos ganado varios concurso de capital semilla y estamos creciendo, por lo que nos gustaría incorporar a un practicante con muchas ganas de crecer con nosotros para el desarrollo de nuestra plataforma y en todo el proceso de lanzamiento de un producto digital.',
-      funciones: [
-        'Desarrollar MVP fanto FrontEnd como Backend de acuerdo a requerimientos del backlog',
-        'Desarrollar Codigo en PHP, Javascript, WordpressDiseñar base de datos del aplicativo',
-        'Utilizar algoritmos de Inteligencia Artificial',
-      ],
-      conocimientos: [
-        'Ingles intermedio',
-        'Estudiante y/o egresado de Sistemas, Ciencia de la computación o afines.',
-        'Carácter autodidacta, resolutivo, analítico, disciplinado, curioso y con muchos deseos de desarrollo',
-        'Conocimientos de programación (Con ganas de desarrollarse como full stack)',
-        'Conocimientos básicos de herramientas de prototipado y esquematizado como Figma, Miro, entre otros. (deseable)',
-        'Conocimientos básicos de metodologías ágiles (deseable)',
-      ],
-    },
-    {
-      id:3,
-      img: '',
-      titulo: 'Administrador de azure',
-      modalidad: 'hibrido',
-      descripcion:
-        '3 Hola, somos Laboral.ai, startup que a través de inteligencia artificial apoya a estudiantes a encajar con trabajos altamente demandados, creando una conexión más rápida con oportunidades laborales que eleven su calidad de vida.      Hemos ganado varios concurso de capital semilla y estamos creciendo, por lo que nos gustaría incorporar a un practicante con muchas ganas de crecer con nosotros para el desarrollo de nuestra plataforma y en todo el proceso de lanzamiento de un producto digital.',
-      funciones: [
-        'Desarrollar desarrollo FrontEnd como Backend de acuerdo a requerimientos del backlog',
-        'Desarrollar Codigo en PHP, Javascript, WordpressDiseñar base de datos del aplicativo',
-        'analizar y desarrollar el diagrama de clases',
-      ],
-      conocimientos: [
-        'Ingles basico',
-        'Estudiante y/o egresado de Sistemas, Ciencia de la computación o afines.',
-        'Carácter autodidacta, resolutivo, analítico, disciplinado, curioso y con muchos deseos de desarrollo',
-        'Conocimientos de programación (Con ganas de desarrollarse como full stack)',
-        'Conocimientos básicos de herramientas de prototipado y esquematizado como Figma, Miro, entre otros. (deseable)',
-        'Conocimientos básicos de metodologías ágiles (deseable)',
-      ],
-    },
-  ];
+  ngOnInit(): void {
+    const objLogin = JSON.parse(localStorage.getItem('laboral.ai')!);
+    this.vIdUsuario = Number.parseInt(objLogin.user.id);
+
+    this.cargarEmpleos();
+  }
+
+  cargarEmpleos() {
+    this.bol_LoadingEmpleos = true;
+    this.empresaService.listarEmpleosPorUsuario(this.vIdUsuario).subscribe({
+      next: (resp) => {
+        console.log(resp);
+        this.bol_LoadingEmpleos = false;
+        resp.data.forEach((element) => {
+          this.arrEmpleos.push({
+            id: element.id_job_description,
+            descripcion: element.req_qualifications,
+            titulo: element.job_title,
+            modalidad: 'remoto',
+            img: element.company,
+            funciones: element.key_responsabilities.split('.'),
+            conocimientos: element.techskill_tool.split('.'),
+          });
+        });
+      },
+      error: (err) => {
+        console.log(err);
+        this.bol_LoadingEmpleos = false;
+      },
+      complete: () => {
+        console.log('complete listarEmpleosPorUsuario()');
+      },
+    });
+  }
 
   irNuevoEmpleo() {
     this.router.navigate(['/manager/publicar-editar']);
   }
 
-  verDetalle(empleo:IListaEmpleos) {
+  verDetalle(empleo: IListaEmpleos) {
     this.bol_detalle = true;
     this.empleoDetalle = empleo;
     // console.log('desde mg empleo ===>', empleo);
-    
   }
 }

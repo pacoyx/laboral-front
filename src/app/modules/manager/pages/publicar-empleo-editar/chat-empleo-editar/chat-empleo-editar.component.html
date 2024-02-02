@@ -6,25 +6,60 @@
 
   <div class="container-msj">
     <div class="container-scroll" #target>
-        <div class="mesajes" *ngFor="let item of arr_mensajes">
-            <div class="usuario">
-              <img src="assets/images/logo_chatbot.png" />
-              <span> {{ item.usuario }}</span>
-            </div>
-            <div class="texto">
-              <div [innerHtml]="item.msg"></div>
-            </div>
-          </div>
+      <div class="mensajes" *ngFor="let item of arr_mensajes">
+        <div
+          [ngClass]="{ 'text-right': item.usuario != 'Chatbot' }"
+          style="width: 100%"
+        >
+          <img
+            src="assets/images/logo_chatbot.png"
+            *ngIf="item.usuario == 'Chatbot'"
+          />
+          <svg
+            *ngIf="item.usuario != 'Chatbot'"
+            xmlns="http://www.w3.org/2000/svg"
+            width="25"
+            height="25"
+            fill="currentColor"
+            class="bi bi-person-circle"
+            viewBox="0 0 16 16"
+          >
+            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+            <path
+              fill-rule="evenodd"
+              d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
+            />
+          </svg>
+
+          <span> {{ item.usuario }}</span>
+        </div>
+        <div class="texto">
+          <div
+            [innerHtml]="item.msg"
+            [ngClass]="{ 'text-right': item.usuario != 'Chatbot' }"
+          ></div>
+        </div>
+      </div>
+      <div *ngIf="bolLoading">
+        <img src="assets/images/logo_chatbot.png"/>
+        <span> Chatbot</span>
+        <br>
+        <div class="ml-4 spinner-grow spinner-grow-sm" role="status">     
+          <span class="sr-only">Loading...</span>        
+        </div>        
+      </div>
+      
     </div>
-    
 
     <div class="input_msj d-flex justify-content-between align-items-center">
       <input
+        id="txtMsg"
         type="text"
         class="form-control"
         placeholder="escribe un mensaje"
         #inputmsg
         [(ngModel)]="inputText"
+        (keydown.enter)="enviarMsg(inputmsg.value)"
       />
       <button class="btn" (click)="enviarMsg(inputmsg.value)">
         <img src="assets/images/button_send.png" alt="" />
