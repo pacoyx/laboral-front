@@ -50,10 +50,10 @@
             />
 
             <svg
-              *ngIf="!bol_loading"
+              *ngIf="!bol_loading && vEmpLogo == ''"
               xmlns="http://www.w3.org/2000/svg"
-              width="100"
-              height="100"
+              width="100px"
+              height="100px"
               fill="#D2DEEF"
               class="bi bi-camera"
               viewBox="0 0 16 16"
@@ -65,13 +65,16 @@
                 d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5m0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7M3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0"
               />
             </svg>
+            <img 
+            *ngIf="vEmpLogo != ''"
+            [src]="vEmpLogo" width="100px">
+
+
           </div>
           <div class="col-7">
             <p style="color: #172c73; font-weight: 700; font-size: 24px">
               
-              <ngx-skeleton-loader *ngIf="bol_loading"
-              count="2" appearance="line" animation="progress"  />
-              
+              <ngx-skeleton-loader *ngIf="bol_loading" count="2" appearance="line" animation="progress"/>              
               <span *ngIf="!bol_loading">
                 {{vEmpNombre}} | {{vEmpRating}}
               </span>

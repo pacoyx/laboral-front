@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EmpresaService } from '../../services/empresa.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-landing-manager',
@@ -70,7 +71,7 @@ export class LandingManagerComponent implements OnInit {
           this.vEmpRating = resp.data.rating;
           this.vEmpUbicacion = resp.data.location;
           this.vEmpWeb = resp.data.webpage;
-          this.vEmpLogo = resp.data.icon;
+          this.vEmpLogo = environment.epImagesPublic +'/'+ resp.data.icon;
         }
       },
       error: (err) => {

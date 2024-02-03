@@ -9,4 +9,5 @@ export const environment = {
   epListarEmpPorUsu:'/getCompanyByIdUser'  ,
   epRegistrarEmpleo: '/registerJob',
   epListarEmpleosPorUsu:'/getJobsByIdUser',
+  epImagesPublic: 'http://localhost:4001/public',
 };

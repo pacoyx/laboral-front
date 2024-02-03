@@ -1,7 +1,8 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { Datachat } from '../../../interfaces/IDatachat';
 import { EmpresaService } from '../../../services/empresa.service';
 import { IReqRegEmpleo } from '../../../interfaces/IReqRegEmpleo';
+import { environment } from 'src/environments/environment';
 
 declare var $: any;
 
@@ -10,21 +11,27 @@ declare var $: any;
   templateUrl: './previsualizacion-empleo-editar.component.html',
   styleUrls: ['./previsualizacion-empleo-editar.component.scss'],
 })
-export class PrevisualizacionEmpleoEditarComponent {
+export class PrevisualizacionEmpleoEditarComponent  implements OnInit{
   @Input() dataPreview!: Datachat[];
   private empresaService = inject(EmpresaService);
 
-  mensaje = 'Estamos generando la publicación';
-  // bolConData = false;
+  mensaje = 'Estamos generando la publicación';  
   vIdUsuario = 0;
   bolErr = false;
 
+  vEmpNombre = 'Nombre empresa';  
+  vEmpLogo = '';
+  bol_loading = false;
+
   constructor() {
     this.dataPreview = [];
-
     const objLogin = JSON.parse(localStorage.getItem('laboral.ai')!);
     this.vIdUsuario = Number.parseInt(objLogin.user.id);
     console.log('this.vIdUsuario==>', this.vIdUsuario);
+  }
+  
+  ngOnInit(): void {
+    this.validarDatosEmpresa();
   }
 
   publicarEmpleo() {
@@ -84,4 +91,25 @@ export class PrevisualizacionEmpleoEditarComponent {
       },
     });
   }
+
+  validarDatosEmpresa() {
+    this.bol_loading = true;    
+    this.empresaService.listarEmpresaPorUsuario(this.vIdUsuario).subscribe({
+      next: (resp) => {
+        this.bol_loading = false;                
+        if (resp.hasData) {
+          this.vEmpNombre = resp.data.name;          
+          this.vEmpLogo = environment.epImagesPublic +'/'+ resp.data.icon;
+        }
+      },
+      error: (err) => {
+        console.log(err);
+        this.bol_loading = false;
+      },
+      complete: () => {
+        console.log('listarEmpresaPorUsuario()');
+      },
+    });
+  }
+
 }

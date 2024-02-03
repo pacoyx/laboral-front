@@ -9,4 +9,5 @@ export const environment = {
   epListarEmpPorUsu:'/getCompanyByIdUser',
   epRegistrarEmpleo: '/registerJob',  
   epListarEmpleosPorUsu:'/getJobsByIdUser',
+  epImagesPublic: 'https://dev-laboral-back.azurewebsites.net/public',
 };
