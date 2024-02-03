@@ -15,15 +15,13 @@
   </div>
 
   <div class="d-flex flex-row" style="background-color: white; padding: 20px">
-    <app-chat-empleo-editar
-      (dataChat)="xdataChat = $event"
-    ></app-chat-empleo-editar>
-    <app-previsualizacion-empleo-editar
-      *ngIf="xdataChat.preguntas.length > 0"
-      [dataPreview]="xdataChat"
-    ></app-previsualizacion-empleo-editar>
+    <app-chat-empleo-editar (dataChat)="xdataChat = $event"></app-chat-empleo-editar>
+    <app-previsualizacion-empleo-editar 
+    *ngIf="xdataChat"
+    [dataPreview]="xdataChat">      
+    </app-previsualizacion-empleo-editar>
 
-    <div *ngIf="xdataChat.preguntas.length == 0">
+    <div *ngIf="!xdataChat">
       <div class="block-visualizacion-nodata">
         <div class="titulo-preview-nodata">Previsualización</div>
         <div class="text-center pt-5">
@@ -50,5 +48,6 @@
         
       </div>
     </div>
+
   </div>
 </div>

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { IListaEmpleos } from '../../interfaces/IListaEmpleos';
 import { EmpresaService } from '../../services/empresa.service';
 
+declare var $:any;
 @Component({
   selector: 'app-publicar-empleo-mg',
   templateUrl: './publicar-empleo-mg.component.html',
@@ -23,6 +24,24 @@ export class PublicarEmpleoMgComponent implements OnInit {
     this.vIdUsuario = Number.parseInt(objLogin.user.id);
 
     this.cargarEmpleos();
+    this.verificarDataEmpresa();
+  }
+
+  verificarDataEmpresa() {
+    this.empresaService.listarEmpresaPorUsuario(this.vIdUsuario).subscribe({
+      next: (resp) => {
+        console.log(resp);
+        if(resp.codigoRespuesta == '00' && !resp.hasData){
+          $('#modalAvisoFaltaDatos').modal('show')
+        }
+      },
+      error: (err) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('complete listarEmpresaPorUsuario()');
+      },
+    });
   }
 
   cargarEmpleos() {

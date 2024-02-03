@@ -1,5 +1,8 @@
 export interface Datachat {
-    preguntas: string[];
-    respuestas: string[];
-  }
-  
+  preg: string;
+  resp: string;
+  tipo: string;
+  preview: string;
+  edicion:boolean;
+}
+

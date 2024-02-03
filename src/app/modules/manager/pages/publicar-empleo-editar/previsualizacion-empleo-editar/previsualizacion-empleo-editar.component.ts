@@ -11,7 +11,7 @@ declare var $: any;
   styleUrls: ['./previsualizacion-empleo-editar.component.scss'],
 })
 export class PrevisualizacionEmpleoEditarComponent {
-  @Input() dataPreview!: Datachat ;
+  @Input() dataPreview!: Datachat[];
   private empresaService = inject(EmpresaService);
 
   mensaje = 'Estamos generando la publicación';
@@ -20,21 +20,15 @@ export class PrevisualizacionEmpleoEditarComponent {
   bolErr = false;
 
   constructor() {
-    this.dataPreview = {
-      preguntas: [],
-      respuestas: [],
-    };
-
-    
+    this.dataPreview = [];
 
     const objLogin = JSON.parse(localStorage.getItem('laboral.ai')!);
     this.vIdUsuario = Number.parseInt(objLogin.user.id);
     console.log('this.vIdUsuario==>', this.vIdUsuario);
   }
 
- 
   publicarEmpleo() {
-    if (this.dataPreview!.respuestas.length == 0) {
+    if (this.dataPreview.length == 0) {
       this.bolErr = true;
       setTimeout(() => {
         this.bolErr = false;
@@ -43,22 +37,22 @@ export class PrevisualizacionEmpleoEditarComponent {
     }
 
     const req: IReqRegEmpleo = {
-      job_title: this.dataPreview.respuestas[0],
+      job_title: this.dataPreview[0].resp,
       job_offer_link: '',
       company: '',
-      req_qualifications: this.dataPreview.respuestas[1],
+      req_qualifications: this.dataPreview[1].resp,
       pref_qualifications: '',
-      key_responsabilities: this.dataPreview.respuestas[2],
-      techskill_tool: this.dataPreview.respuestas[3],
+      key_responsabilities: this.dataPreview[2].resp,
+      techskill_tool: this.dataPreview[3].resp,
       language: '',
       knowledge: '',
       softskills: '',
       career_background: '',
-      location: this.dataPreview.respuestas[5],
-      salary: Number.parseInt(this.dataPreview.respuestas[6]),
-      date_entry: this.dataPreview.respuestas[7],
-      date_expiration: this.dataPreview.respuestas[7],
-      number_positions: Number.parseInt(this.dataPreview.respuestas[4]),
+      location: this.dataPreview[5].resp,
+      salary: Number.parseInt(this.dataPreview[6].resp),
+      date_entry: this.dataPreview[7].resp,
+      date_expiration: this.dataPreview[7].resp,
+      number_positions: Number.parseInt(this.dataPreview[4].resp),
       status: 'Abierto',
       nps: '',
       id_recruiter: this.vIdUsuario,

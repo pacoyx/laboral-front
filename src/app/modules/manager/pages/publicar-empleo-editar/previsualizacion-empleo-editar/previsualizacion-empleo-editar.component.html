@@ -8,11 +8,28 @@
     </div>
 
     <div class="container-scroll">
-      <div *ngFor="let pregunta of dataPreview.preguntas; index as i">
-        <span> {{ pregunta }}</span>
-        <p>
-          {{ dataPreview.respuestas[i] }}
+      <div *ngFor="let pregunta of dataPreview; index as i">
+        <span> {{ pregunta.preview }}</span>
+        <input 
+          type="text" 
+          class="form-control" 
+          [(ngModel)]="pregunta.resp" 
+          (keydown.enter)="pregunta.edicion = false"
+          *ngIf="pregunta.edicion"
+        >
+        <p 
+        *ngIf="pregunta.tipo == 'texto' && !pregunta.edicion" 
+        (click)="pregunta.edicion = true"        
+        >
+          {{ pregunta.resp || ''}}
         </p>
+
+        <ul *ngIf="pregunta.tipo == 'lista'" (click)="pregunta.edicion = true">
+          <li *ngFor="let item of pregunta.resp.split('.')">
+            - {{item}}
+          </li>
+        </ul>
+
       </div>
     </div>
   </div>

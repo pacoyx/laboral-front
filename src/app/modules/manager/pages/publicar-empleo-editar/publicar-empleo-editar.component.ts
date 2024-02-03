@@ -8,10 +8,7 @@ import { Datachat } from '../../interfaces/IDatachat';
 })
 export class PublicarEmpleoEditarComponent {
 
-xdataChat:Datachat= {
-  preguntas: [],
-  respuestas: [],
-};
+xdataChat!:Datachat[];
 
 
 }

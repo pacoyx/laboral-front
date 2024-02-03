@@ -60,6 +60,7 @@
         #inputmsg
         [(ngModel)]="inputText"
         (keydown.enter)="enviarMsg(inputmsg.value)"
+        autocomplete="off"
       />
       <button class="btn" (click)="enviarMsg(inputmsg.value)">
         <img src="assets/images/button_send.png" alt="" />

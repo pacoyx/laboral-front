@@ -17,8 +17,10 @@ import { Datachat } from '../../../interfaces/IDatachat';
 export class ChatEmpleoEditarComponent {
   private renderer = inject(Renderer2);
   @ViewChild('target') private myScrollContainer!: ElementRef;
-  @Output() dataChat = new EventEmitter<Datachat>();
+  @Output() dataChat = new EventEmitter<Datachat[]>();
 
+  vNombreUsuario = '';
+  vNombreChatBot = 'Chatbot';
   inputText = '';
   arr_mensajes = [
     {
@@ -28,29 +30,73 @@ export class ChatEmpleoEditarComponent {
   ];
 
   arrPreguntas = [
-    '¿Cual es el nombre del empleo?',
-    '¿Puedes hacer una breve descripcion del trabajo a realizar?',
-    '¿Cuales son las funciones que va realizar? (separa cada funcion con un punto)',
-    '¿Puedes decirme los conocimientos y/o requisitos que se deben tener? (separa cada funcion con un punto)',
-    'Indica el número de vacantes que solicitas para el empleo',
-    '¿Cual es la localidad para trabajo?',
-    '¿Cuanto es el salario para el puesto?',
-    '¿Cual es la fecha estimada para el inicio del trabajo? (yyyy-mm-dd)',
+    {
+      preg: '¿Cual es el nombre del empleo?',
+      resp: '',
+      tipo: 'texto',
+      preview: 'Titulo del empleo',
+      edicion: false
+    },
+    {
+      preg: '¿Puedes hacer una breve descripcion del trabajo a realizar?',
+      resp: '',
+      tipo: 'texto',
+      preview: 'Descripción del puesto',
+      edicion: false
+    },
+    {
+      preg: '¿Cuales son las funciones que va realizar? (separa cada funcion con un punto)',
+      resp: '',
+      tipo: 'lista',
+      preview: 'Funciones',
+      edicion: false
+    },
+    {
+      preg: '¿Puedes decirme los conocimientos y/o requisitos que se deben tener? (separa cada funcion con un punto)',
+      resp: '',
+      tipo: 'lista',
+      preview: 'Conocimientos',
+      edicion: false
+    },
+    {
+      preg: 'Indica el número de vacantes que solicitas para el empleo',
+      resp: '',
+      tipo: 'texto',
+      preview: 'Vacantes',
+      edicion: false
+    },
+    {
+      preg: '¿Cual es la localidad para trabajo?',
+      resp: '',
+      tipo: 'texto',
+      preview: 'Localidad / lugar de trabajo',
+      edicion: false
+    },
+    {
+      preg: '¿Cuanto es el salario para el puesto?',
+      resp: '',
+      tipo: 'texto',
+      preview: 'Salario mensual',
+      edicion: false
+    },
+    {
+      preg: '¿Cual es la fecha estimada para el inicio del trabajo? (yyyy-mm-dd)',
+      resp: '',
+      tipo: 'texto',
+      preview: 'Fecha de inicio',
+      edicion: false
+    },
   ];
-  arrPreguntasPreview = [
-    'Titulo del empleo',
-    'Descripción del puesto',
-    'Funciones',
-    'Conocimientos',
-    'Vacantes',
-    'Localidad / lugar de trabajo',
-    'Salario mensual',
-    'Fecha de inicio',
-  ];
+  
   arrRespuestas: string[] = [];
   contPreg = 0;
   bolConfirmacion = false;
   bolLoading = false;
+
+  constructor() {
+    const objLogin = JSON.parse(localStorage.getItem('laboral.ai')!);
+    this.vNombreUsuario = objLogin.user.nombres_completo;
+  }
 
   scrollToBottom(): void {
     try {
@@ -60,35 +106,53 @@ export class ChatEmpleoEditarComponent {
   }
 
   enviarMsg(value: string) {
+   
+    //Agregamos la respuesta al chat
     this.arr_mensajes.push({
-      usuario: 'carlos',
+      usuario: this.vNombreUsuario,
       msg: value,
     });
     this.inputText = '';
 
+   
     if (this.bolConfirmacion) {
       this.arrRespuestas.push(value);
+      this.arrPreguntas[this.contPreg-1].resp=value;
+      this.dataChat.emit(this.arrPreguntas);
+      console.log(this.arrPreguntas);      
     }
 
+
+    // validacion si no responde SI para inicia
     if (!this.bolConfirmacion) {
-      if (value.toUpperCase().includes('SI')) {
+      if (
+        value.toUpperCase().includes('SI') ||
+        value.toUpperCase().includes('OK') ||
+        value.toUpperCase().includes('EMPECEMOS') ||
+        value.toUpperCase().includes('VAMOS')
+        ) {
         this.bolConfirmacion = true;
+        // return;
       } else {
         setTimeout(() => {
           this.arr_mensajes.push({
-            usuario: 'Chatbot',
-            msg: 'ok, entiendo, puedes comenzar con el proceso despues.',
+            usuario: this.vNombreChatBot,
+            msg: 'Si quieres comenzar la publicacion respondeme con un SI por favor, en todo caso podemos comenzar en otro momento',
           });
         }, 2000);
-
         return;
       }
     }
 
-    if (this.arrPreguntas.length == this.arrRespuestas.length) {
+    
+    
+
+
+    // validacion, si llego al final de preguntas emite todo
+    if (this.arrPreguntas.length == this.contPreg) {
       this.arr_mensajes.push({
-        usuario: 'Chatbot',
-        msg: 'un momento por favor, estamos procesando la informacion para generar la vista previa y puedas confirmar los datos para publicar el empleo.',
+        usuario: this.vNombreChatBot,
+        msg: 'un momento por favor, estamos procesando la información para generar la vista previa y puedas confirmar los datos para publicar el empleo.',
       });
       this.scrollToBottom();
       this.renderer.selectRootElement('#txtMsg').focus();
@@ -96,10 +160,7 @@ export class ChatEmpleoEditarComponent {
       this.bolLoading = true;
       setTimeout(() => {
         this.bolLoading = false;
-        this.dataChat.emit({
-          preguntas: this.arrPreguntasPreview,
-          respuestas: this.arrRespuestas,
-        });
+        this.dataChat.emit(this.arrPreguntas);
       }, 2000);
       return;
     }
@@ -108,8 +169,8 @@ export class ChatEmpleoEditarComponent {
     setTimeout(() => {
       this.bolLoading = false;
       this.arr_mensajes.push({
-        usuario: 'Chatbot',
-        msg: this.arrPreguntas[this.contPreg],
+        usuario: this.vNombreChatBot,
+        msg: this.arrPreguntas[this.contPreg].preg,
       });
       this.contPreg++;
       this.scrollToBottom();

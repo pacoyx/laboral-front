@@ -13,6 +13,8 @@ import { LoginService } from 'src/app/Services/login.service';
 
 
 declare var $: any;
+
+
 @Component({
   selector: 'app-perfil-mg',
   templateUrl: './perfil-mg.component.html',
@@ -33,6 +35,7 @@ export class PerfilMgComponent {
   bol_loading = false;
   bol_msgOk = false;
   bol_msgErr = false;
+  bol_SaveOk=false;
   msg_err = '';
 
   constructor() {
@@ -81,6 +84,13 @@ export class PerfilMgComponent {
     this.vEmpleador = objLogin.user.nombres_completo;
     this.vCorreo = objLogin.user.correo_corporativo;
     this.vCelular = objLogin.user.celular;
+
+    $('#modalEditarDatosEmp').on('hidden.bs.modal',  (event:any)=> {
+      console.log('event===========>',event);
+      if(this.bol_SaveOk){
+        this.router.navigate(['/manager']);
+      }
+    });
   }
 
   irConfiguracion() {
@@ -103,7 +113,6 @@ export class PerfilMgComponent {
     }
 
     const reqRegEmp: IReqRegEmpresa = {
-
       idCompany: 0,
       ruc: this.frmDatos.value.ruc,
       name: this.frmDatos.value.nombreEmpresa,
@@ -124,15 +133,16 @@ export class PerfilMgComponent {
 
     this.bol_loading = true;
     this.empresaService.registrarEmpresa(imageForm).subscribe({
-      next: (resp) => {
-        console.log(resp);
+      next: (resp) => {       
         this.bol_loading = false;
         this.bol_msgOk = true;
         setTimeout(() => {
           this.bol_msgOk = false;
+          this.bol_SaveOk=true;
+          // this.router.navigate(['/manager']);
         }, 2000);
 
-        // $('#myModal').modal('hide');
+        
       },
       error: (err) => {
         console.log(err);
