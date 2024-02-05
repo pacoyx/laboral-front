@@ -1,7 +1,10 @@
 <div class="block-menu">
   <div class="pb-3" style="text-align: center">
-    <img src="assets/images/sinfoto_circulo.png" />
-    <div style="color: #1d214e" class="mt-2">Juan Pablo Sinarahua</div>
+    <img *ngIf="icono == ''" src="assets/images/sinfoto_circulo.png" width="100px" />
+    <img *ngIf="icono != ''" [src]="pathImgAvatar" width="100px"  style="border-radius: 50%;"/>
+    <div style="color: #1d214e" class="mt-2">
+      {{nombreUsuario}}
+    </div>
   </div>
   <div class="row pb-3" style="text-align: left">
     <ul class="nav d-flex flex-column">
@@ -88,8 +91,7 @@
 <div class="modal" tabindex="-1" id="modalCerrarSesion" >
   <div class="modal-dialog modal-dialog-centered" >
     <div class="modal-content" style="border-radius: 16px;">
-      <div class="mt-3 mr-3">
-        
+      <div class="mt-3 mr-3">        
         <button
           type="button"
           class="close"
@@ -110,7 +112,7 @@
             <button type="button" class="btn" data-dismiss="modal" style="background-color: #3461FF; color: white; width: 190px; border-radius: 8px;">
                 Si, Cerrar
             </button>
-            <button type="button" class="btn" style="margin-left: 8px; background-color: white; color: #3461FF; width: 190px; border-color: #3461FF;border-radius: 8px;">
+            <button type="button" class="btn" data-dismiss="modal" style="margin-left: 8px; background-color: white; color: #3461FF; width: 190px; border-color: #3461FF;border-radius: 8px;">
                 No, Volver
             </button>
         </div>
@@ -149,7 +151,7 @@
               <button type="button" class="btn" data-dismiss="modal" style="background-color: #3461FF; color: white; width: 190px; border-radius: 8px;">
                   Si, Eliminar
               </button>
-              <button type="button" class="btn" style="margin-left: 8px; background-color: white; color: #3461FF; width: 190px; border-color: #3461FF;border-radius: 8px;">
+              <button type="button" class="btn" data-dismiss="modal" style="margin-left: 8px; background-color: white; color: #3461FF; width: 190px; border-color: #3461FF;border-radius: 8px;">
                   No, Volver
               </button>
           </div>

@@ -1,4 +1,4 @@
-import { Component, inject,OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -8,25 +8,29 @@ import {
 } from '@angular/forms';
 import { LoginService } from 'src/app/Services/login.service';
 import { IReqExisteLogin } from 'src/app/interfaces/IReqExisteLogin';
-import { map } from 'rxjs';
+import { map, Observable, of } from 'rxjs';
 import { IReqRegEmpresa } from '../../../interfaces/IReqRegEmpresa';
 import { EmpresaService } from '../../../services/empresa.service';
-
+import { IReqActDataReclutador } from '../../../interfaces/IReqActDataReclutador';
+import { IReqListarReclutadorPorId } from '../../../interfaces/IReqListarReclutadorPorId';
+import { EventMediatorService } from '../../../services/event-mediator.service';
 
 @Component({
   selector: 'app-cambiar-perfil',
   templateUrl: './cambiar-perfil.component.html',
-  styleUrls: ['./cambiar-perfil.component.scss']
+  styleUrls: ['./cambiar-perfil.component.scss'],
 })
 export class CambiarPerfilComponent implements OnInit {
   private empresaService = inject(EmpresaService);
   private loginService = inject(LoginService);
+  private eventMediator = inject(EventMediatorService);
   private fb = inject(FormBuilder);
 
   vIdUsuario = 0;
   vEmpleador = '';
   vCorreo = '';
   vCelular = '';
+  vIconoActual = '';
   frmReclutador: FormGroup;
   bol_loading = false;
   bol_msgOk = false;
@@ -34,10 +38,7 @@ export class CambiarPerfilComponent implements OnInit {
   msg_err = '';
 
   constructor() {
-   
     this.frmReclutador = this.fb.group({
-      nombreCompleto: ['', { validators: [Validators.required] }],
-      nombreEmpresa: ['', { validators: [Validators.required] }],
       correo: [
         '',
         {
@@ -46,7 +47,12 @@ export class CambiarPerfilComponent implements OnInit {
           updateOn: 'blur',
         },
       ],
-      celular: ['', { validators: Validators.required }],      
+      nombreUsuario: [''],
+      nombres: [''],
+      apellidos: [''],
+      celular: ['', { validators: Validators.required }],
+      direccion: [''],
+      ubicacion: [''],
       uploadedImage1: new FormControl(['']),
     });
   }
@@ -57,24 +63,54 @@ export class CambiarPerfilComponent implements OnInit {
     this.vEmpleador = objLogin.user.nombres_completo;
     this.vCorreo = objLogin.user.correo_corporativo;
     this.vCelular = objLogin.user.celular;
+    this.vIconoActual = objLogin.user.icono;
+    this.cargarDataReclutador();
+  }
+
+  cargarDataReclutador() {
+    const req: IReqListarReclutadorPorId = {
+      idRecruiter: this.vIdUsuario,
+    };
+    this.empresaService.listarReclutadorPorId(req).subscribe({
+      next: (resp) => {
+        console.log(resp);
+        this.frmReclutador.get('correo')?.setValue(resp.data.email);
+        this.vCorreo = resp.data.email;
+        this.frmReclutador.get('nombreUsuario')?.setValue(resp.data.user_name);
+        this.frmReclutador.get('nombres')?.setValue(resp.data.name);
+        this.frmReclutador.get('apellidos')?.setValue(resp.data.last_name);
+        this.frmReclutador.get('celular')?.setValue(resp.data.cell_number);
+        this.frmReclutador.get('direccion')?.setValue(resp.data.address);
+        this.frmReclutador.get('ubicacion')?.setValue(resp.data.location);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('complete listarReclutadorPorId(req)');
+      },
+    });
   }
 
   validarEmail(control: AbstractControl) {
     console.log('entro al checkmail');
+
+    if (this.vCorreo == control.value) {
+      return new Observable((subscriber) => {
+        console.log('correo original');
+        subscriber.next(null);
+      });
+    }
+
     const reqCheck: IReqExisteLogin = {
       correo: control.value,
     };
     return this.loginService.checkLogin(reqCheck).pipe(
       map((res) => {
         console.log(res);
-
         return res.existe == 'NO' ? null : { emailTaken: true };
       })
     );
-  }
-
-  get nombreCompleto() {
-    return this.frmReclutador.get('nombreCompleto');
   }
 
   get correo() {
@@ -83,18 +119,13 @@ export class CambiarPerfilComponent implements OnInit {
   get celular() {
     return this.frmReclutador.get('celular');
   }
-  
-  get nombreEmpresa() {
-    return this.frmReclutador.get('nombreEmpresa');
-  }
-
 
   onFileSelect2(event: any) {
     const file = event.target.files[0];
     this.frmReclutador.get('uploadedImage1')!.setValue(file);
   }
 
-  guardarDatosEmpresa() {
+  guardarDatosReclutador() {
     if (this.frmReclutador.invalid) {
       this.bol_msgErr = true;
       this.msg_err = 'Debe completar los campos.';
@@ -104,20 +135,24 @@ export class CambiarPerfilComponent implements OnInit {
       return;
     }
 
-    // const reqRegEmp: IReqRegEmpresa = {
-      const reqRegEmp: any = {
-      idusuario: this.vIdUsuario,
-      nombreEmpresa: this.frmReclutador.value.nombreEmpresa,
+    const reqDatosReclutador: IReqActDataReclutador = {
+      idReclutador: this.vIdUsuario,
+      correo: this.frmReclutador.value.correo,
+      nombreUsuario: this.frmReclutador.value.nombreUsuario,
+      nombres: this.frmReclutador.value.nombres,
+      apellidos: this.frmReclutador.value.apellidos,
+      celular: this.frmReclutador.value.celular,
+      direccion: this.frmReclutador.value.direccion,
       ubicacion: this.frmReclutador.value.ubicacion,
-      url: this.frmReclutador.value.url,
+      icono: this.vIconoActual,
     };
 
     const imageForm = new FormData();
     imageForm.append('myFile', this.frmReclutador.get('uploadedImage1')!.value);
-    imageForm.append('infoData', JSON.stringify(reqRegEmp));
+    imageForm.append('infoData', JSON.stringify(reqDatosReclutador));
 
     this.bol_loading = true;
-    this.empresaService.registrarEmpresa(imageForm).subscribe({
+    this.empresaService.actualizarReclutador(imageForm).subscribe({
       next: (resp) => {
         console.log(resp);
         this.bol_loading = false;
@@ -125,8 +160,17 @@ export class CambiarPerfilComponent implements OnInit {
         setTimeout(() => {
           this.bol_msgOk = false;
         }, 2000);
+        this.eventMediator.notifyOnAvatarChanged({
+          icono: resp.icono,
+          nombreUsuario: reqDatosReclutador.nombreUsuario,
+        });
 
-        // $('#myModal').modal('hide');
+        const objLogin = JSON.parse(localStorage.getItem('laboral.ai')!);
+        if(resp.icono != ''){
+          objLogin.user.icono = resp.icono;
+        }
+        objLogin.user.user_name = reqDatosReclutador.nombreUsuario;
+        localStorage.setItem('laboral.ai', JSON.stringify(objLogin));
       },
       error: (err) => {
         console.log(err);
@@ -142,5 +186,4 @@ export class CambiarPerfilComponent implements OnInit {
       },
     });
   }
-
 }

@@ -7,6 +7,11 @@ import { IResListarEmpPorUsu } from '../interfaces/IResListarEmpPorUsu';
 import { IReqRegEmpleo } from '../interfaces/IReqRegEmpleo';
 import { IResRegEmpleo } from '../interfaces/IResRegEmpleo';
 import { IResListarEmpleosPorUsu } from '../interfaces/IResListarEmpleosPorUsu';
+import { IReqActDataReclutador } from '../interfaces/IReqActDataReclutador';
+import { IResActDataReclutador } from '../interfaces/IResActDataReclutador';
+import { IReqListarReclutadorPorId } from '../interfaces/IReqListarReclutadorPorId';
+import { IResListarReclutadorPorId } from '../interfaces/IResListarReclutadorPorId';
+import { IReqActPwdReclutador } from '../interfaces/IReqActPwdReclutador';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +22,10 @@ export class EmpresaService {
   private epListarEmpPorUsu = environment.epListarEmpPorUsu;
   private epListarEmpleosPorUsu = environment.epListarEmpleosPorUsu;
   private epRegEmpleo = environment.epRegistrarEmpleo;
+  private epActDataReclutador = environment.epActualizarReclutador;
+  private epListarReclutadorPorId = environment.epListarReclutadorPorId;
+  private epActPwdReclutador = environment.epActPwdReclutador;
+
   private http = inject(HttpClient);
 
   constructor() {}
@@ -49,4 +58,24 @@ export class EmpresaService {
     );
   }
 
+  actualizarReclutador(req: FormData) {
+    return this.http.post<IResActDataReclutador>(
+      this.epRaiz + this.epActDataReclutador,
+      req
+    );
+  }
+
+  listarReclutadorPorId(req: IReqListarReclutadorPorId) {
+    return this.http.post<IResListarReclutadorPorId>(
+      this.epRaiz + this.epListarReclutadorPorId,
+      req
+    );
+  }
+
+  actualizarPasswordReclutador(req: IReqActPwdReclutador) {
+    return this.http.post<IReqActDataReclutador>(
+      this.epRaiz + this.epActPwdReclutador,
+      req
+    );
+  }
 }

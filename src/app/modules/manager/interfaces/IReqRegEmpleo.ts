@@ -18,4 +18,5 @@ export interface IReqRegEmpleo{
     status: string;
     nps: string;
     id_recruiter: number;
+    modality: string;
 }

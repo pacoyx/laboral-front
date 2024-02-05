@@ -22,12 +22,12 @@ export class PrevisualizacionEmpleoEditarComponent  implements OnInit{
   vEmpNombre = 'Nombre empresa';  
   vEmpLogo = '';
   bol_loading = false;
+  bol_Grabando = false;
 
   constructor() {
     this.dataPreview = [];
     const objLogin = JSON.parse(localStorage.getItem('laboral.ai')!);
-    this.vIdUsuario = Number.parseInt(objLogin.user.id);
-    console.log('this.vIdUsuario==>', this.vIdUsuario);
+    this.vIdUsuario = Number.parseInt(objLogin.user.id);    
   }
   
   ngOnInit(): void {
@@ -63,13 +63,15 @@ export class PrevisualizacionEmpleoEditarComponent  implements OnInit{
       status: 'Abierto',
       nps: '',
       id_recruiter: this.vIdUsuario,
+      modality: this.dataPreview[8].resp,
     };
 
+    this.bol_Grabando = true;
     this.mensaje = 'Estamos generando la publicación';
     this.empresaService.registrarEmpleo(req).subscribe({
       next: (resp) => {
         console.log(resp);
-
+        this.bol_Grabando = false;
         if (resp.codigoRespuesta == '00') {
           $('#modalPublicar').modal('show');
           setTimeout(() => {
@@ -85,6 +87,7 @@ export class PrevisualizacionEmpleoEditarComponent  implements OnInit{
       },
       error: (err) => {
         console.log(err);
+        this.bol_Grabando = false;
       },
       complete: () => {
         console.log('complete registrarEmpleo()');

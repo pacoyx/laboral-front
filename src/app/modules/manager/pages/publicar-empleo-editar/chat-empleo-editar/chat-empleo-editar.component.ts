@@ -6,6 +6,7 @@ import {
   Renderer2,
   Output,
   EventEmitter,
+  OnInit,
 } from '@angular/core';
 import { Datachat } from '../../../interfaces/IDatachat';
 
@@ -14,7 +15,7 @@ import { Datachat } from '../../../interfaces/IDatachat';
   templateUrl: './chat-empleo-editar.component.html',
   styleUrls: ['./chat-empleo-editar.component.scss'],
 })
-export class ChatEmpleoEditarComponent {
+export class ChatEmpleoEditarComponent implements OnInit {
   private renderer = inject(Renderer2);
   @ViewChild('target') private myScrollContainer!: ElementRef;
   @Output() dataChat = new EventEmitter<Datachat[]>();
@@ -22,12 +23,7 @@ export class ChatEmpleoEditarComponent {
   vNombreUsuario = '';
   vNombreChatBot = 'Chatbot';
   inputText = '';
-  arr_mensajes = [
-    {
-      usuario: 'Chatbot',
-      msg: 'Hola 😃 (nombre), te ayudaremos a crear tu empleo para ello te haremos una serie de preguntas.        ¿Estás listo para comenzar? necesito que me confirmes. <br> 1. Sí, quiero publicar un empleo <br>2. No',
-    },
-  ];
+  arr_mensajes = [{ usuario: '', msg: '' }];
 
   arrPreguntas = [
     {
@@ -35,59 +31,59 @@ export class ChatEmpleoEditarComponent {
       resp: '',
       tipo: 'texto',
       preview: 'Titulo del empleo',
-      edicion: false
+      edicion: false,
     },
     {
       preg: '¿Puedes hacer una breve descripcion del trabajo a realizar?',
       resp: '',
       tipo: 'texto',
       preview: 'Descripción del puesto',
-      edicion: false
+      edicion: false,
     },
     {
       preg: '¿Cuales son las funciones que va realizar? (separa cada funcion con un punto)',
       resp: '',
       tipo: 'lista',
       preview: 'Funciones',
-      edicion: false
+      edicion: false,
     },
     {
       preg: '¿Puedes decirme los conocimientos y/o requisitos que se deben tener? (separa cada funcion con un punto)',
       resp: '',
       tipo: 'lista',
       preview: 'Conocimientos',
-      edicion: false
+      edicion: false,
     },
     {
       preg: 'Indica el número de vacantes que solicitas para el empleo',
       resp: '',
       tipo: 'texto',
       preview: 'Vacantes',
-      edicion: false
+      edicion: false,
     },
     {
       preg: '¿Cual es la localidad para trabajo?',
       resp: '',
       tipo: 'texto',
       preview: 'Localidad / lugar de trabajo',
-      edicion: false
+      edicion: false,
     },
     {
       preg: '¿Cuanto es el salario para el puesto?',
       resp: '',
       tipo: 'texto',
       preview: 'Salario mensual',
-      edicion: false
+      edicion: false,
     },
     {
       preg: '¿Cual es la fecha estimada para el inicio del trabajo? (yyyy-mm-dd)',
       resp: '',
       tipo: 'texto',
       preview: 'Fecha de inicio',
-      edicion: false
+      edicion: false,
     },
   ];
-  
+
   arrRespuestas: string[] = [];
   contPreg = 0;
   bolConfirmacion = false;
@@ -96,7 +92,17 @@ export class ChatEmpleoEditarComponent {
   constructor() {
     const objLogin = JSON.parse(localStorage.getItem('laboral.ai')!);
     this.vNombreUsuario = objLogin.user.nombres_completo;
+    this.arr_mensajes = [
+      {
+        usuario: 'Chatbot',
+        msg:
+          'Hola 😃 ' +
+          this.vNombreUsuario +
+          ', te ayudaremos a crear tu empleo para ello te haremos una serie de preguntas.        ¿Estás listo para comenzar? necesito que me confirmes. <br> 1. Sí, quiero publicar un empleo <br>2. No',
+      },
+    ];
   }
+  ngOnInit(): void {}
 
   scrollToBottom(): void {
     try {
@@ -106,7 +112,6 @@ export class ChatEmpleoEditarComponent {
   }
 
   enviarMsg(value: string) {
-   
     //Agregamos la respuesta al chat
     this.arr_mensajes.push({
       usuario: this.vNombreUsuario,
@@ -114,14 +119,12 @@ export class ChatEmpleoEditarComponent {
     });
     this.inputText = '';
 
-   
     if (this.bolConfirmacion) {
       this.arrRespuestas.push(value);
-      this.arrPreguntas[this.contPreg-1].resp=value;
+      this.arrPreguntas[this.contPreg - 1].resp = value;
       this.dataChat.emit(this.arrPreguntas);
-      console.log(this.arrPreguntas);      
+      console.log(this.arrPreguntas);
     }
-
 
     // validacion si no responde SI para inicia
     if (!this.bolConfirmacion) {
@@ -130,7 +133,7 @@ export class ChatEmpleoEditarComponent {
         value.toUpperCase().includes('OK') ||
         value.toUpperCase().includes('EMPECEMOS') ||
         value.toUpperCase().includes('VAMOS')
-        ) {
+      ) {
         this.bolConfirmacion = true;
         // return;
       } else {
@@ -144,12 +147,17 @@ export class ChatEmpleoEditarComponent {
       }
     }
 
-    
-    
-
-
     // validacion, si llego al final de preguntas emite todo
     if (this.arrPreguntas.length == this.contPreg) {
+      this.arrPreguntas.push({
+        preg: '¿Cual es la modalidad?',
+        resp: 'Presencial',
+        tipo: 'texto',
+        preview: 'Modalidad',
+        edicion: false,
+      });
+      this.dataChat.emit(this.arrPreguntas);
+
       this.arr_mensajes.push({
         usuario: this.vNombreChatBot,
         msg: 'un momento por favor, estamos procesando la información para generar la vista previa y puedas confirmar los datos para publicar el empleo.',

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -9,13 +9,14 @@ import {
 import { Router } from '@angular/router';
 import { EmpresaService } from '../../../services/empresa.service';
 import { LoginService } from 'src/app/Services/login.service';
+import { IReqActPwdReclutador } from '../../../interfaces/IReqActPwdReclutador';
 
 @Component({
   selector: 'app-cambiar-pwd',
   templateUrl: './cambiar-pwd.component.html',
   styleUrls: ['./cambiar-pwd.component.scss'],
 })
-export class CambiarPwdComponent {
+export class CambiarPwdComponent implements OnInit {
   private router = inject(Router);
   private empresaService = inject(EmpresaService);
   private loginService = inject(LoginService);
@@ -27,6 +28,7 @@ export class CambiarPwdComponent {
   bol_msgOk = false;
   bol_msgErr = false;
   msg_err = '';
+  vIdusuario = 0;
 
   constructor() {
     this.frmPwd = this.fb.group({
@@ -43,6 +45,11 @@ export class CambiarPwdComponent {
         { validators: [Validators.required, Validators.minLength(6)] },
       ],
     });
+  }
+
+  ngOnInit(): void {
+    const objLogin = JSON.parse(localStorage.getItem('laboral.ai')!);
+    this.vIdusuario = objLogin.user.id;
   }
 
   get claveActual() {
@@ -67,19 +74,39 @@ export class CambiarPwdComponent {
       return;
     }
 
-    const reqPwd = {
-      claveActual: this.frmPwd.value.claveActual,
-      claveNueva: this.frmPwd.value.claveNueva,
+    const reqPwd: IReqActPwdReclutador = {
+      idReclutador: this.vIdusuario,
+      passwordActual: this.frmPwd.value.claveActual,
+      passwordNuevo: this.frmPwd.value.claveNueva,
     };
 
     this.bol_loading = true;
-    setTimeout(() => {
-      this.bol_loading = false;
-      this.bol_msgOk = true;
+    this.empresaService.actualizarPasswordReclutador(reqPwd).subscribe({
+      next: (resp) => {
+        console.log(resp);
+        this.bol_loading = false;
+        this.bol_msgOk = true;
 
-      setTimeout(() => {
-        this.bol_msgOk = false;
-      }, 2000);
-    }, 2000);
+        setTimeout(() => {
+          this.bol_msgOk = false;
+        }, 2000);
+
+      },
+      error: (err) => {
+        console.log(err);
+        this.bol_loading = false;
+        this.bol_msgErr = true;
+        this.msg_err = 'Error al intentar actualizar el password.';
+
+        setTimeout(() => {
+          this.bol_msgErr = false;
+        }, 2000);
+
+      },
+      complete: () => {
+        console.log('complete actualizarPasswordReclutador()');
+      },
+    });
+    
   }
 }

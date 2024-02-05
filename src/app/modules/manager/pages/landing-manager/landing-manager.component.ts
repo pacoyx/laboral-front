@@ -17,6 +17,9 @@ export class LandingManagerComponent implements OnInit {
   vEmpleador = '';
   vCorreo = '';
   vCelular = '';
+  pathImgAvatar = '';  
+  icono = '';
+
   vEmpNombre = 'Nombre empresa';
   vEmpRating = 0.0;
   vEmpUbicacion = 'Lima, Peru';
@@ -45,12 +48,15 @@ export class LandingManagerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const objLogin = JSON.parse(localStorage.getItem('laboral.ai')!);
-    console.log('===>', objLogin);
+    const objLogin = JSON.parse(localStorage.getItem('laboral.ai')!);    
     this.vIdUsuario = objLogin.user.id;
     this.vEmpleador = objLogin.user.nombres_completo;
     this.vCorreo = objLogin.user.correo_corporativo;
     this.vCelular = objLogin.user.celular;
+    
+    this.icono = objLogin.user.icono || '';        
+    this.pathImgAvatar = environment.epImagesPublic + '/' + this.icono;
+    
     this.validarDatosEmpresa();
   }
 

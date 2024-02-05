@@ -9,4 +9,5 @@ export interface IResLogin {
     nombres_completo: string;
     nombre_empresa: string;
     celular: string;
+    icono:string;
   }

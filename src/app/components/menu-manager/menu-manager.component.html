@@ -15,14 +15,16 @@
           </li>          
           <li class="nav-item dropdown">
             
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-              <i class="far fa-user-circle"></i> 
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">              
+              <img *ngIf="icono == ''" src="assets/images/sinfoto_circulo.png" width="25px" />
+              <img *ngIf="icono != ''" [src]="pathImgAvatar" width="25px"  style="border-radius: 50%;"/>
+              <span> {{nombreUsuario}}</span>
             </a>
             
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">Empleos</a>
-              <a class="dropdown-item" href="#">Empresa</a>
-              <a class="dropdown-item" href="#">Configuracion</a>
+              <!-- <a class="dropdown-item" href="#">Empleos</a>
+              <a class="dropdown-item" href="#">Empresa</a> -->
+              <a class="dropdown-item" href="#" [routerLink]="['/manager/configuracion']" routerLinkActive="router-link-active"  >Configuracion</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#">Cerrar sesión</a>
             </div>

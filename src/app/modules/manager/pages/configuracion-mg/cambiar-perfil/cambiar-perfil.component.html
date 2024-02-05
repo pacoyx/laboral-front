@@ -2,81 +2,8 @@
     <h5>Mi perfil</h5>
     <hr />
     <form [formGroup]="frmReclutador">
-      <div class="form-group">
-        <label for="txtNombres" class="label_text">Nombres y apellidos</label>
-        <input
-          formControlName="nombreCompleto"
-          type="text"
-          class="form-control"
-          id="txtNombres"
-          aria-describedby="emailHelp"
-        />
-        <small
-          id="emailHelp"
-          class="form-text text-muted"
-          *ngIf="
-            nombreCompleto.invalid &&
-            (nombreCompleto.dirty || nombreCompleto.touched)
-          "
-        >
-          <div *ngIf="nombreCompleto.errors?.['required']">
-            nombresCompleto es requerido.
-          </div>
-        </small>
-      </div>
-
       <div class="row">
-        <div class="col-6">
-          <div class="form-group">
-            <label for="txtNombreEmpresa" class="label_text"
-              >Nombre de la empresa</label
-            >
-            <input
-              formControlName="nombreEmpresa"
-              type="text"
-              class="form-control"
-              id="txtNombreEmpresa"
-              aria-describedby="emailHelp"
-            />
-            <small
-              id="emailHelp"
-              class="form-text text-muted"
-              *ngIf="
-                nombreEmpresa.invalid &&
-                (nombreEmpresa.dirty || nombreEmpresa.touched)
-              "
-            >
-              <div *ngIf="nombreEmpresa.errors?.['required']">
-                nombreEmpresa es requerido.
-              </div>
-            </small>
-          </div>
-        </div>
-        <div class="col-6">
-          <div class="form-group">
-            <label for="txtCelular" class="label_text">Celular </label>
-            <input
-              formControlName="celular"
-              type="text"
-              class="form-control"
-              id="txtCelular"
-              aria-describedby="emailHelp"
-            />
-            <small
-              id="emailHelp"
-              class="form-text text-muted"
-              *ngIf="celular.invalid && (celular.dirty || celular.touched)"
-            >
-              <div *ngIf="celular.errors?.['required']">
-                celular es requerido.
-              </div>
-            </small>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-6">
+        <div class="col-md-6">
           <div class="form-group">
             <label for="txtCorreo" class="label_text"
               >Correo Corporativo
@@ -105,7 +32,104 @@
             </small>
           </div>
         </div>
-        <div class="col-6">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="txtNombreUsuario" class="label_text">
+              Nombre Usuario</label>
+            <input
+              formControlName="nombreUsuario"
+              type="text"
+              class="form-control"
+              id="txtNombreUsuario"
+              aria-describedby="emailHelp"
+            />            
+          </div>
+        </div>
+      </div>
+      
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="txtNombres" class="label_text"
+              >Nombres</label
+            >
+            <input
+              formControlName="nombres"
+              type="text"
+              class="form-control"
+              id="txtNombres"
+              aria-describedby="emailHelp"
+            />            
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="txtApellidos" class="label_text">
+              Apellidos
+            </label>
+            <input
+              formControlName="apellidos"
+              type="text"
+              class="form-control"
+              id="txtApellidos"
+              aria-describedby="emailHelp"
+            />            
+          </div>          
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="txtCelular" class="label_text">Celular </label>
+            <input
+              formControlName="celular"
+              type="text"
+              class="form-control"
+              id="txtCelular"
+              aria-describedby="emailHelp"
+            />
+            <small
+              id="emailHelp"
+              class="form-text text-muted"
+              *ngIf="celular.invalid && (celular.dirty || celular.touched)"
+            >
+              <div *ngIf="celular.errors?.['required']">
+                celular es requerido.
+              </div>
+            </small>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="txtUbicacion" class="label_text">Ubicacion </label>
+            <input
+              formControlName="ubicacion"
+              type="text"
+              class="form-control"
+              id="txtUbicacion"
+              aria-describedby="emailHelp"
+            />            
+          </div>
+        </div>        
+
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="txtDireccion" class="label_text">Direccion </label>
+            <input
+              formControlName="direccion"
+              type="text"
+              class="form-control"
+              id="txtDireccion"
+              aria-describedby="emailHelp"
+            />            
+          </div>
+        </div>
+        <div class="col-md-6">
           <div class="form-group">
             <label class="label_text" for="customFile2">Imagen perfil</label>
             <input
@@ -120,7 +144,7 @@
 
       <hr />
       <div style="text-align: right">
-        <button class="btn btn-primary" [disabled]="frmReclutador.invalid">
+        <button class="btn btn-primary" [disabled]="frmReclutador.invalid" (click)="guardarDatosReclutador()">
           <span
           class="spinner-border spinner-border-sm"
           *ngIf="bol_loading"

@@ -152,7 +152,8 @@
 
     <div class="block-empleador">
       <div class="pb-3" style="text-align: center">
-        <img src="assets/images/sinfoto_circulo.png" />
+        <img *ngIf="icono == ''" src="assets/images/sinfoto_circulo.png" width="100px" />
+        <img *ngIf="icono != ''" [src]="pathImgAvatar" width="100px"  style="border-radius: 50%;"/>
       </div>
       <div class="row pb-3" style="text-align: left">
         <div>

@@ -54,6 +54,9 @@
       Debe completar las preguntas del chatbot.
     </div>
     <button class="btn btn-primary ml-3" (click)="publicarEmpleo()">
+      <div class="spinner-border text-primary" role="status" *ngIf="bol_Grabando">
+        <span class="sr-only">Loading...</span>
+      </div>
       Publicar empleo
     </button>
   </div>
