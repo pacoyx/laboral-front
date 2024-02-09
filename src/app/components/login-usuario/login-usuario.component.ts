@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { LoginService } from 'src/app/Services/login.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IReqLogin } from 'src/app/interfaces/IreqLogin';
+import { AuthGoogleService } from 'src/app/Services/auth-google.service';
 
 @Component({
   selector: 'app-login-usuario',
@@ -15,7 +16,7 @@ export class LoginUsuarioComponent implements OnInit {
   msg_err = '';
   bol_loading=false;
 
-  constructor(private router: Router, private loginService: LoginService) {
+  constructor(private router: Router, private loginService: LoginService, private authGoogleService:AuthGoogleService) {
     this.frmLogin = new FormGroup({
       correo: new FormControl('', [Validators.required, Validators.email]),
       clave: new FormControl('', [
@@ -66,6 +67,7 @@ export class LoginUsuarioComponent implements OnInit {
             user: resp.data,
             token: resp.token,
             recordar: this.frmLogin.value.recordar ? 1 : 0,
+            tipo: 'sistema'
           };
           localStorage.setItem('laboral.ai', JSON.stringify(dataToken));
           localStorage.setItem('laboral.ai.check', JSON.stringify(req));
@@ -92,5 +94,9 @@ export class LoginUsuarioComponent implements OnInit {
         console.log('complete login()');
       },
     });
+  }
+
+  loginGoogle(){
+    this.authGoogleService.login();
   }
 }

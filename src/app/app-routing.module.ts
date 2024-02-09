@@ -4,6 +4,7 @@ import { LandingHomeComponent } from './pages/landing-home/landing-home.componen
 import { LayoutPublicComponent } from './layouts/layout-public/layout-public.component';
 import { UsuarioCreadoMsgComponent } from './pages/usuario-creado-msg/usuario-creado-msg.component';
 import { UsuarioCreadoValidacionComponent } from './pages/usuario-creado-validacion/usuario-creado-validacion.component';
+import { ValidateLoginComponent } from './pages/validate-login/validate-login.component';
 
 
 const routes: Routes = [
@@ -15,6 +16,10 @@ const routes: Routes = [
   {
     path: 'validate/:token',
     component: UsuarioCreadoValidacionComponent,
+  },
+  {
+    path: 'validatelogin',
+    component: ValidateLoginComponent,
   },
   {
     path: 'manager',

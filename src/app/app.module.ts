@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { OAuthModule } from 'angular-oauth2-oidc';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,6 +17,7 @@ import { MenuManagerComponent } from './components/menu-manager/menu-manager.com
 import { SidebarManagerComponent } from './components/sidebar-manager/sidebar-manager.component';
 import { UsuarioCreadoMsgComponent } from './pages/usuario-creado-msg/usuario-creado-msg.component';
 import { UsuarioCreadoValidacionComponent } from './pages/usuario-creado-validacion/usuario-creado-validacion.component';
+import { ValidateLoginComponent } from './pages/validate-login/validate-login.component';
 
 @NgModule({
   declarations: [
@@ -30,13 +32,15 @@ import { UsuarioCreadoValidacionComponent } from './pages/usuario-creado-validac
     MenuManagerComponent,
     SidebarManagerComponent,
     UsuarioCreadoMsgComponent,
-    UsuarioCreadoValidacionComponent
+    UsuarioCreadoValidacionComponent,
+    ValidateLoginComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    OAuthModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

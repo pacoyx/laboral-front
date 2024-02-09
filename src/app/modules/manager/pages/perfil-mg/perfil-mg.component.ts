@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { EmpresaService } from '../../services/empresa.service';
 import { IReqRegEmpresa } from '../../interfaces/IReqRegEmpresa';
 import { LoginService } from 'src/app/Services/login.service';
+import { environment } from 'src/environments/environment';
 
 
 declare var $: any;
@@ -30,6 +31,8 @@ export class PerfilMgComponent {
   vEmpleador = '';
   vCorreo = '';
   vCelular = '';
+  pathImgAvatar = '';
+  icono = '';
 
   frmDatos: FormGroup;
   bol_loading = false;
@@ -84,6 +87,13 @@ export class PerfilMgComponent {
     this.vEmpleador = objLogin.user.nombres_completo;
     this.vCorreo = objLogin.user.correo_corporativo;
     this.vCelular = objLogin.user.celular;
+    this.icono = objLogin.user.icono || '';
+    
+    this.pathImgAvatar =
+    objLogin.tipo == 'sistema'
+      ? environment.epImagesPublic + '/' + this.icono
+      : this.icono;
+
 
     $('#modalEditarDatosEmp').on('hidden.bs.modal',  (event:any)=> {
       console.log('event===========>',event);

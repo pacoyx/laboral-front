@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EmpresaService } from '../../services/empresa.service';
 import { environment } from 'src/environments/environment';
+import { AuthGoogleService } from 'src/app/Services/auth-google.service';
 
 @Component({
   selector: 'app-landing-manager',
@@ -12,12 +13,13 @@ import { environment } from 'src/environments/environment';
 export class LandingManagerComponent implements OnInit {
   private router = inject(Router);
   private empresaService = inject(EmpresaService);
+  private authGoogleService = inject(AuthGoogleService);
 
   vIdUsuario = 0;
   vEmpleador = '';
   vCorreo = '';
   vCelular = '';
-  pathImgAvatar = '';  
+  pathImgAvatar = '';
   icono = '';
 
   vEmpNombre = 'Nombre empresa';
@@ -30,6 +32,8 @@ export class LandingManagerComponent implements OnInit {
   bol_loading = false;
 
   constructor() {
+    console.log('constructor()');
+
     this.frmDatos = new FormGroup({
       nombreEmpresa: new FormControl('', Validators.required),
       ubicacion: new FormControl('', Validators.required),
@@ -48,25 +52,31 @@ export class LandingManagerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const objLogin = JSON.parse(localStorage.getItem('laboral.ai')!);    
+    console.log('ngOnInit()');
+
+    const objLogin = JSON.parse(localStorage.getItem('laboral.ai')!);
     this.vIdUsuario = objLogin.user.id;
     this.vEmpleador = objLogin.user.nombres_completo;
     this.vCorreo = objLogin.user.correo_corporativo;
     this.vCelular = objLogin.user.celular;
-    
-    this.icono = objLogin.user.icono || '';        
-    this.pathImgAvatar = environment.epImagesPublic + '/' + this.icono;
-    
+
+    this.icono = objLogin.user.icono || '';
+
+    this.pathImgAvatar =
+      objLogin.tipo == 'sistema'
+        ? environment.epImagesPublic + '/' + this.icono
+        : this.icono;
+
     this.validarDatosEmpresa();
   }
 
   validarDatosEmpresa() {
-    this.bol_loading = true;    
+    this.bol_loading = true;
     this.empresaService.listarEmpresaPorUsuario(this.vIdUsuario).subscribe({
       next: (resp) => {
         this.bol_loading = false;
 
-        if(!resp.hasData){
+        if (!resp.hasData) {
           this.router.navigate(['/manager/perfil']);
           return;
         }
@@ -77,7 +87,7 @@ export class LandingManagerComponent implements OnInit {
           this.vEmpRating = resp.data.rating;
           this.vEmpUbicacion = resp.data.location;
           this.vEmpWeb = resp.data.webpage;
-          this.vEmpLogo = environment.epImagesPublic +'/'+ resp.data.icon;
+          this.vEmpLogo = environment.epImagesPublic + '/' + resp.data.icon;
         }
       },
       error: (err) => {
@@ -85,16 +95,8 @@ export class LandingManagerComponent implements OnInit {
         this.bol_loading = false;
       },
       complete: () => {
-        console.log('listarEmpresaPorUsuario()');
+        console.log('complete listarEmpresaPorUsuario()');
       },
     });
-  }
-
-  irConfiguracion() {
-    this.router.navigate(['/manager/configuracion']);
-  }
-
-  abrirModalDatosEmp() {
-    console.log('abriendso midal');
   }
 }

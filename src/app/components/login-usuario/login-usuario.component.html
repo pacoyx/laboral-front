@@ -56,10 +56,13 @@
         </p>        
         
         <img src="assets/images/in.png">        
-        <img src="assets/images/google.png" class="ml-3">
+        <img src="assets/images/google.png" class="ml-3" (click)="loginGoogle()" style="cursor: pointer;">
     </div>
 
   </div>
+  <!-- <div>
+    <button class="btn btn-primary btn-block" (click)="loginGoogle()"> Login Google</button>
+  </div> -->
 
   <div class="alert alert-danger mt-3" role="alert" *ngIf="bol_err">
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-octagon-fill" viewBox="0 0 16 16">

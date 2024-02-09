@@ -99,10 +99,14 @@
     class="d-flex"
     style="height: 300px; overflow-y: scroll; margin-top: 20px"
   >
+    <div class="spinner-border text-primary" role="status" *ngIf="bol_loading">
+      <span class="sr-only">Loading...</span>
+    </div>
+
     <table style="width: 100%; margin-top: 10px">
-      <tr *ngFor="let item of [1, 2, 4, 5, 1, 2, 4, 5]">
+      <tr *ngFor="let item of dataEmpleos">
         <td style="padding-right: 5px">
-          <input type="checkbox" class="form-control" />
+          <input type="checkbox" class="form-control" (change)="checkValue($event,item)"/>
         </td>
         <td>
           <div class="d-flex">
@@ -121,13 +125,13 @@
                   max-width: 250px;
                 "
               >
-                PHP/React/Angular Fullstack nodejs avanzado
+                {{ item.job_title }}
               </span>
               <span style="font-size: 14px; font-weight: 500; color: #47576f">
-                Solera
+                {{ item.location }}
               </span>
               <span style="font-size: 14px; font-weight: 400; color: #47576f">
-                Publicado: el 1 de diciembre de 2023
+                Publicado: {{ item.register_date | date }}
               </span>
             </div>
           </div>
@@ -151,7 +155,7 @@
                 text-align: left;
               "
             >
-              65 <br />postulantes
+              {{ item.postulantes }} <br />postulantes
             </div>
             <div
               style="
@@ -162,7 +166,7 @@
                 text-align: left;
               "
             >
-              15 <br />evaluados
+              {{ item.evaluados }} <br />evaluados
             </div>
             <div
               style="
@@ -173,12 +177,16 @@
                 text-align: left;
               "
             >
-              5 <br />filtrados por IA
+              {{ item.filtrados_ia }} <br />filtrados por IA
             </div>
           </div>
         </td>
         <td>
-          <button (click)="verCandidatos(1)" class="btn" style="background-color: #e5f4ff; color: #0d99ff">
+          <button
+            (click)="verCandidatos(1)"
+            class="btn"
+            style="background-color: #e5f4ff; color: #0d99ff"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -198,13 +206,8 @@
         <td>
           <select
             class="form-control"
-            style="
-              background-color: #14ae5c;
-              color: #ffffff;
-              font-size: 14px;
-              font-weight: 500;
-            "
-            (change)="handleEstado($event)"
+            (change)="handleEstado($event,item)"
+            [ngClass]="{'combo-verde': item.status == 'Abierto', 'combo-amarillo': item.status == 'Pausado', 'combo-rojo': item.status == 'Cerrado'}"
           >
             <option value="A">Abierto</option>
             <option value="P">Pausado</option>
@@ -247,9 +250,9 @@
         </div>
         <div class="text-center w-100 mb-5">
           <button
+            (click)="eliminarEmpleo()"
             type="button"
-            class="btn"
-            data-dismiss="modal"
+            class="btn"            
             style="
               background-color: #3461ff;
               color: white;
@@ -262,6 +265,7 @@
           <button
             type="button"
             class="btn"
+            data-dismiss="modal"
             style="
               margin-left: 8px;
               background-color: white;
@@ -301,9 +305,9 @@
           style="color: #1d214e; font-size: 16px; font-weight: 600"
         >
           <p>
-            Este empleo se encuentra cerrado, si <br>
-             deseas abrirlo comunicate con
-            nosotros a <a href="Laboral.ai@gmail.com"> Laboral.ai@gmail.com </a>
+            Este empleo se encuentra cerrado, si <br />
+            deseas abrirlo comunicate con nosotros a
+            <a href="Laboral.ai@gmail.com"> Laboral.ai@gmail.com </a>
           </p>
         </div>
 
@@ -319,8 +323,8 @@
               border-radius: 8px;
             "
           >
-           Entendido
-          </button>          
+            Entendido
+          </button>
         </div>
       </div>
     </div>

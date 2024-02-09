@@ -17,7 +17,12 @@ export class MenuManagerComponent implements OnInit {
     const objLogin = JSON.parse(localStorage.getItem('laboral.ai')!);
     this.nombreUsuario = objLogin.user.user_name;
     this.icono = objLogin.user.icono || '';        
-    this.pathImgAvatar = environment.epImagesPublic + '/' + this.icono;
+    // this.pathImgAvatar = environment.epImagesPublic + '/' + this.icono;
+
+    this.pathImgAvatar =
+      objLogin.tipo == 'sistema'
+        ? environment.epImagesPublic + '/' + this.icono
+        : this.icono;
 
     this.eventMediator
     .avatarChanged

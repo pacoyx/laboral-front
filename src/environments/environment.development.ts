@@ -13,4 +13,7 @@ export const environment = {
   epActualizarReclutador: '/updateDataUser',
   epListarReclutadorPorId:'/getRecruiterById',
   epActPwdReclutador: '/updatePasswordAccount',
+  epListarEmpleosOpenClose: '/getJobsOpenClose',
+  epEliminarEmpleosPorIds: '/deleteJobsByIds',
+  epValidaTokenGoogle: '/validateTokenGoogle',
 };
