@@ -14,12 +14,14 @@ export class MenuConfigComponent implements OnInit {
   pathImgAvatar = '';
   nombreUsuario = '';
   icono = '';
+  vTipoLogin='';
 
   ngOnInit(): void {
     const objLogin = JSON.parse(localStorage.getItem('laboral.ai')!);
     this.nombreUsuario = objLogin.user.user_name;
     this.icono = objLogin.user.icono || '';
-    this.pathImgAvatar = environment.epImagesPublic + '/' + this.icono;
+    this.pathImgAvatar = objLogin.tipo == 'sistema' ? environment.epImagesPublic + '/' + this.icono : this.icono ;
+    this.vTipoLogin = objLogin.tipo;
 
     this.eventMediator.avatarChanged.subscribe((avatarData) => {
       if (avatarData) {

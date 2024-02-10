@@ -36,6 +36,8 @@ export class CambiarPerfilComponent implements OnInit {
   bol_msgOk = false;
   bol_msgErr = false;
   msg_err = '';
+  vTipoLogin='';
+  vDatahidden:any={correo:'', nombre:'', imagen:''};
 
   constructor() {
     this.frmReclutador = this.fb.group({
@@ -64,6 +66,7 @@ export class CambiarPerfilComponent implements OnInit {
     this.vCorreo = objLogin.user.correo_corporativo;
     this.vCelular = objLogin.user.celular;
     this.vIconoActual = objLogin.user.icono;
+    this.vTipoLogin = objLogin.tipo;
     this.cargarDataReclutador();
   }
 
@@ -76,6 +79,10 @@ export class CambiarPerfilComponent implements OnInit {
         console.log(resp);
         this.frmReclutador.get('correo')?.setValue(resp.data.email);
         this.vCorreo = resp.data.email;
+        this.vDatahidden.correo = resp.data.email;
+        this.vDatahidden.nombre = resp.data.name;
+        this.vDatahidden.imagen = '';
+
         this.frmReclutador.get('nombreUsuario')?.setValue(resp.data.user_name);
         this.frmReclutador.get('nombres')?.setValue(resp.data.name);
         this.frmReclutador.get('apellidos')?.setValue(resp.data.last_name);

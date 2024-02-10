@@ -104,9 +104,11 @@ export class RegistroUsuarioComponent {
       correo: this.frmRegUsuario.value.correo,
       clave: this.frmRegUsuario.value.clave,
       nombreCompleto: this.frmRegUsuario.value.nombreCompleto,
-      nombreEmpresa: this.frmRegUsuario.value.nombreEmpresa,
+      nombreEmpresa: this.frmRegUsuario.value.nombreCompleto,
       celular: this.frmRegUsuario.value.celular,
       estado: 2,
+      icono: '',
+      typeLogin: 'sistema'
     };
     this.bol_loading = true;
     this.loginService.registrarUsuario(req).subscribe({

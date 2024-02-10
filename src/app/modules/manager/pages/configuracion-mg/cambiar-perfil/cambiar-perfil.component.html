@@ -1,20 +1,31 @@
 <div class="block-perfil">
-    <h5>Mi perfil</h5>
+    <h5>Mi perfil</h5>    
     <hr />
     <form [formGroup]="frmReclutador">
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">
-            <label for="txtCorreo" class="label_text"
-              >Correo Corporativo
-            </label>
+            <label for="txtCorreo" class="label_text">
+              Correo Corporativo <small style="color: rgb(155, 2, 2);" *ngIf="vTipoLogin != 'sistema'">
+                (no se puede editar)
+              </small>
+            </label>            
             <input
               formControlName="correo"
               type="text"
               class="form-control"
               id="txtCorreo"
               aria-describedby="emailHelp"
+              *ngIf="vTipoLogin == 'sistema'"
             />
+            <input
+            *ngIf="vTipoLogin != 'sistema'"
+            type="text"
+            class="form-control"
+            [value]="vDatahidden.correo"
+            disabled
+            >
+
             <small
               id="emailHelp"
               class="form-text text-muted"
@@ -51,16 +62,26 @@
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">
-            <label for="txtNombres" class="label_text"
-              >Nombres</label
-            >
+            <label for="txtNombres" class="label_text">
+              Nombres <small style="color: rgb(155, 2, 2);" *ngIf="vTipoLogin != 'sistema'">
+                (no se puede editar)
+                </small>
+            </label>
             <input
               formControlName="nombres"
               type="text"
               class="form-control"
               id="txtNombres"
               aria-describedby="emailHelp"
+              *ngIf="vTipoLogin == 'sistema'"
             />            
+            <input
+            *ngIf="vTipoLogin != 'sistema'"
+            type="text"
+            class="form-control"
+            [value]="vDatahidden.nombre"
+            disabled
+            >
           </div>
         </div>
         <div class="col-md-6">
@@ -131,13 +152,28 @@
         </div>
         <div class="col-md-6">
           <div class="form-group">
-            <label class="label_text" for="customFile2">Imagen perfil</label>
+            <label class="label_text" for="customFile2">
+              Imagen perfil <small style="color: rgb(155, 2, 2);" *ngIf="vTipoLogin != 'sistema'">
+                (no se puede editar)
+              </small>
+            </label>
             <input
               type="file"
               class="form-control"
               id="customFile2"
               (change)="onFileSelect2($event)"
+              *ngIf="vTipoLogin == 'sistema'"
             />
+
+            <input
+              type="file"
+              class="form-control"
+              id="customFile2"
+              (change)="onFileSelect2($event)"
+              *ngIf="vTipoLogin != 'sistema'"
+              disabled
+            />
+
           </div>
         </div>
       </div>

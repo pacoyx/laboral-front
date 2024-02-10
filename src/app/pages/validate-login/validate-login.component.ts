@@ -44,6 +44,7 @@ export class ValidateLoginComponent {
         },
         error: (err) => {
           console.log(err);
+          this.router.navigateByUrl('/home');
         },
         complete: () => {
           console.log('complete validaTokenGoogle()');

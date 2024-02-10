@@ -5,4 +5,6 @@ export interface IReqRegUsuario {
     nombreEmpresa: string;
     celular: string;
     estado: number;
+    icono:string;
+    typeLogin:string;
   }

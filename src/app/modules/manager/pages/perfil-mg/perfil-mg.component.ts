@@ -46,7 +46,7 @@ export class PerfilMgComponent {
       idcompany: new FormControl(0),
       ruc: new FormControl('', Validators.required),
       nombreEmpresa: new FormControl('', Validators.required),      
-      rating: new FormControl(''),
+      rating: new FormControl(0),
       ubicacion: new FormControl(''),
       linkedin: new FormControl(''),
       url: new FormControl(''),      
@@ -88,7 +88,7 @@ export class PerfilMgComponent {
     this.vCorreo = objLogin.user.correo_corporativo;
     this.vCelular = objLogin.user.celular;
     this.icono = objLogin.user.icono || '';
-    
+
     this.pathImgAvatar =
     objLogin.tipo == 'sistema'
       ? environment.epImagesPublic + '/' + this.icono
