@@ -4,6 +4,7 @@ import { LoginService } from 'src/app/Services/login.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IReqLogin } from 'src/app/interfaces/IreqLogin';
 import { AuthGoogleService } from 'src/app/Services/auth-google.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login-usuario',
@@ -15,6 +16,12 @@ export class LoginUsuarioComponent implements OnInit {
   bol_err = false;
   msg_err = '';
   bol_loading=false;
+
+  linkedInCredentials: any = {
+    clientId: environment.linkedinClientId,
+    redirectUrl: environment.linkedinRedirectUrl,
+    scope: "profile%20email%20openid" // To read basic user profile data and email
+  };
 
   constructor(private router: Router, private loginService: LoginService, private authGoogleService:AuthGoogleService) {
     this.frmLogin = new FormGroup({
@@ -98,5 +105,11 @@ export class LoginUsuarioComponent implements OnInit {
 
   loginGoogle(){
     this.authGoogleService.login();
+  }
+
+  loginLinkedin(){
+    window.location.href = `https://www.linkedin.com/uas/oauth2/authorization?response_type=code&client_id=${
+      this.linkedInCredentials.clientId
+    }&redirect_uri=${this.linkedInCredentials.redirectUrl}&scope=${this.linkedInCredentials.scope}`;
   }
 }

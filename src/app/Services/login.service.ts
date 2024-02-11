@@ -18,6 +18,7 @@ export class LoginService {
   private epValidarRegistroUsuario = environment.epValidarRegistroUsuario;
   private epValidarExisteUsuario = environment.epValidarExisteUsuario;
   private epValidaTokenGoogle = environment.epValidaTokenGoogle;
+  private epValidaTokenLinkedin = environment.epValidaTokenLinkedin;
 
   constructor(private http: HttpClient) {}
 
@@ -39,6 +40,10 @@ export class LoginService {
 
   validaTokenGoogle(body: any) {
     return this.http.post<any>(this.epRaiz + this.epValidaTokenGoogle, body);
+  }
+
+  validaTokenLinkedin(body: any) {
+    return this.http.post<any>(this.epRaiz + this.epValidaTokenLinkedin, body);
   }
 
 }
