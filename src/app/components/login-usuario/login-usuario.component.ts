@@ -108,7 +108,7 @@ export class LoginUsuarioComponent implements OnInit {
   }
 
   loginLinkedin(){
-    window.location.href = `https://www.linkedin.com/uas/oauth2/authorization?response_type=code&client_id=${
+    window.location.href = `https://www.linkedin.com/uas/oauth2/authorization?response_type=code&state=12ZpTvGc2chql4U&client_id=${
       this.linkedInCredentials.clientId
     }&redirect_uri=${this.linkedInCredentials.redirectUrl}&scope=${this.linkedInCredentials.scope}`;
   }

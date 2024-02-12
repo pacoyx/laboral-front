@@ -28,6 +28,7 @@ export class ValidateLoginComponent implements OnInit {
       this.validarTokenGoogle();
     }
   }
+  
   validarTokenLinkedin(token: string) {
     this.loginService.validaTokenLinkedin({ token }).subscribe({
       next: (resp) => {
@@ -58,7 +59,7 @@ export class ValidateLoginComponent implements OnInit {
 
   validarTokenGoogle() {
     const data = this.authGoogle.getProfile();
-    console.log('data==>', data);
+    console.log('data google==>', data);
     setTimeout(() => {
       const token = sessionStorage.getItem('id_token');
 
