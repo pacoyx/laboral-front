@@ -2,7 +2,7 @@ export const environment = {
   production: true,
   epRaiz: 'https://dev-laboral-back.azurewebsites.net',
   epImagesPublic: 'https://dev-laboral-back.azurewebsites.net/public',
-  googleClientId:'981520994137-jeoi9je1nikppgossau431aa4c070ge2.apps.googleusercontent.com',
+  googleClientId:'439932421298-uuf25oiloqf2nbqefl1md5hc93vsso8d.apps.googleusercontent.com',  
   linkedinClientId:'78yvrrjvsx8hu6',
   linkedinRedirectUrl:'https://gentle-moss-01a23fa10.4.azurestaticapps.net/validatelogin',  
 
