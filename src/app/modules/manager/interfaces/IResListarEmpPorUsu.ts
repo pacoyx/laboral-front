@@ -4,7 +4,7 @@ export interface IResListarEmpPorUsu {
   data: IResListarEmpPorUsuData;
 }
 
-interface IResListarEmpPorUsuData {
+export interface IResListarEmpPorUsuData {
   id_company: number;
   ruc: string;
   name: string;

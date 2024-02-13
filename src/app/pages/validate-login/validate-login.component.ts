@@ -1,5 +1,6 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AuthGoogleService } from 'src/app/Services/auth-google.service';
 import { LoginService } from 'src/app/Services/login.service';
 
@@ -8,7 +9,7 @@ import { LoginService } from 'src/app/Services/login.service';
   templateUrl: './validate-login.component.html',
   styleUrls: ['./validate-login.component.scss'],
 })
-export class ValidateLoginComponent implements OnInit {
+export class ValidateLoginComponent implements OnInit, OnDestroy {
   private authGoogle = inject(AuthGoogleService);
   private loginService = inject(LoginService);
   private router = inject(Router);
@@ -16,8 +17,15 @@ export class ValidateLoginComponent implements OnInit {
 
   linkedInToken = '';
 
+  unsuscriptionGoogle!: Subscription;
+  unsuscriptionLinkedin!: Subscription;
+
   constructor() {
     //  this.validarTokenGoogle();
+  }
+  ngOnDestroy(): void {
+    if(this.unsuscriptionGoogle)this.unsuscriptionGoogle.unsubscribe();
+    if(this.unsuscriptionLinkedin)this.unsuscriptionLinkedin.unsubscribe();
   }
 
   ngOnInit(): void {
@@ -30,7 +38,7 @@ export class ValidateLoginComponent implements OnInit {
   }
   
   validarTokenLinkedin(token: string) {
-    this.loginService.validaTokenLinkedin({ token }).subscribe({
+    this.unsuscriptionLinkedin =   this.loginService.validaTokenLinkedin({ token }).subscribe({
       next: (resp) => {
         console.log(resp);
         if (resp.codigoRespuesta != '00') {
@@ -64,7 +72,7 @@ export class ValidateLoginComponent implements OnInit {
       const token = sessionStorage.getItem('id_token');
 
       //validamos token contra el backend
-      this.loginService.validaTokenGoogle({ token }).subscribe({
+      this.unsuscriptionGoogle = this.loginService.validaTokenGoogle({ token }).subscribe({
         next: (resp) => {
           console.log(resp);
           if (resp.codigoRespuesta != '00') {

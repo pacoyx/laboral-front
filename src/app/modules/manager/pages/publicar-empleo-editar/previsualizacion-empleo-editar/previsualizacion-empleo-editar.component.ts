@@ -3,6 +3,7 @@ import { Datachat } from '../../../interfaces/IDatachat';
 import { EmpresaService } from '../../../services/empresa.service';
 import { IReqRegEmpleo } from '../../../interfaces/IReqRegEmpleo';
 import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 
 declare var $: any;
 
@@ -14,9 +15,12 @@ declare var $: any;
 export class PrevisualizacionEmpleoEditarComponent  implements OnInit{
   @Input() dataPreview!: Datachat[];
   private empresaService = inject(EmpresaService);
+  private router = inject(Router);
 
   mensaje = 'Estamos generando la publicación';  
   vIdUsuario = 0;
+  vCorreo = '';
+  vNombreUsuario = '';
   bolErr = false;
 
   vEmpNombre = 'Nombre empresa';  
@@ -28,6 +32,8 @@ export class PrevisualizacionEmpleoEditarComponent  implements OnInit{
     this.dataPreview = [];
     const objLogin = JSON.parse(localStorage.getItem('laboral.ai')!);
     this.vIdUsuario = Number.parseInt(objLogin.user.id);    
+    this.vCorreo = objLogin.user.correo_corporativo;
+    this.vNombreUsuario = objLogin.user.nombres_completo;
   }
   
   ngOnInit(): void {
@@ -64,6 +70,8 @@ export class PrevisualizacionEmpleoEditarComponent  implements OnInit{
       nps: '',
       id_recruiter: this.vIdUsuario,
       modality: this.dataPreview[8].resp,
+      correo: this.vCorreo,
+      nombre: this.vNombreUsuario
     };
 
     this.bol_Grabando = true;
@@ -80,6 +88,7 @@ export class PrevisualizacionEmpleoEditarComponent  implements OnInit{
               this.mensaje = '¡Listo! el empleo ya esta publicado';
               setTimeout(() => {
                 $('#modalPublicar').modal('hide');
+                this.router.navigate(['/manager/publicar']);
               }, 2000);
             }, 2000);
           }, 2000);

@@ -9,5 +9,7 @@ export interface IReqRegEmpresa {
   webpage: string;
   endorse: string;
   about: string;
-  idUser:number;
+  idUser: number;
+  correo: string;
+  nombre: string;  
 }

@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { LoginService } from 'src/app/Services/login.service';
 import { IReqExisteLogin } from 'src/app/interfaces/IReqExisteLogin';
-import { map, Observable, of } from 'rxjs';
+import { map, Observable, of, Subscription } from 'rxjs';
 import { IReqRegEmpresa } from '../../../interfaces/IReqRegEmpresa';
 import { EmpresaService } from '../../../services/empresa.service';
 import { IReqActDataReclutador } from '../../../interfaces/IReqActDataReclutador';
@@ -36,8 +36,11 @@ export class CambiarPerfilComponent implements OnInit {
   bol_msgOk = false;
   bol_msgErr = false;
   msg_err = '';
-  vTipoLogin='';
-  vDatahidden:any={correo:'', nombre:'', imagen:''};
+  vTipoLogin = '';
+  vDatahidden: any = { correo: '', nombre: '', imagen: '' };
+
+  unsuscription!: Subscription;
+  unsuscriptionSave!: Subscription;
 
   constructor() {
     this.frmReclutador = this.fb.group({
@@ -70,33 +73,42 @@ export class CambiarPerfilComponent implements OnInit {
     this.cargarDataReclutador();
   }
 
+  ngOnDestroy(): void {
+    this.unsuscription.unsubscribe();
+    if(this.unsuscriptionSave)this.unsuscriptionSave.unsubscribe();
+  }
+
   cargarDataReclutador() {
     const req: IReqListarReclutadorPorId = {
       idRecruiter: this.vIdUsuario,
     };
-    this.empresaService.listarReclutadorPorId(req).subscribe({
-      next: (resp) => {
-        console.log(resp);
-        this.frmReclutador.get('correo')?.setValue(resp.data.email);
-        this.vCorreo = resp.data.email;
-        this.vDatahidden.correo = resp.data.email;
-        this.vDatahidden.nombre = resp.data.name;
-        this.vDatahidden.imagen = '';
+    this.unsuscription = this.empresaService
+      .listarReclutadorPorId(req)
+      .subscribe({
+        next: (resp) => {
+          console.log(resp);
+          this.frmReclutador.get('correo')?.setValue(resp.data.email);
+          this.vCorreo = resp.data.email;
+          this.vDatahidden.correo = resp.data.email;
+          this.vDatahidden.nombre = resp.data.name;
+          this.vDatahidden.imagen = '';
 
-        this.frmReclutador.get('nombreUsuario')?.setValue(resp.data.user_name);
-        this.frmReclutador.get('nombres')?.setValue(resp.data.name);
-        this.frmReclutador.get('apellidos')?.setValue(resp.data.last_name);
-        this.frmReclutador.get('celular')?.setValue(resp.data.cell_number);
-        this.frmReclutador.get('direccion')?.setValue(resp.data.address);
-        this.frmReclutador.get('ubicacion')?.setValue(resp.data.location);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('complete listarReclutadorPorId(req)');
-      },
-    });
+          this.frmReclutador
+            .get('nombreUsuario')
+            ?.setValue(resp.data.user_name);
+          this.frmReclutador.get('nombres')?.setValue(resp.data.name);
+          this.frmReclutador.get('apellidos')?.setValue(resp.data.last_name);
+          this.frmReclutador.get('celular')?.setValue(resp.data.cell_number);
+          this.frmReclutador.get('direccion')?.setValue(resp.data.address);
+          this.frmReclutador.get('ubicacion')?.setValue(resp.data.location);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => {
+          console.log('complete listarReclutadorPorId(req)');
+        },
+      });
   }
 
   validarEmail(control: AbstractControl) {
@@ -159,38 +171,41 @@ export class CambiarPerfilComponent implements OnInit {
     imageForm.append('infoData', JSON.stringify(reqDatosReclutador));
 
     this.bol_loading = true;
-    this.empresaService.actualizarReclutador(imageForm).subscribe({
-      next: (resp) => {
-        console.log(resp);
-        this.bol_loading = false;
-        this.bol_msgOk = true;
-        setTimeout(() => {
-          this.bol_msgOk = false;
-        }, 2000);
-        this.eventMediator.notifyOnAvatarChanged({
-          icono: resp.icono,
-          nombreUsuario: reqDatosReclutador.nombreUsuario,
-        });
+    this.unsuscriptionSave = this.empresaService
+      .actualizarReclutador(imageForm)
+      .subscribe({
+        next: (resp) => {
+          console.log(resp);
+          this.bol_loading = false;
+          this.bol_msgOk = true;
+          setTimeout(() => {
+            this.bol_msgOk = false;
+          }, 2000);
+          this.eventMediator.notifyOnAvatarChanged({
+            icono: resp.icono,
+            nombreUsuario: reqDatosReclutador.nombreUsuario,
+          });
 
-        const objLogin = JSON.parse(localStorage.getItem('laboral.ai')!);
-        if(resp.icono != ''){
-          objLogin.user.icono = resp.icono;
-        }
-        objLogin.user.user_name = reqDatosReclutador.nombreUsuario;
-        localStorage.setItem('laboral.ai', JSON.stringify(objLogin));
-      },
-      error: (err) => {
-        console.log(err);
-        this.bol_loading = false;
-        this.bol_msgErr = true;
-        this.msg_err = 'Error interno!';
-        setTimeout(() => {
-          this.bol_msgErr = false;
-        }, 2000);
-      },
-      complete: () => {
-        console.log('complete registrarEmpresa()');
-      },
-    });
+          const objLogin = JSON.parse(localStorage.getItem('laboral.ai')!);
+          if (resp.icono != '') {
+            objLogin.user.icono = resp.icono;
+          }
+          objLogin.user.user_name = reqDatosReclutador.nombreUsuario;
+          objLogin.user.celular = reqDatosReclutador.celular;
+          localStorage.setItem('laboral.ai', JSON.stringify(objLogin));
+        },
+        error: (err) => {
+          console.log(err);
+          this.bol_loading = false;
+          this.bol_msgErr = true;
+          this.msg_err = 'Error interno!';
+          setTimeout(() => {
+            this.bol_msgErr = false;
+          }, 2000);
+        },
+        complete: () => {
+          console.log('complete registrarEmpresa()');
+        },
+      });
   }
 }

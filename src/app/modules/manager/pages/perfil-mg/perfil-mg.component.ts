@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -11,6 +11,7 @@ import { EmpresaService } from '../../services/empresa.service';
 import { IReqRegEmpresa } from '../../interfaces/IReqRegEmpresa';
 import { LoginService } from 'src/app/Services/login.service';
 import { environment } from 'src/environments/environment';
+import { Subscription } from 'rxjs';
 
 
 declare var $: any;
@@ -21,7 +22,7 @@ declare var $: any;
   templateUrl: './perfil-mg.component.html',
   styleUrls: ['./perfil-mg.component.scss'],
 })
-export class PerfilMgComponent {
+export class PerfilMgComponent implements OnDestroy {
   private router = inject(Router);
   private empresaService = inject(EmpresaService);
   private loginService = inject(LoginService);
@@ -40,6 +41,9 @@ export class PerfilMgComponent {
   bol_msgErr = false;
   bol_SaveOk=false;
   msg_err = '';
+
+  unsuscription!: Subscription;
+  unsuscriptionSave!: Subscription;
 
   constructor() {
     this.frmDatos = new FormGroup({
@@ -96,11 +100,16 @@ export class PerfilMgComponent {
 
 
     $('#modalEditarDatosEmp').on('hidden.bs.modal',  (event:any)=> {
-      console.log('event===========>',event);
+      // console.log('event===========>',event);
       if(this.bol_SaveOk){
         this.router.navigate(['/manager']);
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    if(this.unsuscription)this.unsuscription.unsubscribe();
+    if(this.unsuscriptionSave)this.unsuscriptionSave.unsubscribe();
   }
 
   irConfiguracion() {
@@ -133,7 +142,9 @@ export class PerfilMgComponent {
       webpage: this.frmDatos.value.url,
       endorse: '0',
       about: this.frmDatos.value.about,
-      idUser: this.vIdUsuario
+      idUser: this.vIdUsuario,
+      correo: this.vCorreo,
+      nombre: this.vEmpleador      
     };
     
 
@@ -142,7 +153,7 @@ export class PerfilMgComponent {
     imageForm.append('infoData', JSON.stringify(reqRegEmp));
 
     this.bol_loading = true;
-    this.empresaService.registrarEmpresa(imageForm).subscribe({
+    this.unsuscriptionSave = this.empresaService.registrarEmpresa(imageForm).subscribe({
       next: (resp) => {       
         this.bol_loading = false;
         this.bol_msgOk = true;

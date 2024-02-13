@@ -122,12 +122,11 @@
             >
           </div>
           <div class="col-2" style="text-align: right">
-            <!-- <img
+            <img
               src="assets/images/pencil_edit.png"
               style="width: 30px; cursor: pointer"
-              data-toggle="modal"
-              data-target="#modalEditarDatosEmp"
-            /> -->
+              (click)="abrirModal()"
+            />
           </div>
         </div>
       </div>
@@ -213,80 +212,235 @@
         </button>
       </div>
       <div class="modal-body">
-        <p>Responda las siguientes preguntas</p>
+        <p style="color: #7792b9; font-size: 14px; font-weight: 400">
+          Responda las siguientes preguntas
+        </p>
         <form [formGroup]="frmDatos">
-          <div class="form-group">
-            <label for="txtNombres" class="label_text">Nombres completos</label>
-            <input
-              formControlName="nombreEmpresa"
-              type="text"
-              class="form-control"
-              id="txtNombres"
-              aria-describedby="emailHelp"
-            />
-            <small
-              id="emailHelp"
-              class="form-text text-muted"
-              *ngIf="
-                nombreEmpresa.invalid &&
-                (nombreEmpresa.dirty || nombreEmpresa.touched)
-              "
-            >
-              <div *ngIf="nombreEmpresa.errors?.['required']">
-                nombreEmpresa es requerido.
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="txtRuc" class="label_text">Ruc</label>
+                <input
+                  formControlName="ruc"
+                  type="text"
+                  class="form-control"
+                  id="txtRuc"
+                  aria-describedby="emailHelp"
+                />
+                <small
+                  id="emailHelp"
+                  class="form-text text-muted"
+                  *ngIf="ruc.invalid && (ruc.dirty || ruc.touched)"
+                >
+                  <div *ngIf="ruc.errors?.['required']">ruc es requerido.</div>
+                </small>
               </div>
-            </small>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="txtNombres" class="label_text"
+                  >Nombre</label
+                >
+                <input
+                  formControlName="nombreEmpresa"
+                  type="text"
+                  class="form-control"
+                  id="txtNombres"
+                  aria-describedby="emailHelp"
+                />
+                <small
+                  id="emailHelp"
+                  class="form-text text-muted"
+                  *ngIf="
+                    nombreEmpresa.invalid &&
+                    (nombreEmpresa.dirty || nombreEmpresa.touched)
+                  "
+                >
+                  <div *ngIf="nombreEmpresa.errors?.['required']">
+                    nombreEmpresa es requerido.
+                  </div>
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="txtUbicacion" class="label_text">Ubicación</label>
+                <input
+                  formControlName="ubicacion"
+                  type="text"
+                  class="form-control"
+                  id="txtUbicacion"
+                  aria-describedby="emailHelp"
+                />
+                <small
+                  id="emailHelp"
+                  class="form-text text-muted"
+                  *ngIf="
+                    ubicacion.invalid && (ubicacion.dirty || ubicacion.touched)
+                  "
+                >
+                  <div *ngIf="ubicacion.errors?.['required']">
+                    Ubicacion es requerido.
+                  </div>
+                </small>
+              </div>
+            </div>
+            <!-- <div class="col-md-6">
+              <div class="form-group">
+                <label for="txtRating" class="label_text">Rating</label>
+                <input
+                  formControlName="rating"
+                  type="text"
+                  class="form-control"
+                  id="txtRating"
+                  aria-describedby="emailHelp"
+                />
+                <small
+                  id="emailHelp"
+                  class="form-text text-muted"
+                  *ngIf="rating.invalid && (rating.dirty || rating.touched)"
+                >
+                  <div *ngIf="rating.errors?.['required']">
+                    rating es requerido.
+                  </div>
+                </small>
+              </div>
+            </div> -->
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="txtUrl" class="label_text"
+                  >Sitio web
+                </label>
+                <input
+                  formControlName="url"
+                  type="text"
+                  class="form-control"
+                  id="txtUrl"
+                  aria-describedby="emailHelp"
+                />
+                <small
+                  id="emailHelp"
+                  class="form-text text-muted"
+                  *ngIf="url.invalid && (url.dirty || url.touched)"
+                >
+                  <div *ngIf="url.errors?.['required']">url es requerido.</div>
+                </small>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="txtLinkedin" class="label_text">Linkedin</label>
+                <input
+                  formControlName="linkedin"
+                  type="text"
+                  class="form-control"
+                  id="txtLinkedin"
+                  aria-describedby="emailHelp"
+                />
+                <small
+                  id="emailHelp"
+                  class="form-text text-muted"
+                  *ngIf="
+                    linkedin.invalid && (linkedin.dirty || linkedin.touched)
+                  "
+                >
+                  <div *ngIf="linkedin.errors?.['required']">
+                    linkedin es requerido.
+                  </div>
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">           
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="txtAbout" class="label_text">about </label>
+                <input
+                  formControlName="about"
+                  type="text"
+                  class="form-control"
+                  id="txtAbout"
+                  aria-describedby="emailHelp"
+                />
+                <small
+                  id="emailHelp"
+                  class="form-text text-muted"
+                  *ngIf="about.invalid && (about.dirty || about.touched)"
+                >
+                  <div *ngIf="about.errors?.['required']">
+                    about es requerido.
+                  </div>
+                </small>
+              </div>
+            </div>
           </div>
 
           <div class="form-group">
-            <label for="txtUbicacion" class="label_text">Ubicación</label>
+            <label for="customFile1" class="label_text">Imagen logo</label>
             <input
-              formControlName="ubicacion"
-              type="text"
+              type="file"
               class="form-control"
-              id="txtUbicacion"
-              aria-describedby="emailHelp"
+              id="customFile1"
+              (change)="onFileSelect($event)"
             />
-            <small
-              id="emailHelp"
-              class="form-text text-muted"
-              *ngIf="
-                ubicacion.invalid && (ubicacion.dirty || ubicacion.touched)
-              "
-            >
-              <div *ngIf="ubicacion.errors?.['required']">
-                Ubicacion es requerido.
-              </div>
-            </small>
-          </div>
-
-          <div class="form-group">
-            <label for="txtUrl" class="label_text"
-              >Url del perfil/sitio web
-            </label>
-            <input
-              formControlName="url"
-              type="text"
-              class="form-control"
-              id="txtUrl"
-              aria-describedby="emailHelp"
-            />
-            <small
-              id="emailHelp"
-              class="form-text text-muted"
-              *ngIf="url.invalid && (url.dirty || url.touched)"
-            >
-              <div *ngIf="url.errors?.['required']">url es requerido.</div>
-            </small>
           </div>
         </form>
       </div>
       <div class="modal-footer">
+        <div class="alert alert-success" role="alert" *ngIf="bol_msgOk">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-clipboard2-check-fill"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M10 .5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5.5.5 0 0 1-.5.5.5.5 0 0 0-.5.5V2a.5.5 0 0 0 .5.5h5A.5.5 0 0 0 11 2v-.5a.5.5 0 0 0-.5-.5.5.5 0 0 1-.5-.5"
+            />
+            <path
+              d="M4.085 1H3.5A1.5 1.5 0 0 0 2 2.5v12A1.5 1.5 0 0 0 3.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-12A1.5 1.5 0 0 0 12.5 1h-.585q.084.236.085.5V2a1.5 1.5 0 0 1-1.5 1.5h-5A1.5 1.5 0 0 1 4 2v-.5q.001-.264.085-.5m6.769 6.854-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708.708"
+            />
+          </svg>
+          Datos actualizados!
+        </div>
+
+        <div class="alert alert-danger" role="alert" *ngIf="bol_msgErr">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-exclamation-circle-fill"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4m.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2"
+            />
+          </svg>
+          {{ msg_err }}
+        </div>
+
         <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-        <button type="button" class="btn btn-primary">
-          <span class="spinner-border spinner-border-sm"></span>
-          <span class="visually-hidden">Loading...</span>
-          Guardar Cambios
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="guardarDatosEmpresa()"
+        >
+          <span
+            class="spinner-border spinner-border-sm"
+            *ngIf="bol_loading"
+          ></span>
+          <span class="visually-hidden" *ngIf="bol_loading"> Guardando...</span>
+          <span *ngIf="!bol_loading"> Guardar Cambios </span>
         </button>
       </div>
     </div>
