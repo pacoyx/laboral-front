@@ -1,8 +1,9 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { EmpresaService } from '../../services/empresa.service';
 import { IReqListarEmpleosOpenClose } from '../../interfaces/IReqListarEmpleosOpenClose';
 import { IReqEliEmpleosPorIds } from '../../interfaces/IReqEliEmpleosPorIds';
+import { Subscription } from 'rxjs';
 
 declare var $: any;
 
@@ -11,7 +12,8 @@ declare var $: any;
   templateUrl: './empleos-mg.component.html',
   styleUrls: ['./empleos-mg.component.scss'],
 })
-export class EmpleosMgComponent implements OnInit {
+export class EmpleosMgComponent implements OnInit, OnDestroy {
+  
   private router = inject(Router);
   private empresaService = inject(EmpresaService);
 
@@ -22,10 +24,16 @@ export class EmpleosMgComponent implements OnInit {
   bol_deleting = false;
   listaIdsDelete: number[] = [];
 
+  suscriptionEli!:Subscription;
+
   ngOnInit(): void {
     const objLogin = JSON.parse(localStorage.getItem('laboral.ai')!);
     this.vIdUsuario = Number.parseInt(objLogin.user.id);
     this.cargarEmpleos();
+  }
+
+  ngOnDestroy(): void {
+    if(this.suscriptionEli)this.suscriptionEli.unsubscribe();
   }
 
   cargarEmpleos() {
@@ -91,7 +99,7 @@ export class EmpleosMgComponent implements OnInit {
       ids: [...this.listaIdsDelete],
     };
     this.bol_deleting = true;
-    this.empresaService.eliminarEmpleosPorIds(req).subscribe({
+   this.suscriptionEli =  this.empresaService.eliminarEmpleosPorIds(req).subscribe({
       next: (resp) => {
         console.log(resp);
         this.bol_deleting = false;

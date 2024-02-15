@@ -74,7 +74,7 @@ export class CambiarPerfilComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    this.unsuscription.unsubscribe();
+    if(this.unsuscription)this.unsuscription.unsubscribe();
     if(this.unsuscriptionSave)this.unsuscriptionSave.unsubscribe();
   }
 

@@ -1,7 +1,8 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IListaEmpleos } from '../../interfaces/IListaEmpleos';
 import { EmpresaService } from '../../services/empresa.service';
+import { Subscription } from 'rxjs';
 
 declare var $:any;
 @Component({
@@ -9,7 +10,8 @@ declare var $:any;
   templateUrl: './publicar-empleo-mg.component.html',
   styleUrls: ['./publicar-empleo-mg.component.scss'],
 })
-export class PublicarEmpleoMgComponent implements OnInit {
+export class PublicarEmpleoMgComponent implements OnInit, OnDestroy {
+ 
   private router = inject(Router);
   private empresaService = inject(EmpresaService);
 
@@ -18,6 +20,8 @@ export class PublicarEmpleoMgComponent implements OnInit {
   empleoDetalle!: IListaEmpleos;
   vIdUsuario = 0;
   arrEmpleos: IListaEmpleos[] = [];
+  suscriptionListarEmpleos!:Subscription;
+  suscriptionVerificar!:Subscription;
 
   ngOnInit(): void {
     const objLogin = JSON.parse(localStorage.getItem('laboral.ai')!);
@@ -27,8 +31,13 @@ export class PublicarEmpleoMgComponent implements OnInit {
     this.verificarDataEmpresa();
   }
 
+  ngOnDestroy(): void {
+    if(this.suscriptionListarEmpleos)this.suscriptionListarEmpleos.unsubscribe();
+    if(this.suscriptionVerificar)this.suscriptionVerificar.unsubscribe();
+  }
+
   verificarDataEmpresa() {
-    this.empresaService.listarEmpresaPorUsuario(this.vIdUsuario).subscribe({
+    this.suscriptionVerificar = this.empresaService.listarEmpresaPorUsuario(this.vIdUsuario).subscribe({
       next: (resp) => {
         console.log(resp);
         if(resp.codigoRespuesta == '00' && !resp.hasData){
@@ -46,7 +55,7 @@ export class PublicarEmpleoMgComponent implements OnInit {
 
   cargarEmpleos() {
     this.bol_LoadingEmpleos = true;
-    this.empresaService.listarEmpleosPorUsuario(this.vIdUsuario).subscribe({
+    this.suscriptionListarEmpleos = this.empresaService.listarEmpleosPorUsuario(this.vIdUsuario).subscribe({
       next: (resp) => {
         console.log(resp);
         this.bol_LoadingEmpleos = false;

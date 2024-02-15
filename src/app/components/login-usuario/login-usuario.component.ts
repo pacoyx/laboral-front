@@ -1,21 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/Services/login.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IReqLogin } from 'src/app/interfaces/IreqLogin';
 import { AuthGoogleService } from 'src/app/Services/auth-google.service';
 import { environment } from 'src/environments/environment';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login-usuario',
   templateUrl: './login-usuario.component.html',
   styleUrls: ['./login-usuario.component.scss'],
 })
-export class LoginUsuarioComponent implements OnInit {
+export class LoginUsuarioComponent implements OnInit,OnDestroy {
   frmLogin: FormGroup;
   bol_err = false;
   msg_err = '';
   bol_loading=false;
+  suscriptionLogin!:Subscription;
 
   linkedInCredentials: any = {
     clientId: environment.linkedinClientId,
@@ -32,6 +34,9 @@ export class LoginUsuarioComponent implements OnInit {
       ]),
       recordar: new FormControl(false, Validators.required),
     });
+  }
+  ngOnDestroy(): void {
+    if(this.suscriptionLogin)this.suscriptionLogin.unsubscribe();
   }
 
   ngOnInit(): void {
@@ -65,7 +70,7 @@ export class LoginUsuarioComponent implements OnInit {
     console.log('request::', req);
 
     this.bol_loading = true;
-    this.loginService.login(req).subscribe({
+    this.suscriptionLogin = this.loginService.login(req).subscribe({
       next: (resp) => {
         console.log(resp);
         this.bol_loading = false;

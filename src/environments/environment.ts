@@ -4,7 +4,7 @@ export const environment = {
   epImagesPublic: 'https://dev-laboral-back.azurewebsites.net/public',
   googleClientId:'439932421298-uuf25oiloqf2nbqefl1md5hc93vsso8d.apps.googleusercontent.com',  
   linkedinClientId:'78yvrrjvsx8hu6',
-  linkedinRedirectUrl:'https://gentle-moss-01a23fa10.4.azurestaticapps.net/validatelogin',  
+  linkedinRedirectUrl:'https://empresas.laboral.ai/validatelogin',  
 
   epLogin: '/login',
   epRegistrarUsuario: '/registerUser',

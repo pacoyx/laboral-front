@@ -1,9 +1,10 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { Datachat } from '../../../interfaces/IDatachat';
 import { EmpresaService } from '../../../services/empresa.service';
 import { IReqRegEmpleo } from '../../../interfaces/IReqRegEmpleo';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 declare var $: any;
 
@@ -12,7 +13,7 @@ declare var $: any;
   templateUrl: './previsualizacion-empleo-editar.component.html',
   styleUrls: ['./previsualizacion-empleo-editar.component.scss'],
 })
-export class PrevisualizacionEmpleoEditarComponent  implements OnInit{
+export class PrevisualizacionEmpleoEditarComponent  implements OnInit, OnDestroy{
   @Input() dataPreview!: Datachat[];
   private empresaService = inject(EmpresaService);
   private router = inject(Router);
@@ -27,6 +28,9 @@ export class PrevisualizacionEmpleoEditarComponent  implements OnInit{
   vEmpLogo = '';
   bol_loading = false;
   bol_Grabando = false;
+  suscriptionGrabar!:Subscription;
+  suscriptionValidar!:Subscription;
+
 
   constructor() {
     this.dataPreview = [];
@@ -34,6 +38,11 @@ export class PrevisualizacionEmpleoEditarComponent  implements OnInit{
     this.vIdUsuario = Number.parseInt(objLogin.user.id);    
     this.vCorreo = objLogin.user.correo_corporativo;
     this.vNombreUsuario = objLogin.user.nombres_completo;
+  }
+
+  ngOnDestroy(): void {
+     if(this.suscriptionGrabar)this.suscriptionGrabar.unsubscribe();
+     if(this.suscriptionValidar)this.suscriptionValidar.unsubscribe();
   }
   
   ngOnInit(): void {
@@ -76,7 +85,7 @@ export class PrevisualizacionEmpleoEditarComponent  implements OnInit{
 
     this.bol_Grabando = true;
     this.mensaje = 'Estamos generando la publicación';
-    this.empresaService.registrarEmpleo(req).subscribe({
+    this.suscriptionGrabar = this.empresaService.registrarEmpleo(req).subscribe({
       next: (resp) => {
         console.log(resp);
         this.bol_Grabando = false;
@@ -106,7 +115,7 @@ export class PrevisualizacionEmpleoEditarComponent  implements OnInit{
 
   validarDatosEmpresa() {
     this.bol_loading = true;    
-    this.empresaService.listarEmpresaPorUsuario(this.vIdUsuario).subscribe({
+    this.suscriptionValidar = this.empresaService.listarEmpresaPorUsuario(this.vIdUsuario).subscribe({
       next: (resp) => {
         this.bol_loading = false;                
         if (resp.hasData) {
