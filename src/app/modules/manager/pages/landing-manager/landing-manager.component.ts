@@ -32,6 +32,8 @@ export class LandingManagerComponent implements OnInit, OnDestroy {
   vEmpUbicacion = 'Lima, Peru';
   vEmpWeb = '';
   vEmpLogo = '';
+  vAbout = '';
+  vRuc = '';
 
   frmDatos: FormGroup;
   bol_loading = false;
@@ -127,6 +129,8 @@ export class LandingManagerComponent implements OnInit, OnDestroy {
             this.vEmpUbicacion = resp.data.location;
             this.vEmpWeb = resp.data.webpage;
             this.vEmpLogo = environment.epImagesPublic + '/' + resp.data.icon;
+            this.vAbout = resp.data.about;
+            this.vRuc = resp.data.ruc;
           }
         },
         error: (err) => {

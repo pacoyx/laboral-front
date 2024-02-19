@@ -19,6 +19,7 @@ export const environment = {
   epActPwdReclutador: '/updatePasswordAccount',
   epListarEmpleosOpenClose: '/getJobsOpenClose',
   epEliminarEmpleosPorIds: '/deleteJobsByIds',
+  epListarCandidatosPorEmpleo: '/getCandidatesByJob',
 
   epValidaTokenGoogle: '/validateTokenGoogle',
   epValidaTokenLinkedin: '/validateTokenLinkedin',

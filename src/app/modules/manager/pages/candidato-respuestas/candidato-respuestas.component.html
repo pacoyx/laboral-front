@@ -1,0 +1,252 @@
+<div class="container-respuestas">
+  <div style="width: 100%; margin-left: 20px">
+    <nav aria-label="breadcrumb" style="background-color: white">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a
+            [routerLink]="['/manager/empleos']"
+            routerLinkActive="router-link-active"
+            >Empleos</a
+          >
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+          <a
+            [routerLink]="['/manager/candidatos/', jobId]"
+            routerLinkActive="router-link-active"
+          >
+            Candidatos</a
+          >
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Resultados</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<div class="d-flex justify-content-between sec-info-empleo shadow-sm">
+  <table style="width: 100%; margin-top: 10px; margin-bottom: 10px">
+    <tr>
+      <td>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="#FFB025"
+          class="bi bi-trophy mr-1"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M2.5.5A.5.5 0 0 1 3 0h10a.5.5 0 0 1 .5.5q0 .807-.034 1.536a3 3 0 1 1-1.133 5.89c-.79 1.865-1.878 2.777-2.833 3.011v2.173l1.425.356c.194.048.377.135.537.255L13.3 15.1a.5.5 0 0 1-.3.9H3a.5.5 0 0 1-.3-.9l1.838-1.379c.16-.12.343-.207.537-.255L6.5 13.11v-2.173c-.955-.234-2.043-1.146-2.833-3.012a3 3 0 1 1-1.132-5.89A33 33 0 0 1 2.5.5m.099 2.54a2 2 0 0 0 .72 3.935c-.333-1.05-.588-2.346-.72-3.935m10.083 3.935a2 2 0 0 0 .72-3.935c-.133 1.59-.388 2.885-.72 3.935M3.504 1q.01.775.056 1.469c.13 2.028.457 3.546.87 4.667C5.294 9.48 6.484 10 7 10a.5.5 0 0 1 .5.5v2.61a1 1 0 0 1-.757.97l-1.426.356a.5.5 0 0 0-.179.085L4.5 15h7l-.638-.479a.5.5 0 0 0-.18-.085l-1.425-.356a1 1 0 0 1-.757-.97V10.5A.5.5 0 0 1 9 10c.516 0 1.706-.52 2.57-2.864.413-1.12.74-2.64.87-4.667q.045-.694.056-1.469z"
+          />
+        </svg>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-person-circle"
+          viewBox="0 0 16 16"
+        >
+          <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+          <path
+            fill-rule="evenodd"
+            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
+          />
+        </svg>
+        Luis Carrasco Ramirez
+      </td>
+      <td>
+        <!-- {{ item.potencial }} -->
+        <span class="badge badge-light texto-badge">Proactivo</span>
+        <span class="badge badge-light texto-badge">Python</span>
+        <span class="badge badge-light texto-badge">SQL</span>
+      </td>
+      <td>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="#0BAC56"
+          class="bi bi-bar-chart-fill"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1z"
+          />
+        </svg>
+        <span style="color: #0bac56"> 90%</span>
+      </td>
+      <td class="text-center">
+        <img src="assets/images/linkedin-circle.png" style="cursor: pointer" />
+        <img
+          src="assets/images/cv-circle.png"
+          style="margin-left: 5px; cursor: pointer"
+        />
+      </td>
+      <td>
+        <button class="btn btn-success btn-block btn-sm">Contactar</button>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="d-flex sec-2">
+  <div class="conte-chart rounded shadow-sm">
+    <div class="w-100 m-2 titulo">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        fill="currentColor"
+        class="bi bi-bar-chart-fill"
+        viewBox="0 0 16 16"
+      >
+        <path
+          d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1z"
+        />
+      </svg>
+       Estadisticas
+    </div>
+    <hr />
+  </div>
+  <div class="d-flex flex-column">
+    <div class="conte-preguntas rounded shadow-sm">
+      <div class="w-100 m-2 titulo">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-question-square"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"
+          />
+          <path
+            d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286m1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94"
+          />
+        </svg>
+        Respuestas
+      </div>
+      <hr />
+
+<div>
+    <div class="accordion" id="accordionExample">
+        
+        <div class="card">
+          <div class="card-header" id="headingOne">
+            <h2 class="mb-0">
+              <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                Pregunta 1:<br>
+                ¿Cuáles son tus metas a corto y largo plazo en el ámbito financiero y cómo crees que este puesto en finanzas corporativas puede contribuir a alcanzar esas metas?
+              </button>
+            </h2>
+          </div>
+      
+          <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div class="card-body">
+                A corto plazo, busco perfeccionar mis habilidades en finanzas corporativas y participar en proyectos desafiantes. A largo plazo, aspiro a ascender y contribuir al crecimiento financiero de la empresa.
+                Este puesto es crucial para mis metas, ya que me brinda la oportunidad de aplicar mis habilidades analíticas, tomar decisiones estratégicas y colaborar con equipos multidisciplinarios, preparándome para roles de mayor responsabilidad en el futuro.
+            </div>
+          </div>
+        </div>
+
+
+
+        <div class="card">
+          <div class="card-header" id="headingTwo">
+            <h2 class="mb-0">
+              <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                Pregunta 2:<br>
+
+¿Cuáles son tus metas a corto y largo plazo en el ámbito financiero y cómo crees que este puesto en finanzas corporativas puede contribuir a alcanzar esas metas?
+              </button>
+            </h2>
+          </div>
+          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+            <div class="card-body">
+              Some placeholder content for the second accordion panel. This panel is hidden by default.
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="headingThree">
+            <h2 class="mb-0">
+              <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                Pregunta 3:<br>
+
+¿Cuáles son tus metas a corto y largo plazo en el ámbito financiero y cómo crees que este puesto en finanzas corporativas puede contribuir a alcanzar esas metas?
+              </button>
+            </h2>
+          </div>
+          <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+            <div class="card-body">
+              And lastly, the placeholder content for the third and final accordion panel. This panel is hidden by default.
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+
+
+
+    </div>
+    <div class="conte-assesment rounded shadow-sm">
+      <div class="w-100 m-2 titulo">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-question-square"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"
+          />
+          <path
+            d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286m1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94"
+          />
+        </svg>
+        Assesment
+      </div>
+      <hr />
+
+      <div>
+        <div class="accordion" id="accordionExample">
+            <div class="card">
+              <div class="card-header" id="headingOne">
+                <h2 class="mb-0">
+                  <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Assesment 1
+                  </button>
+                </h2>
+              </div>
+          
+              <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <div class="card-body">
+                  Some placeholder content for the first accordion panel. This panel is shown by default, thanks to the <code>.show</code> class.
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header" id="headingTwo">
+                <h2 class="mb-0">
+                  <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Assesment 2
+                  </button>
+                </h2>
+              </div>
+              <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                <div class="card-body">
+                  Some placeholder content for the second accordion panel. This panel is hidden by default.
+                </div>
+              </div>
+            </div>
+           
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

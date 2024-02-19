@@ -6,7 +6,7 @@ import {
   Renderer2,
   Output,
   EventEmitter,
-  OnInit,
+  OnInit,HostListener, AfterViewChecked 
 } from '@angular/core';
 import { Datachat } from '../../../interfaces/IDatachat';
 
@@ -15,7 +15,7 @@ import { Datachat } from '../../../interfaces/IDatachat';
   templateUrl: './chat-empleo-editar.component.html',
   styleUrls: ['./chat-empleo-editar.component.scss'],
 })
-export class ChatEmpleoEditarComponent implements OnInit {
+export class ChatEmpleoEditarComponent implements OnInit,AfterViewChecked  {
   private renderer = inject(Renderer2);
   @ViewChild('target') private myScrollContainer!: ElementRef;
   @Output() dataChat = new EventEmitter<Datachat[]>();
@@ -89,6 +89,10 @@ export class ChatEmpleoEditarComponent implements OnInit {
   bolConfirmacion = false;
   bolLoading = false;
 
+
+
+
+
   constructor() {
     const objLogin = JSON.parse(localStorage.getItem('laboral.ai')!);
     this.vNombreUsuario = objLogin.user.nombres_completo;
@@ -102,13 +106,18 @@ export class ChatEmpleoEditarComponent implements OnInit {
       },
     ];
   }
+  ngAfterViewChecked(): void {
+  this.scrollToBottom();  
+  }
   ngOnInit(): void {}
 
-  scrollToBottom(): void {
+  scrollToBottom(): void {    
+    
     try {
       this.myScrollContainer.nativeElement.scrollTop =
         this.myScrollContainer.nativeElement.scrollHeight;
-    } catch (err) {}
+    } catch (err) {console.log('error scrol', err);
+    }
   }
 
   enviarMsg(value: string) {
@@ -174,6 +183,7 @@ export class ChatEmpleoEditarComponent implements OnInit {
     }
 
     this.bolLoading = true;
+    
     setTimeout(() => {
       this.bolLoading = false;
       this.arr_mensajes.push({
@@ -181,9 +191,10 @@ export class ChatEmpleoEditarComponent implements OnInit {
         msg: this.arrPreguntas[this.contPreg].preg,
       });
       this.contPreg++;
-      this.scrollToBottom();
-    }, 2000);
-
+      // this.scrollToBottom();
+    }, 1500);
+    
     this.renderer.selectRootElement('#txtMsg').focus();
+    
   }
 }

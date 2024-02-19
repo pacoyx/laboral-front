@@ -21,5 +21,5 @@ export const environment = {
   epEliminarEmpleosPorIds: '/deleteJobsByIds',
   epValidaTokenGoogle: '/validateTokenGoogle',
   epValidaTokenLinkedin: '/validateTokenLinkedin',
-  
+  epListarCandidatosPorEmpleo: '/getCandidatesByJob',
 };

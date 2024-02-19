@@ -141,11 +141,50 @@
         <div
           class="d-flex flex-column align-items-center justify-content-center"
           style="height: 100%"
-        >
+          *ngIf="vAbout == ''"
+        >        
           <img src="assets/images/carpeta.png" style="width: 60px" />
           <p style="color: #172c73; font-weight: 600; font-size: 12px">
             Aún no haz colocado los datos de la empresa
-          </p>
+          </p>        
+        </div>
+        <div
+          class="d-flex flex-column pl-4"
+          style="height: 100%"
+          *ngIf="vAbout != ''"
+        >
+          <div>            
+            <div class="row pb-3" style="text-align: left">
+              <div>
+                <span class="titulo"> Razón Social: </span>
+                <div class="subtitulo">{{ vEmpNombre }}</div>
+              </div>
+            </div>
+           
+            <div class="row pb-3" style="text-align: left">
+              <div>
+                <span class="titulo"> RUC: </span>
+                <div class="subtitulo">{{ vRuc }}</div>
+              </div>
+            </div>
+
+            <div class="row pb-3" style="text-align: left">
+              <div>
+                <span class="titulo"> Ubicación: </span>
+                <div class="subtitulo">{{ vEmpUbicacion }}</div>
+              </div>
+            </div>
+
+            <div class="row pb-3" style="text-align: left">
+              <div>
+                <span class="titulo"></span>
+                <div class="subtitulo">{{ vAbout }}</div>
+              </div>
+            </div>
+
+          </div>
+
+
         </div>
       </div>
     </div>

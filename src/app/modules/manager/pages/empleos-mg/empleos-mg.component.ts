@@ -91,7 +91,7 @@ export class EmpleosMgComponent implements OnInit, OnDestroy {
   }
 
   verCandidatos(idEmpleo: number) {
-    this.router.navigate(['/manager/candidatos']);
+    this.router.navigate([`/manager/candidatos/${idEmpleo}`]);
   }
 
   eliminarEmpleo() {

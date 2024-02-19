@@ -20,6 +20,7 @@ import { ListaEmpleosComponent } from './pages/publicar-empleo-mg/lista-empleos/
 import { DetalleEmpleoComponent } from './pages/publicar-empleo-mg/detalle-empleo/detalle-empleo.component';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { EmpleoCandidatosComponent } from './pages/empleo-candidatos/empleo-candidatos.component';
+import { CandidatoRespuestasComponent } from './pages/candidato-respuestas/candidato-respuestas.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { EmpleoCandidatosComponent } from './pages/empleo-candidatos/empleo-cand
     PrevisualizacionEmpleoEditarComponent,
     ListaEmpleosComponent,
     DetalleEmpleoComponent,
-    EmpleoCandidatosComponent,    
+    EmpleoCandidatosComponent,
+    CandidatoRespuestasComponent,    
   ],
   imports: [
     CommonModule,

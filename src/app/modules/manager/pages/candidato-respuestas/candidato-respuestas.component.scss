@@ -1,10 +1,45 @@
-.container-candidatos {
+.container-respuestas {
     width: 100%;
     // margin: 20px;
     //  background-color: red;
     // display: flexbox;
     // flex-direction: column;
 
+}
+
+.sec-2 {
+    width: 95%;
+    margin-left: 20px;
+
+    .titulo{
+        font-size: 16px;
+        font-weight: 500;
+        color: #3D4279;
+    }
+
+    .conte-chart {
+        background-color: white;
+        width: 315px;
+        height: 530px;
+        // border: 1px solid black;
+        margin: 5px;
+    }
+
+    .conte-preguntas {
+        background-color: white;
+        width: 780px;
+        // height: 450px;
+        // border: 1px solid black;
+        margin: 5px;
+    }
+
+    .conte-assesment {
+        background-color: white;
+        width: 780px;
+        height: 328px;
+        // border: 1px solid black;
+        margin: 5px;
+    }
 }
 
 .sec-info-empleo {
@@ -41,67 +76,12 @@
         color: #47576F;
     }
 
-
-}
-
-.sec-listado {
-    width: 95%;
-    // border: 1px solid black;
-    margin-left: 20px;
-    border-radius: 8px;    
-
-    .texto-badge{
+    .texto-badge {
         margin-left: 5px;
         background-color: #EEF8FF;
         color: #8B8FC1;
         padding-left: 10px;
         padding-right: 10px;
     }
-}
 
-.img-social{
-    cursor: pointer;
-}
-
-
-.combo-verde {
-    background-color: #14ae5c;
-    color: #ffffff;
-    font-size: 14px;
-    font-weight: 500;
-}
-
-.combo-rojo {
-    background-color: #F22D2D;
-    color: #ffffff;
-    font-size: 14px;
-    font-weight: 500;
-}
-
-.combo-amarillo {
-    background-color: #FFB025;
-    color: #ffffff;
-    font-size: 14px;
-    font-weight: 500;
-}
-
-table{
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-}
-
-th {
-    background-color: #EAEAF6;
-    color: #1D214E;
-    font-size: 14px;
-    font-weight: 600;
-    height: 40px;    
-}
-
-td {
-    background-color: white;
-    padding-left: 5px;
-    color: #1D214E;
-    font-size: 14px;
-    font-weight: 600;
 }

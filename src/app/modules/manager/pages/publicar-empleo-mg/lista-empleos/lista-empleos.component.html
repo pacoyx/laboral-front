@@ -4,7 +4,7 @@
 <div class="block-lista-empleos" *ngFor="let empleo of listEmpleos" (click)="verEmpleo(empleo)">
     <div class="d-flex">
         <div class="ml-1 mt-1">
-            <img src="assets/images/logo_rappi.png">
+            <img *ngIf="vEmpLogo != ''"   [src]="vEmpLogo" width="50px" class="rounded">
         </div>
         <div class="w-100 pl-2 pr-1" style="color: #1D214E;font-size: 14; font-weight: 600;">
             <p>{{empleo.titulo}}</p>
