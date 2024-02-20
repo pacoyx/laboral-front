@@ -20,6 +20,7 @@ export const environment = {
   epListarEmpleosOpenClose: '/getJobsOpenClose',
   epEliminarEmpleosPorIds: '/deleteJobsByIds',
   epListarCandidatosPorEmpleo: '/getCandidatesByJob',
+  epListarPreguntasPorEmpleo: '/getQuestionsByJob',
 
   epValidaTokenGoogle: '/validateTokenGoogle',
   epValidaTokenLinkedin: '/validateTokenLinkedin',

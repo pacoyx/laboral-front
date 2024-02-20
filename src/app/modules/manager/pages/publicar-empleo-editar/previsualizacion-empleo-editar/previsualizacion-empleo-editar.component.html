@@ -34,7 +34,7 @@
           [(ngModel)]="pregunta.resp" 
           (keydown.enter)="pregunta.edicion = false"
           *ngIf="pregunta.edicion"
-        >
+        ><small *ngIf="pregunta.edicion" class="text-sm">(press enter to confirm)</small>
         <p *ngIf="pregunta.tipo == 'texto' && !pregunta.edicion">
           {{ pregunta.resp || ''}}
         </p>

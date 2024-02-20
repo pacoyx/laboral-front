@@ -88,6 +88,8 @@ export class ChatEmpleoEditarComponent implements OnInit,AfterViewChecked  {
   contPreg = 0;
   bolConfirmacion = false;
   bolLoading = false;
+  bolValidacion=false;
+  msgVal='';
 
 
 
@@ -121,6 +123,21 @@ export class ChatEmpleoEditarComponent implements OnInit,AfterViewChecked  {
   }
 
   enviarMsg(value: string) {
+
+    //validacion de Number en sueldo
+    if(this.contPreg == 7){
+      console.log('validacion number ==>', value);      
+      if(!Number(value)){
+        this.bolValidacion=true;
+        this.msgVal='Solo se aceptan numeros';
+        setTimeout(() => {
+          this.bolValidacion=false;
+        }, 2000);
+        return;
+      }
+    }
+   
+
     //Agregamos la respuesta al chat
     this.arr_mensajes.push({
       usuario: this.vNombreUsuario,
@@ -169,16 +186,17 @@ export class ChatEmpleoEditarComponent implements OnInit,AfterViewChecked  {
 
       this.arr_mensajes.push({
         usuario: this.vNombreChatBot,
-        msg: 'un momento por favor, estamos procesando la información para generar la vista previa y puedas confirmar los datos para publicar el empleo.',
+        // msg: 'un momento por favor, estamos procesando la información para generar la vista previa y puedas confirmar los datos para publicar el empleo.',
+        msg: 'Listo, puedes revisar el preview y editar si necesitas modificar un dato del empleo.',
       });
-      this.scrollToBottom();
+      // this.scrollToBottom();
       this.renderer.selectRootElement('#txtMsg').focus();
 
-      this.bolLoading = true;
-      setTimeout(() => {
-        this.bolLoading = false;
-        this.dataChat.emit(this.arrPreguntas);
-      }, 2000);
+      // this.bolLoading = true;
+      // setTimeout(() => {
+      //   this.bolLoading = false;
+      //   this.dataChat.emit(this.arrPreguntas);
+      // }, 2000);
       return;
     }
 

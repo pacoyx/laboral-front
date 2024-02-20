@@ -4,6 +4,9 @@ import { EmpresaService } from '../../services/empresa.service';
 import { IReqListarEmpleosOpenClose } from '../../interfaces/IReqListarEmpleosOpenClose';
 import { IReqEliEmpleosPorIds } from '../../interfaces/IReqEliEmpleosPorIds';
 import { Subscription } from 'rxjs';
+import { EventMediatorService } from '../../services/event-mediator.service';
+import { environment } from 'src/environments/environment';
+import { IResListarEmpleosOpenCloseDet } from '../../interfaces/IResListarEmpleosOpenClose';
 
 declare var $: any;
 
@@ -16,6 +19,7 @@ export class EmpleosMgComponent implements OnInit, OnDestroy {
   
   private router = inject(Router);
   private empresaService = inject(EmpresaService);
+  private mediatorService = inject(EventMediatorService);
 
   bol_tabAbierto = false;
   vIdUsuario = 0;
@@ -23,18 +27,23 @@ export class EmpleosMgComponent implements OnInit, OnDestroy {
   bol_loading = false;
   bol_deleting = false;
   listaIdsDelete: number[] = [];
+  vEmpLogo = '';
 
   suscriptionEli!:Subscription;
-
+  suscriptionListado!:Subscription;
+  
   ngOnInit(): void {
     const objLogin = JSON.parse(localStorage.getItem('laboral.ai')!);
     this.vIdUsuario = Number.parseInt(objLogin.user.id);
+    this.vEmpLogo = environment.epImagesPublic + '/' + objLogin.company.logo;  
     this.cargarEmpleos();
   }
 
   ngOnDestroy(): void {
-    if(this.suscriptionEli)this.suscriptionEli.unsubscribe();
+    if(this.suscriptionEli)this.suscriptionEli.unsubscribe();   
+    if(this.suscriptionListado) {this.suscriptionListado.unsubscribe();}
   }
+  
 
   cargarEmpleos() {
     const req: IReqListarEmpleosOpenClose = {
@@ -42,7 +51,7 @@ export class EmpleosMgComponent implements OnInit, OnDestroy {
       estado: 'Abierto',
     };
     this.bol_loading = true;
-    this.empresaService.listarEmpleosOpenClose(req).subscribe({
+    this.suscriptionListado = this.empresaService.listarEmpleosOpenClose(req).subscribe({
       next: (resp) => {
         this.bol_loading = false;
         console.log(resp);
@@ -90,8 +99,10 @@ export class EmpleosMgComponent implements OnInit, OnDestroy {
     console.log('this.listaIdsDelete ==>', this.listaIdsDelete);
   }
 
-  verCandidatos(idEmpleo: number) {
-    this.router.navigate([`/manager/candidatos/${idEmpleo}`]);
+  verCandidatos(empleo: IResListarEmpleosOpenCloseDet) {
+    this.mediatorService.notifyOnEmpleoChanged(empleo);
+
+    this.router.navigate([`/manager/candidatos/${empleo.id_job_description}`]);
   }
 
   eliminarEmpleo() {

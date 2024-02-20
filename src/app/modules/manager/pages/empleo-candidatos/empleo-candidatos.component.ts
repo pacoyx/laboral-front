@@ -4,6 +4,8 @@ import { IReqListarCandiPorEmpleo } from '../../interfaces/IReqListarCandiPorEmp
 import { ActivatedRoute, Router } from '@angular/router';
 import { IResListarCandiPorEmpleoDet } from '../../interfaces/IResListarCandiPorEmpleo';
 import { Subscription } from 'rxjs';
+import { EventMediatorService } from '../../services/event-mediator.service';
+import { IResListarEmpleosOpenCloseDet } from '../../interfaces/IResListarEmpleosOpenClose';
 
 declare var $: any;
 
@@ -13,26 +15,42 @@ declare var $: any;
   styleUrls: ['./empleo-candidatos.component.scss'],
 })
 export class EmpleoCandidatosComponent implements OnDestroy {
+  private router = inject(Router);
   private empresaService = inject(EmpresaService);
   private activatedRoute = inject(ActivatedRoute);
-  private router = inject(Router);
+  private mediatorService = inject(EventMediatorService);
 
   lstCandidatos: IResListarCandiPorEmpleoDet[] = [];
   suscriptionListar!: Subscription;
+  unsuscriptionMediator!: Subscription;  
+  objEmpleo!:IResListarEmpleosOpenCloseDet | null;
   jobId: number = 0;
 
   constructor() {
     this.jobId = this.activatedRoute.snapshot.params['jobId'];
     this.cargarCandidatosPorEmpleo(this.jobId);
+    this.unsuscriptionMediator = this.mediatorService.empleoChanged.subscribe({
+      next: (resp) => {        
+        this.objEmpleo = resp;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('complete cargarCandidatosPorEmpleo()');
+      },
+    });
   }
 
   ngOnDestroy(): void {
     if (this.suscriptionListar) this.suscriptionListar.unsubscribe();
+    if(this.unsuscriptionMediator) this.unsuscriptionMediator.unsubscribe();
   }
 
-  irRespuestas(idCliente: number) {
+  irRespuestas(candidato: IResListarCandiPorEmpleoDet) {
+    this.mediatorService.notifyOnCandidatoChanged(candidato);
     this.router.navigate([
-      '/manager/candidatos/' + this.jobId + '/respuestas/' + idCliente,
+      '/manager/candidatos/' + this.jobId + '/respuestas/' + candidato.id_cliente,
     ]);
   }
 

@@ -66,5 +66,10 @@
         <img src="assets/images/button_send.png" alt="" />
       </button>
     </div>
+    <div *ngIf="bolValidacion">
+      <small style="color: red;">
+        {{msgVal}}
+      </small>
+    </div>
   </div>
 </div>

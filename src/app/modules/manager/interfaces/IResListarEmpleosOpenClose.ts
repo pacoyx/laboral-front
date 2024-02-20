@@ -4,7 +4,7 @@ export interface IResListarEmpleosOpenClose {
   data: IResListarEmpleosOpenCloseDet[];
 }
 
-interface IResListarEmpleosOpenCloseDet {
+export interface IResListarEmpleosOpenCloseDet {
   id_job_description: number;
   job_title: string;
   postulantes: number;

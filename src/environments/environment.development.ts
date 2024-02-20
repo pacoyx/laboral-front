@@ -22,4 +22,5 @@ export const environment = {
   epValidaTokenGoogle: '/validateTokenGoogle',
   epValidaTokenLinkedin: '/validateTokenLinkedin',
   epListarCandidatosPorEmpleo: '/getCandidatesByJob',
+  epListarPreguntasPorEmpleo: '/getQuestionsByJob',
 };

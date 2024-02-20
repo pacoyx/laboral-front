@@ -7,6 +7,8 @@ import { AuthGoogleService } from 'src/app/Services/auth-google.service';
 import { IReqRegEmpresa } from '../../interfaces/IReqRegEmpresa';
 import { IResListarEmpPorUsuData } from '../../interfaces/IResListarEmpPorUsu';
 import { Subscription } from 'rxjs';
+import { EventMediatorService } from '../../services/event-mediator.service';
+import { ICompanyData } from 'src/app/interfaces/ICompanyData';
 
 declare var $: any;
 
@@ -18,7 +20,7 @@ declare var $: any;
 export class LandingManagerComponent implements OnInit, OnDestroy {
   private router = inject(Router);
   private empresaService = inject(EmpresaService);
-  private authGoogleService = inject(AuthGoogleService);
+  private mediatorService = inject(EventMediatorService);
 
   vIdUsuario = 0;
   vEmpleador = '';
@@ -131,6 +133,14 @@ export class LandingManagerComponent implements OnInit, OnDestroy {
             this.vEmpLogo = environment.epImagesPublic + '/' + resp.data.icon;
             this.vAbout = resp.data.about;
             this.vRuc = resp.data.ruc;
+            const companyData : ICompanyData = {
+              logo: resp.data.icon
+            };
+            this.mediatorService.notifyOnCompanyChanged(companyData);
+
+            const objLogin = JSON.parse(localStorage.getItem('laboral.ai')!);
+            objLogin.company = {logo:resp.data.icon}
+            localStorage.setItem('laboral.ai',JSON.stringify(objLogin));
           }
         },
         error: (err) => {

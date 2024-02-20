@@ -1,6 +1,67 @@
 .container-chat {
     width: 100%;
-    margin: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
     //  background-color: red;
     flex-direction: column;
+
+.titulo{
+    color: #0256BF;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+    .sec-postulantes {
+        background-color: white;
+        width: 300px;
+        border: 1px solid gainsboro;
+
+        select {
+            background-color: #E5F4FF;
+            color: #0256BF;
+            font-size: 14px;
+            font-weight: 500;
+            width: 268px;
+        }
+        .contenedor-lista{
+            height: 378px ;
+            overflow-y: scroll;
+        }
+
+        .titulo-pos{
+            width: 100%;
+            color: #1D214E;
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            padding-left: 5px;
+            // border: 1px solid black;
+        }
+        .input-text {
+            width: 268px;
+            border-color: #F6F6FF;
+        }
+
+        .texto-lista{
+            color: #3D4279;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+
+    }
+
+    .sec-chatbot {
+        background-color: white;
+        width: 535px;
+        border: 1px solid gainsboro;        
+    }
+
+    .sec-perfil {        
+        background-color: white;
+        width: 281px;
+        border: 1px solid gainsboro;        
+    }
+
 }

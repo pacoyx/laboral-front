@@ -18,6 +18,7 @@ import { IReqEliEmpleosPorIds } from '../interfaces/IReqEliEmpleosPorIds';
 import { IResEliEmpleosPorIds } from '../interfaces/IResEliEmpleosPorIds';
 import { IReqListarCandiPorEmpleo } from '../interfaces/IReqListarCandiPorEmpleo';
 import { IResListarCandiPorEmpleo } from '../interfaces/IResListarCandiPorEmpleo';
+import { IResListarPregPorEmpleo } from '../interfaces/IResListarPregPorEmpleo';
 
 @Injectable({
   providedIn: 'root',
@@ -34,6 +35,7 @@ export class EmpresaService {
   private epListarEmpleosOpenClose = environment.epListarEmpleosOpenClose;
   private epEliminarEmpleosPorId = environment.epEliminarEmpleosPorIds;
   private epListarCandidatosPorEmpleo = environment.epListarCandidatosPorEmpleo;
+  private epListarPreguntasPorEmpleo = environment.epListarPreguntasPorEmpleo;
 
   private http = inject(HttpClient);
 
@@ -105,6 +107,13 @@ export class EmpresaService {
   listarCandidatosPorEmpleo(req: IReqListarCandiPorEmpleo) {
     return this.http.post<IResListarCandiPorEmpleo>(
       this.epRaiz + this.epListarCandidatosPorEmpleo,
+      req
+    );
+  }
+
+  listarPreguntasPorEmpleo(req: IReqListarCandiPorEmpleo) {
+    return this.http.post<IResListarPregPorEmpleo>(
+      this.epRaiz + this.epListarPreguntasPorEmpleo,
       req
     );
   }

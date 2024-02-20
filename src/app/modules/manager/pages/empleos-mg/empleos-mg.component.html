@@ -1,5 +1,5 @@
 <div class="container-empleo">
-  <nav aria-label="breadcrumb" style="background-color: white">
+  <nav aria-label="breadcrumb" style="margin-left: 20px;">
     <ol class="breadcrumb">
       <li class="breadcrumb-item">Empleos</li>
     </ol>
@@ -111,9 +111,11 @@
         <td>
           <div class="d-flex">
             <img
-              src="assets/images/logo_rappi.png"
+              *ngIf="vEmpLogo != ''"
+              [src]="vEmpLogo"
               width="36px"
               height="36px"
+              class="rounded"
             />
             <div class="d-flex flex-column text-left pl-2">
               <span
@@ -183,7 +185,7 @@
         </td>
         <td>
           <button
-            (click)="verCandidatos(item.id_job_description)"
+            (click)="verCandidatos(item)"
             class="btn"
             style="background-color: #e5f4ff; color: #0d99ff"
           >

@@ -53,13 +53,14 @@
             d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
           />
         </svg>
-        Luis Carrasco Ramirez
+        {{objCandidato.nombres}} {{objCandidato.apellidos}}
       </td>
       <td>
-        <!-- {{ item.potencial }} -->
-        <span class="badge badge-light texto-badge">Proactivo</span>
-        <span class="badge badge-light texto-badge">Python</span>
-        <span class="badge badge-light texto-badge">SQL</span>
+        <!-- {{ objCandidato.potencial }} -->
+        <span class="badge badge-light texto-badge"  
+                *ngFor="let etiqueta of objCandidato.potencial.split(' ')">{{etiqueta}}</span>
+
+        
       </td>
       <td>
         <svg
@@ -74,14 +75,15 @@
             d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1z"
           />
         </svg>
-        <span style="color: #0bac56"> 90%</span>
+        <span style="color: #0bac56"> {{ objCandidato.compatibilidad }} %</span>
       </td>
       <td class="text-center">
-        <img src="assets/images/linkedin-circle.png" style="cursor: pointer" />
-        <img
-          src="assets/images/cv-circle.png"
-          style="margin-left: 5px; cursor: pointer"
-        />
+        <a [href]="objCandidato.linkedin" target="_blank">
+          <img src="assets/images/linkedin-circle.png"/>
+        </a>
+        <a [href]="objCandidato.enlace_cv">
+          <img src="assets/images/cv-circle.png" style="margin-left: 5px;"/>
+        </a>          
       </td>
       <td>
         <button class="btn btn-success btn-block btn-sm">Contactar</button>
@@ -133,59 +135,26 @@
 
 <div>
     <div class="accordion" id="accordionExample">
-        
-        <div class="card">
+              
+        <div class="card" *ngFor="let item of arrPreguntas;index as i;">
           <div class="card-header" id="headingOne">
             <h2 class="mb-0">
-              <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                Pregunta 1:<br>
-                ¿Cuáles son tus metas a corto y largo plazo en el ámbito financiero y cómo crees que este puesto en finanzas corporativas puede contribuir a alcanzar esas metas?
+              <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" 
+              [attr.data-target]="'#collapse' + i"
+              aria-expanded="true" aria-controls="collapseOne">
+                Pregunta {{item.number_order}}:<br>
+                {{item.question}}                
               </button>
             </h2>
           </div>
       
-          <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+          <div [id]="'collapse' + i" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
             <div class="card-body">
-                A corto plazo, busco perfeccionar mis habilidades en finanzas corporativas y participar en proyectos desafiantes. A largo plazo, aspiro a ascender y contribuir al crecimiento financiero de la empresa.
-                Este puesto es crucial para mis metas, ya que me brinda la oportunidad de aplicar mis habilidades analíticas, tomar decisiones estratégicas y colaborar con equipos multidisciplinarios, preparándome para roles de mayor responsabilidad en el futuro.
+              {{item.anwser}}                
             </div>
           </div>
         </div>
-
-
-
-        <div class="card">
-          <div class="card-header" id="headingTwo">
-            <h2 class="mb-0">
-              <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                Pregunta 2:<br>
-
-¿Cuáles son tus metas a corto y largo plazo en el ámbito financiero y cómo crees que este puesto en finanzas corporativas puede contribuir a alcanzar esas metas?
-              </button>
-            </h2>
-          </div>
-          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-            <div class="card-body">
-              Some placeholder content for the second accordion panel. This panel is hidden by default.
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-header" id="headingThree">
-            <h2 class="mb-0">
-              <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                Pregunta 3:<br>
-
-¿Cuáles son tus metas a corto y largo plazo en el ámbito financiero y cómo crees que este puesto en finanzas corporativas puede contribuir a alcanzar esas metas?
-              </button>
-            </h2>
-          </div>
-          <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-            <div class="card-body">
-              And lastly, the placeholder content for the third and final accordion panel. This panel is hidden by default.
-            </div>
-          </div>
-        </div>
+       
       </div>
 </div>
 
@@ -226,7 +195,7 @@
           
               <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                 <div class="card-body">
-                  Some placeholder content for the first accordion panel. This panel is shown by default, thanks to the <code>.show</code> class.
+                  Texto para reproducir
                 </div>
               </div>
             </div>
@@ -240,7 +209,7 @@
               </div>
               <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                 <div class="card-body">
-                  Some placeholder content for the second accordion panel. This panel is hidden by default.
+                  Texto para reproducir
                 </div>
               </div>
             </div>
