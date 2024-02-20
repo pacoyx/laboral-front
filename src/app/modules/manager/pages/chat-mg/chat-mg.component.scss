@@ -5,11 +5,11 @@
     //  background-color: red;
     flex-direction: column;
 
-.titulo{
-    color: #0256BF;
-    font-size: 16px;
-    font-weight: 500;
-}
+    .titulo {
+        color: #0256BF;
+        font-size: 16px;
+        font-weight: 500;
+    }
 
     .sec-postulantes {
         background-color: white;
@@ -23,12 +23,13 @@
             font-weight: 500;
             width: 268px;
         }
-        .contenedor-lista{
-            height: 378px ;
+
+        .contenedor-lista {
+            height: 378px;
             overflow-y: scroll;
         }
 
-        .titulo-pos{
+        .titulo-pos {
             width: 100%;
             color: #1D214E;
             font-size: 16px;
@@ -38,12 +39,13 @@
             padding-left: 5px;
             // border: 1px solid black;
         }
+
         .input-text {
             width: 268px;
             border-color: #F6F6FF;
         }
 
-        .texto-lista{
+        .texto-lista {
             color: #3D4279;
             font-size: 14px;
             font-weight: 500;
@@ -54,14 +56,58 @@
 
     .sec-chatbot {
         background-color: white;
-        width: 535px;
-        border: 1px solid gainsboro;        
+        width: 500px;
+        border: 1px solid gainsboro;
     }
 
-    .sec-perfil {        
+    .sec-perfil {
         background-color: white;
-        width: 281px;
-        border: 1px solid gainsboro;        
+        width: 270px;
+        border: 1px solid gainsboro;
+
+        .nombre {
+            text-align: center;
+            color: #3D4279;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .foto {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .telefono {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #1D214E;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .puesto-texto {
+            text-align: center;
+            margin-bottom: 2px;
+            color: #3D4279;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .puesto-nombre {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #7792B9;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .botones {            
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+
     }
 
 }
