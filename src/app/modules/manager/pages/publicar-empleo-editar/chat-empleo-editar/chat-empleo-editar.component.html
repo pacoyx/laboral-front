@@ -7,14 +7,8 @@
   <div class="container-msj">
     <div class="container-scroll" #target>
       <div class="mensajes" *ngFor="let item of arr_mensajes">
-        <div
-          [ngClass]="{ 'text-right': item.usuario != 'Chatbot' }"
-          style="width: 100%"
-        >
-          <img
-            src="assets/images/logo_chatbot.png"
-            *ngIf="item.usuario == 'Chatbot'"
-          />
+        <div [ngClass]="{ 'text-right': item.usuario != 'Chatbot' }" style="width: 100%">
+          <img src="assets/images/logo_chatbot.png" *ngIf="item.usuario == 'Chatbot'"/>
           <svg
             *ngIf="item.usuario != 'Chatbot'"
             xmlns="http://www.w3.org/2000/svg"
@@ -34,10 +28,8 @@
           <span> {{ item.usuario }}</span>
         </div>
         <div class="texto">
-          <div
-            [innerHtml]="item.msg"
-            [ngClass]="{ 'text-right': item.usuario != 'Chatbot' }"
-          ></div>
+          <div [innerHtml]="item.msg" [ngClass]="{ 'text-right': item.usuario != 'Chatbot' }">            
+          </div>
         </div>
       </div>
       <div *ngIf="bolLoading">

@@ -92,9 +92,6 @@ export class ChatEmpleoEditarComponent implements OnInit,AfterViewChecked  {
   msgVal='';
 
 
-
-
-
   constructor() {
     const objLogin = JSON.parse(localStorage.getItem('laboral.ai')!);
     this.vNombreUsuario = objLogin.user.nombres_completo;
