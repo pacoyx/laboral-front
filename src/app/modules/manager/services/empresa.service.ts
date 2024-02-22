@@ -19,6 +19,10 @@ import { IResEliEmpleosPorIds } from '../interfaces/IResEliEmpleosPorIds';
 import { IReqListarCandiPorEmpleo } from '../interfaces/IReqListarCandiPorEmpleo';
 import { IResListarCandiPorEmpleo } from '../interfaces/IResListarCandiPorEmpleo';
 import { IResListarPregPorEmpleo } from '../interfaces/IResListarPregPorEmpleo';
+import { IReqCandidatosPorEmpleo } from '../interfaces/IReqCandidatosPorEmpleo';
+import { IResCandidatosPorEmpleo } from '../interfaces/IResCandidatosPorEmpleo';
+import { IResListarEmpleosPorReclutador } from '../interfaces/IResListarEmpleosPorReclutador';
+import { IReqListarEmpleosPorReclutador } from '../interfaces/IReqListarEmpleosPorReclutador';
 
 @Injectable({
   providedIn: 'root',
@@ -36,6 +40,9 @@ export class EmpresaService {
   private epEliminarEmpleosPorId = environment.epEliminarEmpleosPorIds;
   private epListarCandidatosPorEmpleo = environment.epListarCandidatosPorEmpleo;
   private epListarPreguntasPorEmpleo = environment.epListarPreguntasPorEmpleo;
+
+  private epListarCandidatosPorEmpleoChat = environment.epListarCandidatosPorEmpleoChat;
+  private epListarEmpleosPorReclutador = environment.epListarEmpleosPorReclutador;
 
   private http = inject(HttpClient);
 
@@ -114,6 +121,20 @@ export class EmpresaService {
   listarPreguntasPorEmpleo(req: IReqListarCandiPorEmpleo) {
     return this.http.post<IResListarPregPorEmpleo>(
       this.epRaiz + this.epListarPreguntasPorEmpleo,
+      req
+    );
+  }
+
+  listarCandidatosPorEmpleoChat(req: IReqCandidatosPorEmpleo) {
+    return this.http.post<IResCandidatosPorEmpleo>(
+      this.epRaiz + this.epListarCandidatosPorEmpleoChat,
+      req
+    );
+  }
+
+  listarEmpleosPorReclutadorChat(req: IReqListarEmpleosPorReclutador) {
+    return this.http.post<IResListarEmpleosPorReclutador>(
+      this.epRaiz + this.epListarEmpleosPorReclutador,
       req
     );
   }
