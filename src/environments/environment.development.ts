@@ -25,4 +25,6 @@ export const environment = {
   epListarPreguntasPorEmpleo: '/getQuestionsByJob',
   epListarCandidatosPorEmpleoChat:'/getCandidatesByJobChat',
   epListarEmpleosPorReclutador:'/getJobsByRecruiter',
+  epRegistrarChatPorReclutadorCandidato:'/registerChat',
+  epListarChatPorReclutadorCandidato:'/getChatsByRecruiterCandidate',
 };

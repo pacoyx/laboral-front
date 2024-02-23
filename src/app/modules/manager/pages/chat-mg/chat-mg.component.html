@@ -8,9 +8,7 @@
   </div>
 
   <div class="d-flex flex-row">
-    <div
-      class="sec-postulantes d-flex flex-column justify-content-center mr-1 rounded shadow-sm"
-    >
+    <div class="sec-postulantes d-flex flex-column justify-content-center mr-1 rounded shadow-sm">
       <div class="pt-2 pl-2">
         <span class="titulo">
           <svg
@@ -136,17 +134,18 @@
 
       <div class="container-msj">
         <div class="container-scroll" #target>
+          <div *ngIf="bolLoading">Cargando mensajes...</div>
           <div class="mensajes" *ngFor="let item of arr_mensajes">
             <div
-              [ngClass]="{ 'text-right': item.usuario != 'Chatbot' }"
+              [ngClass]="{ 'text-right': item.type_owner != 'R' }"
               style="width: 100%"
             >
               <img
                 src="assets/images/logo_chatbot.png"
-                *ngIf="item.usuario == 'Chatbot'"
+                *ngIf="item.owner == 'Chatbot'"
               />
               <svg
-                *ngIf="item.usuario != 'Chatbot'"
+                *ngIf="item.owner != 'Chatbot'"
                 xmlns="http://www.w3.org/2000/svg"
                 width="25"
                 height="25"
@@ -161,12 +160,12 @@
                 />
               </svg>
 
-              <span> {{ item.usuario }}</span>
+              <span> {{ item.owner }}</span>
             </div>
             <div class="texto">
               <div
-                [innerHtml]="item.msg"
-                [ngClass]="{ 'text-right': item.usuario != 'Chatbot' }"
+                [innerHtml]="item.message"
+                [ngClass]="{ 'text-right': item.type_owner != 'R' }"
               ></div>
             </div>
           </div>

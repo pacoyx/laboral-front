@@ -26,6 +26,7 @@ export const environment = {
   epValidaTokenLinkedin: '/validateTokenLinkedin',
   epListarCandidatosPorEmpleoChat:'/getCandidatesByJobChat',
   epListarEmpleosPorReclutador:'/getJobsByRecruiter',
-
+  epRegistrarChatPorReclutadorCandidato:'/registerChat',
+  epListarChatPorReclutadorCandidato:'/getChatsByRecruiterCandidate',
   
 };

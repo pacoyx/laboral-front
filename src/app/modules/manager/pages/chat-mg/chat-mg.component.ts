@@ -7,6 +7,10 @@ import {
   IResCandidatosPorEmpleo,
   IResCandidatosPorEmpleoDet,
 } from '../../interfaces/IResCandidatosPorEmpleo';
+import { IReqRegChatPorReclutadorCandidato } from '../../interfaces/IReqRegChatPorReclutadorCandidato';
+import { Subscription } from 'rxjs';
+import { IReqListarChatsPorReclutador } from '../../interfaces/IReqListarChatsPorReclutador';
+import { IResListarChatsPorReclutadorDet } from '../../interfaces/IResListarChatsPorReclutador';
 
 @Component({
   selector: 'app-chat-mg',
@@ -20,26 +24,23 @@ export class ChatMgComponent implements OnInit, OnDestroy {
   vNombreUsuario = '';
   vNombreChatBot = 'Chatbot';
   inputText = '';
-  arr_mensajes = [{ usuario: '', msg: '' }];
+  arr_mensajes: IResListarChatsPorReclutadorDet[] = [];
   arrEmpleos: IResListarEmpleosPorReclutadorDet[] = [];
   arrCandidatos: IResCandidatosPorEmpleoDet[] = [];
   canditatoSel!: IResCandidatosPorEmpleoDet;
   puestoSel = '';
   puestoIdSel = 0;
+  idCabChat = 0;
+
+  subscriptionRegChat!: Subscription;
+  SubscriptionlistarChat!: Subscription;
+  bolLoading = false;
 
   constructor() {
     const objLogin = JSON.parse(localStorage.getItem('laboral.ai')!);
     this.vNombreUsuario = objLogin.user.nombres_completo;
     this.vIdReclutador = objLogin.user.id;
-    this.arr_mensajes = [
-      {
-        usuario: this.vNombreChatBot,
-        msg: `Hola 😃 luciana, 
-        te quería comentar que actualmente me encuentro dirigiendo un proceso de selección para la empresa Farmacias Peruana, 
-        el puesto es de UX Designer/Researcher. He visto tu perfil y creo que encajarías muy bien con lo solicitado para el puesto.
-        `,
-      },
-    ];
+    this.arr_mensajes = [];
 
     this.canditatoSel = {
       nombres: '',
@@ -53,7 +54,11 @@ export class ChatMgComponent implements OnInit, OnDestroy {
       celular: '',
     };
   }
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    if (this.subscriptionRegChat) this.subscriptionRegChat.unsubscribe();
+    if (this.SubscriptionlistarChat) this.SubscriptionlistarChat.unsubscribe();
+  }
+
   ngOnInit(): void {
     this.cargarMensajes();
     this.cargarPublicaciones();
@@ -65,7 +70,33 @@ export class ChatMgComponent implements OnInit, OnDestroy {
     // this.vIdReclutador
     // this.canditatoSel.id_cliente
     // this.puestoIdSel
-
+    const req: IReqListarChatsPorReclutador = {
+      idReclutador: this.vIdReclutador,
+      idCandidato: this.canditatoSel.id_cliente,
+      idEmpleo: this.puestoIdSel,
+    };
+    this.arr_mensajes=[];
+    this.bolLoading = true;
+    this.SubscriptionlistarChat = this.empresaService
+      .listarChatPorReclutadorCandidatoEmpleo(req)
+      .subscribe({
+        next: (resp) => {
+          console.log(resp);
+          this.bolLoading = false;
+          this.idCabChat = 0;
+          if (resp.codigoRespuesta == '00' && resp.hasData) {
+            this.arr_mensajes = resp.data;
+            this.idCabChat = resp.data[0].id_cab;
+          }
+        },
+        error: (err) => {
+          console.log(err);
+          this.bolLoading = false;
+        },
+        complete: () => {
+          console.log('Complete listarChatPorReclutadorCandidatoEmpleo()');
+        },
+      });
   }
   cargarPublicaciones() {
     const req: IReqListarEmpleosPorReclutador = {
@@ -116,6 +147,7 @@ export class ChatMgComponent implements OnInit, OnDestroy {
     console.log(item);
     console.log(event.currentTarget.checked);
 
+    this.canditatoSel = item;
     this.arrCandidatos.forEach((e) => {
       e.sel = false;
     });
@@ -127,13 +159,41 @@ export class ChatMgComponent implements OnInit, OnDestroy {
       item.sel = false;
     }
 
-    this.canditatoSel = item;
   }
 
   enviarMsg(value: string) {
     this.arr_mensajes.push({
-      usuario: this.vNombreChatBot,
-      msg: value,
+      owner: this.vNombreChatBot,
+      message: value,
+      id_cab: this.idCabChat,
+      iddet: 0,
+      type_owner: 'R',
     });
+
+    const req: IReqRegChatPorReclutadorCandidato = {
+      idReclutador: this.vIdReclutador,
+      idCandidato: this.canditatoSel.id_cliente,
+      idEmpleo: this.puestoIdSel,
+      idCab: this.idCabChat,
+      mensaje: value,
+      participante: this.vNombreChatBot,
+    };
+
+    this.subscriptionRegChat = this.empresaService
+      .registrarChatPorReclutadorCandidatoEmpleo(req)
+      .subscribe({
+        next: (resp) => {
+          console.log(resp);
+          if (resp.codigoRespuesta == '00') {
+            console.log('se registro elchat');
+          }
+        },
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => {
+          console.log('Complete registrarChatPorReclutadorCandidatoEmpleo()');
+        },
+      });
   }
 }
