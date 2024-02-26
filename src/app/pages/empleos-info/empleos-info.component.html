@@ -1,0 +1,27 @@
+<div class="d-flex justify-content-center"  *ngIf="bol_loading">
+  <div>
+    <p>cargando empleo</p>
+  </div>
+  <br />
+  <div class="spinner-border text-primary" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+
+<div class="m-5">
+
+    <h1>Empleos</h1>
+    <hr>
+
+    <h2>
+        {{ empleo.job_title }}
+    </h2>
+    
+    <p>
+        {{ empleo.req_qualifications }}
+    </p>
+    
+    <p>
+        {{ empleo.key_responsabilities }}
+    </p>
+</div>

@@ -1,72 +1,57 @@
 <div class="container-landing-home">
   <app-menu-public></app-menu-public>
   <app-section-conecta></app-section-conecta>
-
-  <!-- <button (click)="login()">ir manager</button> -->
-
-  <div class="d-flex justify-content-between mt-4 mr-4">
-    <div class="d-flex justify-content-center w-100">
-
-      
-      <div class="marco-texto">
-        <p class="titulo">UNA IA QUE REPLICA TUS CRITERIOS DE SELECCION</p>
-        <p class="contenido">¿PORQUE USAR LABORAL.AI?</p>
-        <ul class="contenido">
-          <li>
-           ° Accede a una base con mas de 10 jovenes talentosos adaptados a tus
-            necesidades.
-          </li>
-          <li>
-            ° Traducimos lo que necesitas en una publicacion inteligente con
-            alcance masivo.
-          </li>
-          <li>
-            ° Creamos tu avatar digital que hara todo el proceso de seleccion
-            cuidando tus criterios.
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <div
-      style="
-        width: 400px;
-        border: 1px solid black;
-        padding: 20px;
-        float: right;
-        border-radius: 5px;
-        border-color: gainsboro;
-        margin-bottom: 50px;
-      "
-    >
-      <div class="text-center mb-5">
-        <div
-          style="
-            background-color: #e1ecfc;
-            padding: 5px;
-            border-radius: 5px;
-            width: 100%;
-          "
-        >
-          <button
-            class="btn"
-            [ngClass]="{ 'btn-primary': bol_login }"
-            (click)="modoLogin()"
-          >
-            Iniciar sesión
-          </button>
-          <button
-            class="btn"
-            [ngClass]="{ 'btn-primary': !bol_login }"
-            (click)="modoRegistro()"
-          >
-            Registrate
-          </button>
+  <div class="row">
+    <div class="col-md-7 col-sm-12">
+      <div class="w-100">
+        <div class="marco-texto">
+          <p class="titulo">UNA IA QUE REPLICA TUS CRITERIOS DE SELECCION</p>
+          <p class="contenido">¿PORQUE USAR LABORAL.AI?</p>
+          <ul class="contenido">
+            <li>
+              ° Accede a una base con mas de 10 jovenes talentosos adaptados a
+              tus necesidades.
+            </li>
+            <li>
+              ° Traducimos lo que necesitas en una publicacion inteligente con
+              alcance masivo.
+            </li>
+            <li>
+              ° Creamos tu avatar digital que hara todo el proceso de seleccion
+              cuidando tus criterios.
+            </li>
+          </ul>
         </div>
       </div>
+    </div>
+    <div class="col-md-5 col-sm-12" >
+      <div class="mt-4 mr-4 ml-4 mr-4">
 
-      <app-registro-usuario *ngIf="!bol_login"></app-registro-usuario>
-      <app-login-usuario *ngIf="bol_login"></app-login-usuario>
+        <div class="contenedor-inicio-session float-md-right float-sm-none">
+          <div class="text-center mb-5">
+            <div class="contenedor-botonera">
+              <button
+                class="btn"
+                [ngClass]="{ 'btn-primary': bol_login }"
+                (click)="modoLogin()"
+              >
+                Iniciar sesión
+              </button>
+              <button
+                class="btn"
+                [ngClass]="{ 'btn-primary': !bol_login }"
+                (click)="modoRegistro()"
+              >
+                Registrate
+              </button>
+            </div>
+          </div>
+
+          <app-registro-usuario *ngIf="!bol_login"></app-registro-usuario>
+          <app-login-usuario *ngIf="bol_login"></app-login-usuario>
+        </div>
+
+      </div>
     </div>
   </div>
 </div>

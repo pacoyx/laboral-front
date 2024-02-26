@@ -11,11 +11,15 @@ import { AuthGoogleService } from 'src/app/Services/auth-google.service';
 export class LayoutManagerComponent {
   private authGoogleService = inject(AuthGoogleService);
   private router = inject(Router);
-
+  open=true;
 logout(){
   this.authGoogleService.logout();
   this.router.navigate(['/home']);
   localStorage.clear();
+}
+
+toggle(){
+  this.open = !this.open;
 }
 
 }

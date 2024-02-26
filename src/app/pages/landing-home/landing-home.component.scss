@@ -1,10 +1,12 @@
 .container-landing-home {
     background-color: white;
+    width: 100%;
 
     .marco-texto {
+        padding: 10px;
         text-align: left;
         // border: 1px solid blue;
-        width: 500px;
+        // width: 50%;
         margin-top: 100px;
         max-height: 300px;
     }
@@ -30,6 +32,23 @@
         margin-right: 0;
         padding-left: 20px;
         line-height: 180%;
+    }
+
+    .contenedor-inicio-session{
+         max-width: 400px;
+        border: 1px solid black;
+        padding: 20px;
+        // float: right;
+        border-radius: 5px;
+        border-color: gainsboro;
+        margin-bottom: 50px;
+    }
+
+    .contenedor-botonera{
+        background-color: #e1ecfc;
+        padding: 5px;
+        border-radius: 5px;
+        width: 100%;
     }
 
 }

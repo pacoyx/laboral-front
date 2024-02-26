@@ -5,6 +5,8 @@ import { LayoutPublicComponent } from './layouts/layout-public/layout-public.com
 import { UsuarioCreadoMsgComponent } from './pages/usuario-creado-msg/usuario-creado-msg.component';
 import { UsuarioCreadoValidacionComponent } from './pages/usuario-creado-validacion/usuario-creado-validacion.component';
 import { ValidateLoginComponent } from './pages/validate-login/validate-login.component';
+import { EmpleosInfoComponent } from './pages/empleos-info/empleos-info.component';
+import { authGuard } from './Services/auth.guard';
 
 
 const routes: Routes = [
@@ -23,12 +25,17 @@ const routes: Routes = [
   },
   {
     path: 'manager',
+    canActivate:[authGuard],
     loadChildren: () =>
       import('./modules/manager/manager.module').then((m) => m.ManagerModule),
   },
   {
     path: 'home',
     component: LandingHomeComponent,
+  },
+  {
+    path: 'empleos/:token',
+    component: EmpleosInfoComponent,
   },
 ];
 

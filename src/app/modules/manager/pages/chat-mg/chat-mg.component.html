@@ -140,12 +140,14 @@
               [ngClass]="{ 'text-right': item.type_owner != 'R' }"
               style="width: 100%"
             >
-              <img
-                src="assets/images/logo_chatbot.png"
-                *ngIf="item.owner == 'Chatbot'"
+              <img                
+                [src]="pathImgAvatar"
+                width="30px"  style="border-radius: 50%;"
+                *ngIf="item.type_owner == 'R'"
               />
+              
               <svg
-                *ngIf="item.owner != 'Chatbot'"
+                *ngIf="item.type_owner != 'R'"
                 xmlns="http://www.w3.org/2000/svg"
                 width="25"
                 height="25"

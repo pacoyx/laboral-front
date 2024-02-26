@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild, inject } from '@angular/core';
 import { EmpresaService } from '../../services/empresa.service';
 import { IReqListarEmpleosPorReclutador } from '../../interfaces/IReqListarEmpleosPorReclutador';
 import { IResListarEmpleosPorReclutadorDet } from '../../interfaces/IResListarEmpleosPorReclutador';
@@ -11,14 +11,17 @@ import { IReqRegChatPorReclutadorCandidato } from '../../interfaces/IReqRegChatP
 import { Subscription } from 'rxjs';
 import { IReqListarChatsPorReclutador } from '../../interfaces/IReqListarChatsPorReclutador';
 import { IResListarChatsPorReclutadorDet } from '../../interfaces/IResListarChatsPorReclutador';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-chat-mg',
   templateUrl: './chat-mg.component.html',
   styleUrls: ['./chat-mg.component.scss'],
 })
-export class ChatMgComponent implements OnInit, OnDestroy {
+export class ChatMgComponent implements OnInit, OnDestroy, AfterViewChecked {
   private empresaService = inject(EmpresaService);
+  private renderer = inject(Renderer2);
+  @ViewChild('target') private myScrollContainer!: ElementRef;
 
   vIdReclutador = 0;
   vNombreUsuario = '';
@@ -35,6 +38,8 @@ export class ChatMgComponent implements OnInit, OnDestroy {
   subscriptionRegChat!: Subscription;
   SubscriptionlistarChat!: Subscription;
   bolLoading = false;
+  pathImgAvatar = '';
+  icono = '';
 
   constructor() {
     const objLogin = JSON.parse(localStorage.getItem('laboral.ai')!);
@@ -54,6 +59,7 @@ export class ChatMgComponent implements OnInit, OnDestroy {
       celular: '',
     };
   }
+
   ngOnDestroy(): void {
     if (this.subscriptionRegChat) this.subscriptionRegChat.unsubscribe();
     if (this.SubscriptionlistarChat) this.SubscriptionlistarChat.unsubscribe();
@@ -62,6 +68,26 @@ export class ChatMgComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.cargarMensajes();
     this.cargarPublicaciones();
+
+    const objLogin = JSON.parse(localStorage.getItem('laboral.ai')!);
+    this.icono = objLogin.user.icono || '';
+    this.pathImgAvatar =
+      objLogin.tipo == 'sistema'
+        ? environment.epImagesPublic + '/' + this.icono
+        : this.icono;
+  }
+
+  ngAfterViewChecked(): void {
+    this.scrollToBottom();  
+    }
+
+  scrollToBottom(): void {    
+    
+    try {
+      this.myScrollContainer.nativeElement.scrollTop =
+        this.myScrollContainer.nativeElement.scrollHeight;
+    } catch (err) {console.log('error scrol', err);
+    }
   }
 
   cargarMensajes() {
@@ -163,12 +189,14 @@ export class ChatMgComponent implements OnInit, OnDestroy {
 
   enviarMsg(value: string) {
     this.arr_mensajes.push({
-      owner: this.vNombreChatBot,
+      owner: this.vNombreUsuario,
       message: value,
       id_cab: this.idCabChat,
       iddet: 0,
       type_owner: 'R',
     });
+    this.inputText = '';
+    this.renderer.selectRootElement('#txtMsg').focus();
 
     const req: IReqRegChatPorReclutadorCandidato = {
       idReclutador: this.vIdReclutador,
@@ -176,7 +204,7 @@ export class ChatMgComponent implements OnInit, OnDestroy {
       idEmpleo: this.puestoIdSel,
       idCab: this.idCabChat,
       mensaje: value,
-      participante: this.vNombreChatBot,
+      participante: this.vNombreUsuario,
     };
 
     this.subscriptionRegChat = this.empresaService

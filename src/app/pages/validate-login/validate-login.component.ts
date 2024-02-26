@@ -69,12 +69,14 @@ export class ValidateLoginComponent implements OnInit, OnDestroy {
     const data = this.authGoogle.getProfile();
     console.log('data google==>', data);
     setTimeout(() => {
+      console.log('entro settimeout');
+      
       const token = sessionStorage.getItem('id_token');
 
       //validamos token contra el backend
       this.unsuscriptionGoogle = this.loginService.validaTokenGoogle({ token }).subscribe({
         next: (resp) => {
-          console.log(resp);
+          console.log('validaTokenGoogle==>',resp);
           if (resp.codigoRespuesta != '00') {
             this.router.navigateByUrl('/home');
             return;
@@ -101,6 +103,6 @@ export class ValidateLoginComponent implements OnInit, OnDestroy {
           console.log('complete validaTokenGoogle()');
         },
       });
-    }, 1500);
+    },2000);
   }
 }

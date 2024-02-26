@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { OAuthModule } from 'angular-oauth2-oidc';
 
@@ -18,6 +18,9 @@ import { SidebarManagerComponent } from './components/sidebar-manager/sidebar-ma
 import { UsuarioCreadoMsgComponent } from './pages/usuario-creado-msg/usuario-creado-msg.component';
 import { UsuarioCreadoValidacionComponent } from './pages/usuario-creado-validacion/usuario-creado-validacion.component';
 import { ValidateLoginComponent } from './pages/validate-login/validate-login.component';
+import { EmpleosInfoComponent } from './pages/empleos-info/empleos-info.component';
+import { AuthInterceptor } from './Services/auth.interceptor';
+
 
 @NgModule({
   declarations: [
@@ -33,7 +36,8 @@ import { ValidateLoginComponent } from './pages/validate-login/validate-login.co
     SidebarManagerComponent,
     UsuarioCreadoMsgComponent,
     UsuarioCreadoValidacionComponent,
-    ValidateLoginComponent
+    ValidateLoginComponent,
+    EmpleosInfoComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +46,12 @@ import { ValidateLoginComponent } from './pages/validate-login/validate-login.co
     ReactiveFormsModule,
     OAuthModule.forRoot()
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  } 
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
